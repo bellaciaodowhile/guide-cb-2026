@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Book, AlertTriangle, Crown } from 'lucide-react';
+import { ArrowLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
 import { PRService } from '../services/prService';
@@ -10,6 +10,7 @@ import PRChapterDetail from './PRChapterDetail';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
+import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 
 const GuiasmayoresDaniel: React.FC = () => {
   const [chapters, setChapters] = useState<ChapterInfo[]>([]);
@@ -87,10 +88,28 @@ const GuiasmayoresDaniel: React.FC = () => {
     setError(null);
   };
 
+  const handleChangeCategory = () => {
+    // Limpiar preferencias guardadas
+    localStorage.removeItem('daniel-bible-preference');
+    // Redirigir al home
+    window.location.href = '/';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {/* Background Hero Section */}
+      <div 
+        className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${bgGuiasmayores})`
+        }}
+      >
+        {/* Gradiente que permite ver más imagen y se extiende detrás del header */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+      </div>
+
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-40 relative z-10">
         {loading ? (
           <div className="flex justify-center items-center h-96">
             <LoadingSpinner size="lg" text="Cargando capítulos para Guías Mayores..." />
@@ -130,44 +149,34 @@ const GuiasmayoresDaniel: React.FC = () => {
         ) : (
           <div className="space-y-8">
             {/* Header */}
-            <div className="flex items-center space-x-4 mb-8">
-              <Link
-                to="/"
-                className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
-                aria-label="Volver al inicio"
+            <div className="flex flex-col md:flex-row items-center justify-between mb-8 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl p-6 shadow-xl border border-white/20">
+              <div className="flex flex-col md:flex-row items-start md:items-center space-x-1 md:space-x-4">
+                <Link
+                  to="/"
+                  className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
+                  aria-label="Volver al inicio"
+                >
+                  <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
+                </Link>
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                    Guías Mayores - Daniel
+                  </h1>
+                  <p className="text-lg text-gray-600 dark:text-gray-300">
+                    Estudio completo: Narrativa histórica y visiones proféticas
+                  </p>
+                </div>
+              </div>
+              
+              {/* Botón Cambiar Categoría */}
+              <button
+                onClick={handleChangeCategory}
+                className="change-category-btn flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200"
+                title="Cambiar categoría"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
-              </Link>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                  <Crown className="h-8 w-8 mr-3 text-purple-600 dark:text-purple-400" />
-                  Guías Mayores - Daniel
-                </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Estudio completo: Narrativa histórica y visiones proféticas
-                </p>
-              </div>
-            </div>
-
-            {/* Hero Section */}
-            <div className="text-center py-12 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl border border-purple-200 dark:border-purple-800">
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                Guías Mayores: Estudio Completo
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Explora el libro completo de Daniel: desde las historias de fidelidad en el exilio 
-                hasta las profundas visiones apocalípticas sobre el futuro de los reinos y el plan 
-                divino para la historia.
-              </p>
-              <div className="mt-6 flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
-                <span>📖 12 Capítulos</span>
-                <span>•</span>
-                <span>📝 {chapters.reduce((sum, ch) => sum + ch.verseCount, 0)} Versículos</span>
-                <span>•</span>
-                <span>📚 6 Capítulos PR</span>
-                <span>•</span>
-                <span>🔮 Profecías</span>
-              </div>
+                <RefreshCw className="h-4 w-4" />
+                <span>Cambiar categoría</span>
+              </button>
             </div>
 
             {/* Stats */}
@@ -197,8 +206,6 @@ const GuiasmayoresDaniel: React.FC = () => {
                     >
                       <ChapterCard
                         chapter={chapter}
-                        onClick={() => handleChapterClick(chapter.chapter)}
-                        onPRClick={() => handlePRChapterClick(chapter.chapter)}
                       />
                     </div>
                   ))}
@@ -227,7 +234,6 @@ const GuiasmayoresDaniel: React.FC = () => {
                     >
                       <ChapterCard
                         chapter={chapter}
-                        onClick={() => handleChapterClick(chapter.chapter)}
                       />
                     </div>
                   ))}

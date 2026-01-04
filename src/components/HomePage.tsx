@@ -1,22 +1,92 @@
-import { useState } from 'react';
-import { Users, Award, Crown, Play } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Users, Award, Crown, Play, MousePointer2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import imgHero from '../assets/hero.png';
-import bgAventureros from '../assets/bg-aventureros.png';
-import bgConquistadores from '../assets/bg-conquistadores.png';
-import bgGuiasmayores from '../assets/bg-guiasmayores.png';
+import bgAventureros from '../assets/bg-aventureros.webp';
+import bgConquistadores from '../assets/bg-conquistadores.webp';
+import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   const [showColumns, setShowColumns] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
 
   const handleStartClick = () => {
     setShowColumns(true);
   };
 
+  // Verificar localStorage al cargar el componente
+  useEffect(() => {
+    const savedPreference = localStorage.getItem('daniel-bible-preference');
+    if (savedPreference) {
+      const { dontShow, selectedRoute } = JSON.parse(savedPreference);
+      if (dontShow && selectedRoute) {
+        // Redirigir automáticamente a la ruta guardada
+        navigate(selectedRoute);
+        return;
+      }
+    }
+  }, [navigate]);
+
+  // Mostrar modal después de que aparezcan las columnas
+  useEffect(() => {
+    if (showColumns) {
+      const savedPreference = localStorage.getItem('daniel-bible-preference');
+      if (savedPreference) {
+        const { dontShow } = JSON.parse(savedPreference);
+        if (dontShow) {
+          return; // No mostrar modal si el usuario eligió no verlo
+        }
+      }
+      
+      // Delay para que aparezcan las columnas primero
+      const timer = setTimeout(() => {
+        setShowModal(true);
+      }, 1500); // Espera a que terminen las animaciones de las columnas
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showColumns]);
+
   const handleColumnClick = (categoryId: string) => {
     setSelectedCategory(categoryId);
+    setShowModal(false); // Cerrar modal al seleccionar categoría
+    
+    // Si el usuario marcó "No volver a mostrar", guardar en localStorage
+    if (dontShowAgain) {
+      const category = categories.find(cat => cat.id === categoryId);
+      if (category) {
+        localStorage.setItem('daniel-bible-preference', JSON.stringify({
+          dontShow: true,
+          selectedRoute: category.route,
+          categoryId: categoryId
+        }));
+      }
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    
+    // Si el usuario marcó "No volver a mostrar", guardar en localStorage
+    if (dontShowAgain) {
+      localStorage.setItem('daniel-bible-preference', JSON.stringify({
+        dontShow: true,
+        selectedRoute: null,
+        categoryId: null
+      }));
+    }
+  };
+
+  // Función para resetear preferencias (útil para testing/desarrollo)
+  // Descomenta la siguiente línea si necesitas resetear las preferencias:
+  // console.log('Para resetear preferencias, ejecuta: resetPreferences()');
+  const resetPreferences = () => {
+    localStorage.removeItem('daniel-bible-preference');
+    setDontShowAgain(false);
   };
 
   const categories = [
@@ -33,7 +103,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-blue-200',
       textColor: 'text-gray-800',
       icon: Users,
-      chapters: 'Daniel 1-3, 6 • PR 39, 41, 44',
+      chapters: 'Daniel 1-3, 6 • PR 39, 41, 44 (Hasta los 9 años)',
       gradient: 'from-blue-500 to-blue-700',
       backgroundImage: bgAventureros
     },
@@ -50,7 +120,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-green-200',
       textColor: 'text-gray-800',
       icon: Award,
-      chapters: 'Daniel 1-6 • PR 39-44',
+      chapters: 'Daniel 1-6 • PR 39-44 (Hasta los 15 años)',
       gradient: 'from-green-500 to-green-700',
       backgroundImage: bgConquistadores
     },
@@ -67,7 +137,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-purple-200',
       textColor: 'text-gray-800',
       icon: Crown,
-      chapters: 'Daniel 1-12 • PR 39-44',
+      chapters: 'Daniel 1-12 • PR 39-44 (16 años en adelante)',
       gradient: 'from-purple-500 to-purple-700',
       backgroundImage: bgGuiasmayores
     }
@@ -155,9 +225,10 @@ const HomePage: React.FC = () => {
                       {category.title}
                     </h3>
                     
-                    {/* Indicador de hover */}
-                    <div className="column-chapters opacity-70 text-sm">
-                      
+                    {/* Indicador de click animado */}
+                    <div className="column-chapters opacity-70 text-sm flex flex-col items-center space-y-2">
+                      <MousePointer2 className="h-6 w-6 text-white animate-click-bounce" />
+                      <span className="text-xs font-medium">Haz clic para explorar</span>
                     </div>
                   </div>
 
@@ -195,6 +266,74 @@ const HomePage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Modal de instrucción */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Overlay - sin onClick para prevenir cierre */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+          
+          {/* Modal Content */}
+          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 md:p-8 mx-4 max-w-md w-full animate-modal-appear">
+            {/* Content */}
+            <div className="text-center">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  ¡Elige tu categoría!
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Selecciona la categoría que corresponde edad para comenzar tu aventura con el libro de Daniel.
+                </p>
+              </div>
+              
+              <div className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="font-medium text-blue-700 dark:text-blue-300">Aventureros, {'<'}=9 años</span>
+                  <span>Capítulos 1-3, 6</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <span className="font-medium text-green-700 dark:text-green-300">Conquistadores, {'<'}=15 años</span>
+                  <span>Capítulos 1-6</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <span className="font-medium text-purple-700 dark:text-purple-300">Guías Mayores, {'>'}=16 años </span>
+                  <span>Capítulos 1-12</span>
+                </div>
+              </div>
+              
+              {/* Checkbox "No volver a mostrar" */}
+              <div className="mt-6 flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="dontShowAgain"
+                  checked={dontShowAgain}
+                  onChange={(e) => setDontShowAgain(e.target.checked)}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label 
+                  htmlFor="dontShowAgain" 
+                  className="text-sm text-gray-600 dark:text-gray-300 cursor-pointer"
+                >
+                  No volver a mostrar este mensaje
+                </label>
+              </div>
+              
+              <button
+                onClick={handleCloseModal}
+                className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 w-full"
+              >
+                {dontShowAgain ? 'Guardar preferencia' : 'Entendido'}
+              </button>
+              
+              {dontShowAgain && (
+                <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 text-center">
+                  💡 Tip: Si seleccionas una categoría, serás redirigido automáticamente la próxima vez
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

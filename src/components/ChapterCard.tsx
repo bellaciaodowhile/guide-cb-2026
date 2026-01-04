@@ -1,16 +1,28 @@
 import { BookOpen, Hash, ArrowRight, Book } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import type { ChapterInfo } from '../types/bible';
 import { PRService } from '../services/prService';
 
 interface ChapterCardProps {
   chapter: ChapterInfo;
-  onClick: () => void;
-  onPRClick?: () => void; // Nueva prop para Profetas y Reyes
 }
 
-const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onClick, onPRClick }) => {
+const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
+  const location = useLocation();
+  
+  // Determinar la categoría actual basándose en la ruta
+  const getCurrentCategory = () => {
+    if (location.pathname.includes('/aventureros')) return 'aventureros';
+    if (location.pathname.includes('/conquistadores')) return 'conquistadores';
+    if (location.pathname.includes('/guiasmayores')) return 'guiasmayores';
+    return null;
+  };
+  
+  const currentCategory = getCurrentCategory();
+  const fromParam = currentCategory ? `?from=${currentCategory}` : '';
+  
   // Solo mostrar botón de PR para los primeros 6 capítulos (narrativa)
-  const showPRButton = chapter.chapter <= 6 && onPRClick;
+  const showPRButton = chapter.chapter <= 6;
   
   // Obtener el título del capítulo de Profetas y Reyes
   const prChapterTitle = showPRButton ? PRService.getPRChapterTitle(chapter.chapter) : null;
@@ -60,21 +72,21 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onClick, onPRClick }
         {/* Action Buttons */}
         <div className="space-y-2">
           {/* Botón principal para leer el capítulo bíblico */}
-          <button
-            onClick={onClick}
+          <Link
+            to={`/bible/daniel/${chapter.chapter}${fromParam}`}
             className="w-full flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-900/20 hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded-lg transition-colors duration-200 group/btn"
           >
             <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
               Leer capítulo bíblico
             </span>
             <ArrowRight className="h-4 w-4 text-primary-600 dark:text-primary-400 transform group-hover/btn:translate-x-1 transition-transform duration-200" />
-          </button>
+          </Link>
 
           {/* Botón para Profetas y Reyes (solo para capítulos 1-6) */}
           {showPRButton && prChapterTitle && (
-            <button
-              onClick={onPRClick}
-              className="w-full p-3 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition-colors duration-200 group/btn text-left"
+            <Link
+              to={`/profetas-y-reyes/${chapter.chapter + 38}${fromParam}`}
+              className="w-full p-3 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition-colors duration-200 group/btn text-left block"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1 min-w-0">
@@ -90,7 +102,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, onClick, onPRClick }
                 </div>
                 <ArrowRight className="h-4 w-4 text-green-600 dark:text-green-400 transform group-hover/btn:translate-x-1 transition-transform duration-200 flex-shrink-0 ml-2 mt-1" />
               </div>
-            </button>
+            </Link>
           )}
         </div>
       </div>

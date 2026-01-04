@@ -1,4 +1,5 @@
 import { ArrowLeft, Book, Quote, FileText, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 import type { PRChapter } from '../types/bible';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -11,6 +12,9 @@ interface PRChapterDetailProps {
 }
 
 const PRChapterDetail: React.FC<PRChapterDetailProps> = ({ chapter, onBack, onNavigate, onGoToBible, loading }) => {
+  const [searchParams] = useSearchParams();
+  const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
+  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-96">
@@ -76,13 +80,13 @@ const PRChapterDetail: React.FC<PRChapterDetailProps> = ({ chapter, onBack, onNa
           <p className="text-blue-600 dark:text-blue-300 mb-4">
             Lee el capítulo bíblico correspondiente en el libro de Daniel
           </p>
-          <button
-            onClick={() => onGoToBible(chapter.danielChapter)}
+          <Link
+            to={`/bible/daniel/${chapter.danielChapter}${fromParam}`}
             className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
           >
             <Book className="h-4 w-4" />
             <span>Leer Daniel {chapter.danielChapter}</span>
-          </button>
+          </Link>
         </div>
 
       {/* Content */}
@@ -125,56 +129,59 @@ const PRChapterDetail: React.FC<PRChapterDetailProps> = ({ chapter, onBack, onNa
 
       {/* Footer */}
       <div className="mt-8 space-y-4">
-        {/* Navegación entre capítulos */}
-        <div className="flex sm:flex-row items-center justify-between sm:space-y-0 sm:space-x-4">
-          {/* Botón Anterior */}
-          <div className="flex-1 w-full sm:w-auto">
-            {hasPrevious ? (
-              <button
-                onClick={() => onNavigate(chapter.danielChapter - 1)}
-                className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span>Cap. {chapter.danielChapter - 1}</span>
-              </button>
-            ) : (
-              <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
-                <ChevronLeft className="h-4 w-4" />
-                <span>Primer cap.</span>
-              </div>
-            )}
-          </div>
+        {/* Navigation - Desktop */}
+        <div className="hidden min-[750px]:block">
+          {/* Navegación entre capítulos */}
+          <div className="flex sm:flex-row items-center justify-between sm:space-y-0 sm:space-x-4">
+            {/* Botón Anterior */}
+            <div className="flex-1 w-full sm:w-auto">
+              {hasPrevious ? (
+                <Link
+                  to={`/profetas-y-reyes/${chapter.danielChapter + 37}${fromParam}`}
+                  className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  <span>Cap. {chapter.danielChapter - 1}</span>
+                </Link>
+              ) : (
+                <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
+                  <ChevronLeft className="h-4 w-4" />
+                  <span>Primer cap.</span>
+                </div>
+              )}
+            </div>
 
-          {/* Botón Volver */}
-          <button
-            onClick={onBack}
-            className="px-2 md:px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-1 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Volver</span>
-          </button>
+            {/* Botón Volver */}
+            <button
+              onClick={onBack}
+              className="px-2 md:px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-1 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Volver</span>
+            </button>
 
-          {/* Botón Siguiente */}
-          <div className="flex-1 w-full sm:w-auto">
-            {hasNext ? (
-              <button
-                onClick={() => onNavigate(chapter.danielChapter + 1)}
-                className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
-              >
-                <span>Cap. {chapter.danielChapter + 1}</span>
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            ) : (
-              <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
-                <span>Último cap.</span>
-                <ChevronRight className="h-4 w-4" />
-              </div>
-            )}
+            {/* Botón Siguiente */}
+            <div className="flex-1 w-full sm:w-auto">
+              {hasNext ? (
+                <Link
+                  to={`/profetas-y-reyes/${chapter.danielChapter + 39}${fromParam}`}
+                  className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
+                >
+                  <span>Cap. {chapter.danielChapter + 1}</span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
+                  <span>Último cap.</span>
+                  <ChevronRight className="h-4 w-4" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Información adicional */}
-        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-800">
+        {/* Información adicional - Solo en desktop */}
+        <div className="hidden min-[750px]:block bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-800">
           <h4 className="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2">
             Acerca de "Profetas y Reyes"
           </h4>

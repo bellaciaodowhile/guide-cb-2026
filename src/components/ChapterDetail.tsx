@@ -1,4 +1,5 @@
 import { ArrowLeft, Book, Quote, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 import type { ApiResponse } from '../types/bible';
 import { CHAPTER_DETAILS } from '../utils/constants';
 import { PRService } from '../services/prService';
@@ -13,6 +14,9 @@ interface ChapterDetailProps {
 }
 
 const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, onNavigate, onGoToPR, loading }) => {
+  const [searchParams] = useSearchParams();
+  const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
+  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -109,13 +113,13 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, onNaviga
             <p className="text-purple-600 dark:text-purple-300 mb-4">
               Lee el comentario inspirado sobre este capítulo en Profetas y Reyes
             </p>
-            <button
-              onClick={() => onGoToPR(chapter.chapter)}
+            <Link
+              to={`/profetas-y-reyes/${chapter.chapter + 38}${fromParam}`}
               className="w-full sm:w-auto px-2 md:px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
             >
               <Book className="hidden md:block h-4 w-4" />
               <span>Leer: {prChapterTitle}</span>
-            </button>
+            </Link>
           </div>
         )}
 
@@ -152,20 +156,20 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, onNaviga
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="mt-8 space-y-4">
+      {/* Navigation - Desktop */}
+      <div className="mt-8 space-y-4 hidden min-[750px]:block">
         {/* Navegación entre capítulos */}
         <div className="flex sm:flex-row items-center justify-between sm:space-y-0 sm:space-x-4">
           {/* Botón Anterior */}
           <div className="flex-1 w-full sm:w-auto">
             {hasPrevious ? (
-              <button
-                onClick={() => onNavigate(chapter.chapter - 1)}
+              <Link
+                to={`/bible/daniel/${chapter.chapter - 1}${fromParam}`}
                 className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Cap. {chapter.chapter - 1}</span>
-              </button>
+              </Link>
             ) : (
               <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
                 <ChevronLeft className="h-4 w-4" />
@@ -186,13 +190,13 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, onNaviga
           {/* Botón Siguiente */}
           <div className="flex-1 w-full sm:w-auto">
             {hasNext ? (
-              <button
-                onClick={() => onNavigate(chapter.chapter + 1)}
+              <Link
+                to={`/bible/daniel/${chapter.chapter + 1}${fromParam}`}
                 className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
               >
                 <span>Cap. {chapter.chapter + 1}</span>
                 <ChevronRight className="h-4 w-4" />
-              </button>
+              </Link>
             ) : (
               <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
                 <span>Último cap.</span>

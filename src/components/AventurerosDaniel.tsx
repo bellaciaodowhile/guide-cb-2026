@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Book, AlertTriangle, Users } from 'lucide-react';
+import { ArrowLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
 import { PRService } from '../services/prService';
@@ -10,6 +10,7 @@ import PRChapterDetail from './PRChapterDetail';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
+import bgAventureros from '../assets/bg-aventureros.webp';
 
 const AventurerosDaniel: React.FC = () => {
   const [chapters, setChapters] = useState<ChapterInfo[]>([]);
@@ -23,12 +24,6 @@ const AventurerosDaniel: React.FC = () => {
 
   // Capítulos para Aventureros: 1, 2, 3, 6
   const aventurerosChapters = [1, 2, 3, 6];
-  // PR Capítulos correspondientes: 39 (cap 1), 41 (cap 3), 44 (cap 6)
-  const aventurerosPRMapping: { [key: number]: number } = {
-    1: 39, // Daniel 1 -> PR 39
-    3: 41, // Daniel 3 -> PR 41  
-    6: 44  // Daniel 6 -> PR 44
-  };
 
   useEffect(() => {
     loadAventurerosChapters();
@@ -97,10 +92,28 @@ const AventurerosDaniel: React.FC = () => {
     setError(null);
   };
 
+  const handleChangeCategory = () => {
+    // Limpiar preferencias guardadas
+    localStorage.removeItem('daniel-bible-preference');
+    // Redirigir al home
+    window.location.href = '/';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {/* Background Hero Section */}
+      <div 
+        className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${bgAventureros})`
+        }}
+      >
+        {/* Gradiente que permite ver más imagen y se extiende detrás del header */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+      </div>
+
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-40 relative z-10">
         {loading ? (
           <div className="flex justify-center items-center h-96">
             <LoadingSpinner size="lg" text="Cargando capítulos para Aventureros..." />
@@ -140,44 +153,35 @@ const AventurerosDaniel: React.FC = () => {
         ) : (
           <div className="space-y-8">
             {/* Header */}
-            <div className="flex items-center space-x-4 mb-8">
-              <Link
-                to="/"
-                className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
-                aria-label="Volver al inicio"
+            <div className="flex flex-col md:flex-row items-center justify-between mb-8 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl p-6 shadow-xl border border-white/20">
+              <div className="flex flex-col md:flex-row items-start md:items-center space-x-1 md:space-x-4">
+                <Link
+                  to="/"
+                  className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
+                  aria-label="Volver al inicio"
+                >
+                  <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
+                </Link>
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                    Aventureros - Daniel
+                  </h1>
+                  <p className="text-lg text-gray-600 dark:text-gray-300">
+                    Capítulos seleccionados para el nivel Aventureros
+                  </p>
+                </div>
+              </div>
+              
+              {/* Botón Cambiar Categoría */}
+              <button
+                onClick={handleChangeCategory}
+                className="change-category-btn flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200"
+                title="Cambiar categoría"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
-              </Link>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                  <Users className="h-8 w-8 mr-3 text-blue-600 dark:text-blue-400" />
-                  Aventureros - Daniel
-                </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Capítulos seleccionados para el nivel Aventureros
-                </p>
-              </div>
+                <RefreshCw className="h-4 w-4" />
+                <span>Cambiar categoría</span>
+              </button>
             </div>
-
-            {/* Hero Section */}
-            <div className="text-center py-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl border border-blue-200 dark:border-blue-800">
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                Aventureros: Historias de Fe
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Descubre las emocionantes historias de Daniel y sus amigos en Babilonia. 
-                Aprende sobre la fidelidad, el valor y la confianza en Dios a través de 
-                estas narrativas inspiradoras.
-              </p>
-              <div className="mt-6 flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
-                <span>📖 4 Capítulos</span>
-                <span>•</span>
-                <span>📝 {chapters.reduce((sum, ch) => sum + ch.verseCount, 0)} Versículos</span>
-                <span>•</span>
-                <span>📚 3 Capítulos PR</span>
-              </div>
-            </div>
-
             {/* Stats */}
             <StatsCard chapters={chapters} />
 
@@ -201,8 +205,6 @@ const AventurerosDaniel: React.FC = () => {
                   >
                     <ChapterCard
                       chapter={chapter}
-                      onClick={() => handleChapterClick(chapter.chapter)}
-                      onPRClick={aventurerosPRMapping[chapter.chapter] ? () => handlePRChapterClick(chapter.chapter) : undefined}
                     />
                   </div>
                 ))}
