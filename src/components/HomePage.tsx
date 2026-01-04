@@ -266,7 +266,7 @@ const HomePage: React.FC = () => {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
           
           {/* Modal Content */}
-          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 md:p-8 mx-4 max-w-md w-full animate-modal-appear">
+          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full animate-modal-appear">
             {/* Content */}
             <div className="text-center">
               <div className="mb-6">
@@ -279,15 +279,15 @@ const HomePage: React.FC = () => {
               </div>
               
               <div className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
-                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div className="flex flex-col items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <span className="font-medium text-blue-700 dark:text-blue-300">Aventureros, {'<'}=9 años</span>
                   <span>Capítulos 1-3, 6</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div className="flex flex-col items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                   <span className="font-medium text-green-700 dark:text-green-300">Conquistadores, {'<'}=15 años</span>
                   <span>Capítulos 1-6</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                <div className="flex flex-col items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                   <span className="font-medium text-purple-700 dark:text-purple-300">Guías Mayores, {'>'}=16 años </span>
                   <span>Capítulos 1-12</span>
                 </div>
@@ -314,7 +314,7 @@ const HomePage: React.FC = () => {
                 onClick={handleCloseModal}
                 className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 w-full"
               >
-                {dontShowAgain ? 'Guardar preferencia' : 'Entendido'}
+                {dontShowAgain ? 'Guardar preferencia' : 'Elegir categoría'}
               </button>
               
               {dontShowAgain && (
