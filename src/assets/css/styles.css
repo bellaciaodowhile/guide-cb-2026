@@ -1,0 +1,487 @@
+body {
+  overflow-x: hidden;
+}
+/* Ocultar overflow horizontal */
+body, html {
+  overflow-x: hidden;
+}
+
+/* Efectos para las columnas expandibles */
+.columns-container {
+  display: flex;
+  gap: 1rem;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+  animation: containerFadeIn 0.5s ease-out;
+}
+
+/* Animación para el contenedor */
+@keyframes containerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.expandable-column {
+  position: relative;
+  flex: 1;
+  min-height: 500px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.expandable-column:hover {
+  flex: 1.5;
+}
+
+.expandable-column.expanded {
+  flex: 3;
+  transform: translateY(0);
+}
+
+.expandable-column.collapsed {
+  flex: 0.3;
+  transform: translateY(0);
+}
+
+.column-content {
+  position: absolute;
+  inset: 0;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.column-content.collapsed-content {
+  padding: 1rem 0.5rem;
+}
+
+.column-content.collapsed-content .column-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.column-content.collapsed-content .column-icon,
+.column-content.collapsed-content .column-description,
+.column-content.collapsed-content .column-chapters,
+.column-content.collapsed-content .column-action {
+  display: none;
+}
+
+.column-expanded-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.expandable-column.expanded .column-expanded-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0.2s;
+  background: linear-gradient(0deg, #20120d6e, transparent);
+}
+
+.column-shine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.expandable-column:hover .column-shine-effect::before {
+  left: 100%;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+  .columns-container {
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100vh;
+  }
+  
+  .expandable-column {
+    min-height: 120px;
+  }
+  
+  .expandable-column:hover {
+    flex: 1.2;
+    transform: translateY(-4px);
+  }
+  
+  .expandable-column.expanded {
+    flex: 4;
+  }
+  
+  .expandable-column.collapsed {
+    flex: 0.5;
+  }
+  
+  .column-content {
+    padding: 1rem;
+  }
+  
+  .column-content.collapsed-content {
+    padding: 0.5rem;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .column-content.collapsed-content .column-title {
+    writing-mode: initial;
+    text-orientation: initial;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .column-expanded-content {
+    padding: 1rem;
+  }
+}
+
+/* Efecto de sombra de texto */
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Animación de entrada para columnas - una por una */
+@keyframes columnSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.expandable-column {
+  animation: columnSlideIn 0.8s ease-out forwards;
+  opacity: 0; /* Inicialmente invisible */
+}
+
+/* Efecto adicional de entrada escalonada */
+.column-entrance {
+  animation: columnSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Efectos adicionales para las cards */
+.category-card {
+  position: relative;
+  overflow: visible;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  border-radius: 1rem;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+/* Animación para el logo sobresaliente */
+.floating-logo {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Efecto de brillo en hover */
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg) translate(-100%, -100%);
+  transition: transform 0.6s ease;
+}
+
+.shine-effect:hover::after {
+  transform: rotate(45deg) translate(100%, 100%);
+}
+
+/* Estilos para el video de fondo */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Animación para el botón Comenzar */
+.start-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.start-button:hover::before {
+  left: 100%;
+}
+
+/* Mejoras para las cards con video de fondo */
+.category-card-video {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.category-card-video:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Animación de entrada para el contenido después del video */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-bottom {
+  animation: slideInFromBottom 0.8s ease-out;
+}
+/* Estilos para el botón de videojuego */
+.game-button {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 
+    0 10px 30px rgba(102, 126, 234, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.game-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.game-button:hover::before {
+  left: 100%;
+}
+
+.game-button:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a855f7 100%);
+  box-shadow: 
+    0 15px 40px rgba(124, 58, 237, 0.6),
+    0 0 0 2px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.game-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 5px 15px rgba(124, 58, 237, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación de pulso para las partículas */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.game-button .animate-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Efecto de neón para el texto */
+.game-button:hover span {
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* Sombra personalizada más intensa */
+.shadow-3xl {
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 30px rgba(124, 58, 237, 0.3);
+}
+
+/* Animación de entrada épica para el botón */
+@keyframes epic-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.game-button {
+  animation: epic-entrance 1s ease-out;
+}
+/* Efectos adicionales para el botón épico */
+.game-button {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Efecto de ondas al hacer hover */
+.game-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  pointer-events: none;
+}
+
+.game-button:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Animación de partículas flotantes */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(240deg);
+  }
+}
+
+.game-button .animate-pulse {
+  animation: float-particle 3s ease-in-out infinite;
+}
+
+/* Efecto de resplandor en el fondo del botón */
+.game-button-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.game-button:hover .game-button-glow {
+  opacity: 1;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Texto con efecto de máquina de escribir */
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typewriter-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typewriter 2s steps(20) 1s both;
+}

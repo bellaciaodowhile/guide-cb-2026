@@ -94,3 +94,5 @@ body {
 .book-section {
   position: relative;
 }
+/* Importar estilos adicionales */
+@import './assets/css/styles.css';
