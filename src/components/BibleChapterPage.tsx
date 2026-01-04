@@ -35,14 +35,6 @@ const BibleChapterPage: React.FC = () => {
     }
   };
 
-  const handleNavigateToBible = (chapterNum: number) => {
-    navigate(`/bible/daniel/${chapterNum}`);
-  };
-
-  const handleNavigateToPR = (chapterNum: number) => {
-    navigate(`/profetas-y-reyes/${chapterNum + 38}`); // Daniel 1 = PR 39, etc.
-  };
-
   const handleBack = () => {
     // Primero verificar si hay un parámetro 'from' en la URL
     const fromCategory = searchParams.get('from');
@@ -107,8 +99,6 @@ const BibleChapterPage: React.FC = () => {
         <ChapterDetail
           chapter={chapter}
           onBack={handleBack}
-          onNavigate={handleNavigateToBible}
-          onGoToPR={handleNavigateToPR}
           loading={false}
         />
       </main>

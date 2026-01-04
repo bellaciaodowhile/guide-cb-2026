@@ -2,11 +2,8 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
-import { PRService } from '../services/prService';
-import type { ChapterInfo, ApiResponse, PRChapter } from '../types/bible';
+import type { ChapterInfo } from '../types/bible';
 import ChapterCard from './ChapterCard';
-import ChapterDetail from './ChapterDetail';
-import PRChapterDetail from './PRChapterDetail';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
@@ -14,13 +11,8 @@ import bgConquistadores from '../assets/bg-conquistadores.webp';
 
 const ConquistadoresDaniel: React.FC = () => {
   const [chapters, setChapters] = useState<ChapterInfo[]>([]);
-  const [selectedChapter, setSelectedChapter] = useState<ApiResponse | null>(null);
-  const [selectedPRChapter, setSelectedPRChapter] = useState<PRChapter | null>(null);
   const [loading, setLoading] = useState(true);
-  const [loadingChapter, setLoadingChapter] = useState(false);
-  const [loadingPRChapter, setLoadingPRChapter] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'chapters' | 'bible' | 'pr'>('chapters');
 
   // Capítulos para Conquistadores: 1-6 (toda la primera parte narrativa)
   const conquistadoresChapters = [1, 2, 3, 4, 5, 6];
@@ -43,53 +35,6 @@ const ConquistadoresDaniel: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleChapterClick = async (chapterNumber: number) => {
-    try {
-      setLoadingChapter(true);
-      setError(null);
-      const chapterData = await LocalBibleService.getChapter(chapterNumber);
-      setSelectedChapter(chapterData);
-      setSelectedPRChapter(null);
-      setViewMode('bible');
-    } catch (err) {
-      setError(`Error al cargar el capítulo ${chapterNumber}.`);
-      console.error(err);
-    } finally {
-      setLoadingChapter(false);
-    }
-  };
-
-  const handlePRChapterClick = async (chapterNumber: number) => {
-    try {
-      setLoadingPRChapter(true);
-      setError(null);
-      const prChapterData = await PRService.getPRChapter(chapterNumber);
-      setSelectedPRChapter(prChapterData);
-      setSelectedChapter(null);
-      setViewMode('pr');
-    } catch (err) {
-      setError(`Error al cargar el capítulo de Profetas y Reyes para Daniel ${chapterNumber}.`);
-      console.error(err);
-    } finally {
-      setLoadingPRChapter(false);
-    }
-  };
-
-  const handleNavigateToBible = (chapterNumber: number) => {
-    handleChapterClick(chapterNumber);
-  };
-
-  const handleNavigateToPR = (chapterNumber: number) => {
-    handlePRChapterClick(chapterNumber);
-  };
-
-  const handleBackToChapters = () => {
-    setSelectedChapter(null);
-    setSelectedPRChapter(null);
-    setViewMode('chapters');
-    setError(null);
   };
 
   const handleChangeCategory = () => {
@@ -134,22 +79,6 @@ const ConquistadoresDaniel: React.FC = () => {
               </button>
             </div>
           </div>
-        ) : selectedChapter && viewMode === 'bible' ? (
-          <ChapterDetail
-            chapter={selectedChapter}
-            onBack={handleBackToChapters}
-            onNavigate={handleNavigateToBible}
-            onGoToPR={handleNavigateToPR}
-            loading={loadingChapter}
-          />
-        ) : selectedPRChapter && viewMode === 'pr' ? (
-          <PRChapterDetail
-            chapter={selectedPRChapter}
-            onBack={handleBackToChapters}
-            onNavigate={handleNavigateToPR}
-            onGoToBible={handleNavigateToBible}
-            loading={loadingPRChapter}
-          />
         ) : (
           <div className="space-y-8">
             {/* Header */}

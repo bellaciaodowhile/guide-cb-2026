@@ -6,12 +6,10 @@ import LoadingSpinner from './LoadingSpinner';
 interface PRChapterDetailProps {
   chapter: PRChapter | null;
   onBack: () => void;
-  onNavigate: (chapterNumber: number) => void;
-  onGoToBible: (chapterNumber: number) => void;
   loading: boolean;
 }
 
-const PRChapterDetail: React.FC<PRChapterDetailProps> = ({ chapter, onBack, onNavigate, onGoToBible, loading }) => {
+const PRChapterDetail: React.FC<PRChapterDetailProps> = ({ chapter, onBack, loading }) => {
   const [searchParams] = useSearchParams();
   const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
   

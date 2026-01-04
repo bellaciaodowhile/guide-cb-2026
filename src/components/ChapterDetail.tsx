@@ -8,12 +8,10 @@ import LoadingSpinner from './LoadingSpinner';
 interface ChapterDetailProps {
   chapter: ApiResponse;
   onBack: () => void;
-  onNavigate: (chapterNumber: number) => void;
-  onGoToPR: (chapterNumber: number) => void;
   loading: boolean;
 }
 
-const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, onNavigate, onGoToPR, loading }) => {
+const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading }) => {
   const [searchParams] = useSearchParams();
   const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
   

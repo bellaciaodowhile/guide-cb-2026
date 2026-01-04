@@ -81,14 +81,6 @@ const HomePage: React.FC = () => {
     }
   };
 
-  // Función para resetear preferencias (útil para testing/desarrollo)
-  // Descomenta la siguiente línea si necesitas resetear las preferencias:
-  // console.log('Para resetear preferencias, ejecuta: resetPreferences()');
-  const resetPreferences = () => {
-    localStorage.removeItem('daniel-bible-preference');
-    setDontShowAgain(false);
-  };
-
   const categories = [
     {
       id: 'aventureros',
