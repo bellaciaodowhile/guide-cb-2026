@@ -1,4 +1,4 @@
-import { ArrowLeft, Book, Hash, Quote, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { ArrowLeft, Book, Quote, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import type { ApiResponse } from '../types/bible';
 import { CHAPTER_DETAILS } from '../utils/constants';
 import { PRService } from '../services/prService';

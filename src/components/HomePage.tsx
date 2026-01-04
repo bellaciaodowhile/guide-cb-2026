@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Book, Users, Award, Crown, Play } from 'lucide-react';
+import { Users, Award, Crown, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import imgHero from '../assets/hero.png';
 import bgAventureros from '../assets/bg-aventureros.png';

@@ -74,8 +74,10 @@ export class BibleApiService {
     const totalVerses = chapters.reduce((sum, chapter) => sum + chapter.verseCount, 0);
     
     return {
-      name: 'Daniel',
+      book: 'Daniel',
+      version: 'RV95',
       chapters,
+      totalChapters: chapters.length,
       totalVerses,
       description: 'El libro de Daniel contiene tanto narrativas históricas como visiones proféticas, mostrando la fidelidad de Dios hacia aquellos que le permanecen fieles en tiempos de adversidad.'
     };
