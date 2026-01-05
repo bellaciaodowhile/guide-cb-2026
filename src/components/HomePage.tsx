@@ -1,20 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Users, Award, Crown, Play, MousePointer2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import imgHero from '../assets/hero.png';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
+import bgHomeVideo from '../assets/bg-home.mp4';
+import bgHomeMobileVideo from '../assets/bg-home-mobile.mp4';
+import bgHomeImage from '../assets/bg-home.jpg';
+import topHeroImage from '../assets/top-hero.png';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const [showColumns, setShowColumns] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
 
   const handleStartClick = () => {
+    setIsVideoPlaying(true);
+    // Reproducir el video correspondiente según el tamaño de pantalla
+    if (window.innerWidth >= 750) {
+      if (videoRef.current) {
+        videoRef.current.play();
+      }
+    } else {
+      if (mobileVideoRef.current) {
+        mobileVideoRef.current.play();
+      }
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setVideoEnded(true);
+    setIsVideoPlaying(false);
+    // Pequeño delay para suavizar la transición
     setShowColumns(true);
   };
 
@@ -45,7 +69,7 @@ const HomePage: React.FC = () => {
       // Delay para que aparezcan las columnas primero
       const timer = setTimeout(() => {
         setShowModal(true);
-      }, 1500); // Espera a que terminen las animaciones de las columnas
+      }, 0);
       
       return () => clearTimeout(timer);
     }
@@ -136,48 +160,149 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Video de fondo para pantallas grandes (>=750px) */}
+      <video
+        ref={videoRef}
+        className={`hidden min-[750px]:block absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          isVideoPlaying ? 'z-20' : 'z-0'
+        }`}
+        muted
+        playsInline
+        onEnded={handleVideoEnded}
+        preload="auto"
+      >
+        <source src={bgHomeVideo} type="video/mp4" />
+        {/* Fallback para navegadores sin soporte de video */}
+        <img 
+          src={bgHomeImage} 
+          alt="Daniel Bible Study Background" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </video>
+
+      {/* Fondos y video para móviles (<750px) */}
+      <div className="block min-[750px]:hidden absolute inset-0">
+        {/* Sección superior azul */}
+        <div className={`absolute top-0 left-0 right-0 h-[100px] flex items-center justify-center z-50 ${
+          // Fondo: gradiente inicial, color sólido durante video
+          isVideoPlaying ? 'bg-[#29447c]' : 'bg-gradient-to-b from-[#000c26] to-[#29447c]'
+        } ${
+          // Posición: oculto solo cuando el video termina
+          videoEnded ? 'transform -translate-y-full' : 'transform translate-y-0'
+        }`}></div>
+        
+        {/* Video móvil en la parte inferior */}
+        <video
+          ref={mobileVideoRef}
+          className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md h-auto transition-opacity duration-1000 ${
+            isVideoPlaying ? 'z-20' : 'z-10'
+          }`}
+          muted
+          playsInline
+          onEnded={handleVideoEnded}
+          preload="auto"
+        >
+          <source src={bgHomeMobileVideo} type="video/mp4" />
+          {/* Fallback para navegadores sin soporte de video */}
+          <img 
+            src={bgHomeImage} 
+            alt="Daniel Bible Study Background" 
+            className="w-full max-w-md h-auto"
+          />
+        </video>
+        
+        {/* Sección inferior marrón */}
+        {/* <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-amber-800 z-5"></div> */}
+      </div>
+
+      {/* Imagen top-hero fija en la parte superior para móviles */}
+      <div className={`block min-[750px]:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
+        isVideoPlaying || videoEnded ? 'transform -translate-y-full' : 'transform translate-y-0'
+      }`}>
+        <img 
+          src={topHeroImage} 
+          alt="Daniel Bible Study Hero" 
+          className="w-full h-auto object-contain"
+        />
+      </div>
+
       {/* Contenido principal */}
-      <div className="relative z-10 mx-auto h-full">
-        {/* Hero Section - Solo se muestra si no se han mostrado las columnas */}
-        {!showColumns && (
-          <div className="text-center py-12">
-            <img src={imgHero} alt="Daniel Bible Study" className="m-auto mb-8" />
-            
-            <button
-              onClick={handleStartClick}
-              className="game-button group relative inline-flex items-center justify-center space-x-3 px-12 py-6 text-2xl font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
-            >
-              {/* Fondo del botón con gradiente verde */}
-              <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
-              
-              {/* Borde brillante verde */}
-              <div className="absolute inset-0 rounded-2xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
-              
-              {/* Efecto de brillo verde */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
-              
-              {/* Contenido del botón */}
-              <div className="relative z-10 flex items-center space-x-3">
-                <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
-                  <Play className="h-8 w-8" />
-                </div>
-                <span className="tracking-wide">COMENZAR AVENTURA</span>
+      <div className="relative z-30 mx-auto min-h-screen">
+        {/* Hero Section - Solo se muestra si no se han mostrado las columnas y no está reproduciendo video */}
+        {!showColumns && !isVideoPlaying && (
+          <>
+            {/* Botón para pantallas grandes - en la parte inferior con margen */}
+            <div className="hidden min-[750px]:block fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <button
+                  onClick={handleStartClick}
+                  className="game-button group relative inline-flex items-center justify-center space-x-3 px-12 py-6 text-2xl font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                >
+                  {/* Fondo del botón con gradiente verde */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                  
+                  {/* Borde brillante verde */}
+                  <div className="absolute inset-0 rounded-2xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
+                  
+                  {/* Efecto de brillo verde */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
+                  
+                  {/* Contenido del botón */}
+                  <div className="relative z-10 flex items-center space-x-3">
+                    <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
+                      <Play className="h-8 w-8" />
+                    </div>
+                    <span className="tracking-wide">COMENZAR AVENTURA</span>
+                  </div>
+                  
+                  {/* Partículas decorativas verdes */}
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                </button>
               </div>
-              
-              {/* Partículas decorativas verdes */}
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-            </button>
-          </div>
+            </div>
+
+            {/* Botón para móviles - fijo en la parte inferior */}
+            <div className="block min-[750px]:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <button
+                  onClick={handleStartClick}
+                  className="game-button group relative inline-flex items-center justify-center space-x-3 px-8 py-4 text-xl font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                >
+                  {/* Fondo del botón con gradiente verde */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                  
+                  {/* Borde brillante verde */}
+                  <div className="absolute inset-0 rounded-2xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
+                  
+                  {/* Efecto de brillo verde */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
+                  
+                  {/* Contenido del botón */}
+                  <div className="relative z-10 flex items-center space-x-3">
+                    <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
+                      <Play className="h-6 w-6" />
+                    </div>
+                    <span className="tracking-wide whitespace-nowrap">COMENZAR AVENTURA</span>
+                  </div>
+                  
+                  {/* Partículas decorativas verdes */}
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                </button>
+              </div>
+            </div>
+          </>
         )}
 
         {/* Three Expandable Columns */}
         {showColumns && (
-          <div className="h-screen flex items-center">
+          <div className="absolute inset-0 z-50 h-screen flex items-center">
             <div className="columns-container h-screen w-full mx-auto">
-              {categories.map((category, index) => (
+              {categories.map((category) => (
                 <div
                   key={category.id}
                   onClick={() => handleColumnClick(category.id)}
@@ -187,7 +312,7 @@ const HomePage: React.FC = () => {
                     ${selectedCategory && selectedCategory !== category.id ? 'collapsed' : ''}
                   `}
                   style={{ 
-                    animationDelay: `${index * 200}ms`,
+                    // animationDelay: `${index * 200}ms`,
                     background: `linear-gradient(135deg, ${category.gradient.replace('from-', '').replace(' to-', ', ')})`
                   }}
                 >
@@ -217,11 +342,13 @@ const HomePage: React.FC = () => {
                       {category.title}
                     </h3>
                     
-                    {/* Indicador de click animado */}
-                    <div className="column-chapters opacity-70 text-sm flex flex-col items-center space-y-2">
-                      <MousePointer2 className="h-6 w-6 text-white animate-click-bounce" />
-                      <span className="text-xs font-medium">Haz clic para explorar</span>
-                    </div>
+                    {/* Indicador de click animado - Solo se muestra si no hay categoría seleccionada */}
+                    {!selectedCategory && (
+                      <div className="column-chapters opacity-70 text-sm flex flex-col items-center space-y-2">
+                        <MousePointer2 className="h-6 w-6 text-white animate-click-bounce" />
+                        <span className="text-xs font-medium">Haz clic para explorar</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Contenido expandido */}
@@ -237,7 +364,6 @@ const HomePage: React.FC = () => {
                           to={category.route}
                           className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl border border-white/30 text-white font-semibold transition-all duration-300 hover:scale-105"
                         >
-                          <category.icon className="h-5 w-5" />
                           <span>Comenzar estudio</span>
                         </Link>
                         <button
@@ -261,24 +387,25 @@ const HomePage: React.FC = () => {
 
       {/* Modal de instrucción */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center">
           {/* Overlay - sin onClick para prevenir cierre */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
           
           {/* Modal Content */}
-          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full animate-modal-appear">
+          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl mx-4 max-w-md w-full animate-modal-appear bg-gradient-to-b from-[#000c26] to-[#29447c]">
+            <img src={topHeroImage} alt="Top Hero Image" className='rounded-2xl'/>
             {/* Content */}
-            <div className="text-center">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <div className="text-center p-8">
+              <div className="mb-6 -mt-16">
+                <h3 className="text-2xl font-bold text-white dark:text-white mb-2">
                   ¡Elige tu categoría!
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-white dark:text-gray-300 leading-relaxed">
                   Selecciona la categoría que corresponde edad para comenzar tu aventura con el libro de Daniel.
                 </p>
               </div>
               
-              <div className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+              {/* <div className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex flex-col items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <span className="font-medium text-blue-700 dark:text-blue-300">Aventureros, {'<'}=9 años</span>
                   <span>Capítulos 1-3, 6</span>
@@ -291,7 +418,7 @@ const HomePage: React.FC = () => {
                   <span className="font-medium text-purple-700 dark:text-purple-300">Guías Mayores, {'>'}=16 años </span>
                   <span>Capítulos 1-12</span>
                 </div>
-              </div>
+              </div> */}
               
               {/* Checkbox "No volver a mostrar" */}
               <div className="mt-6 flex items-center space-x-3">
@@ -304,7 +431,7 @@ const HomePage: React.FC = () => {
                 />
                 <label 
                   htmlFor="dontShowAgain" 
-                  className="text-sm text-gray-600 dark:text-gray-300 cursor-pointer"
+                  className="text-sm text-white cursor-pointer"
                 >
                   No volver a mostrar este mensaje
                 </label>
@@ -318,7 +445,7 @@ const HomePage: React.FC = () => {
               </button>
               
               {dontShowAgain && (
-                <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 text-center">
+                <p className="mt-3 text-xs text-white text-center">
                   💡 Tip: Si seleccionas una categoría, serás redirigido automáticamente la próxima vez
                 </p>
               )}

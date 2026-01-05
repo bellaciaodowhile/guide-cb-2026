@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
+import { ChevronLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
 import type { ChapterInfo } from '../types/bible';
@@ -86,10 +86,10 @@ const AventurerosDaniel: React.FC = () => {
               <div className="flex flex-col md:flex-row items-start md:items-center space-x-1 md:space-x-4">
                 <Link
                   to="/"
-                  className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
+                  className="p-3 md:p-4 rounded-lg transition-colors duration-200 group absolute md:relative top-0 -left-1"
                   aria-label="Volver al inicio"
                 >
-                  <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
+                  <ChevronLeft className="h-4 md:h-5 w-4 md:w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
                 </Link>
                 <div>
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">

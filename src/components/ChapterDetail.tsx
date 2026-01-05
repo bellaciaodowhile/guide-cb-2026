@@ -57,7 +57,7 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             <Book className="h-6 w-6 text-primary-600 dark:text-primary-400" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {chapterDetail.title}
             </h2>
             {chapterDetail.subtitle && (
@@ -103,7 +103,7 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
 
       {/* Botón para ir a Profetas y Reyes (solo para capítulos 1-6) */}
         {hasPRChapter && prChapterTitle && (
-          <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 md:p-6 border border-purple-200 dark:border-purple-800 mb-4 md:mb-6">
+          <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 md:p-6 border border-purple-200 dark:border-purple-800 mb-4 md:mb-6">
             <h4 className="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center">
               <BookOpen className="h-5 w-5 mr-2" />
               Contenido Relacionado

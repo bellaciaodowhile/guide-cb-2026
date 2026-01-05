@@ -47,7 +47,7 @@ const ScrollToTop: React.FC = () => {
         fixed right-6 z-50 p-3 
         ${isChapterPage 
           ? 'bottom-6 min-[750px]:bottom-6 max-[749px]:bottom-20' 
-          : 'bottom-10'
+          : 'bottom-8'
         }
         bg-primary-600 hover:bg-primary-700 active:bg-primary-800
         dark:bg-primary-500 dark:hover:bg-primary-600 dark:active:bg-primary-700
