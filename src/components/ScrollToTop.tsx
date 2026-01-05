@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChevronUp } from 'lucide-react';
 
 const ScrollToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
+
+  // Detectar si estamos en una página de capítulo individual (Bible o PR)
+  const isChapterPage = location.pathname.includes('/bible/daniel/') || location.pathname.includes('/profetas-y-reyes/');
 
   useEffect(() => {
     // Función para manejar el scroll
@@ -40,7 +45,10 @@ const ScrollToTop: React.FC = () => {
       onClick={scrollToTop}
       className={`
         fixed right-6 z-50 p-3 
-        bottom-6 min-[750px]:bottom-6 max-[749px]:bottom-20
+        ${isChapterPage 
+          ? 'bottom-6 min-[750px]:bottom-6 max-[749px]:bottom-20' 
+          : 'bottom-10'
+        }
         bg-primary-600 hover:bg-primary-700 active:bg-primary-800
         dark:bg-primary-500 dark:hover:bg-primary-600 dark:active:bg-primary-700
         text-white rounded-full shadow-lg hover:shadow-xl 
