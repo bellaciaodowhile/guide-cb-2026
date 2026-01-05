@@ -113,12 +113,34 @@ body {
   }
 }
 
+@keyframes circleExpand {
+  from {
+    width: 0px;
+    height: 0px;
+  }
+  to {
+    width: 1000px;
+    height: 1000px;
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.4s ease-out forwards;
 }
 
 .animate-slide-down {
   animation: slideDown 0.5s ease-out forwards;
+}
+
+.circle-expand {
+  animation: circleExpand 1s ease-out forwards;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
 }
 
 /* Estilos para las secciones del libro */

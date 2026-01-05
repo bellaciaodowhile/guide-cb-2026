@@ -8,7 +8,6 @@ import bgHomeVideo from '../assets/bg-home.mp4';
 import bgHomeMobileVideo from '../assets/bg-home-mobile.mp4';
 import bgHomeImage from '../assets/bg-home.jpg';
 import topHeroImage from '../assets/top-hero.png';
-import topCloudsImage from '../assets/top-clouds.png';
 import posterMobile from '../assets/poster-mobile.png';
 import '../assets/css/styles.css';
 
@@ -22,16 +21,13 @@ const HomePage: React.FC = () => {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
-  const [videoZoomed, setVideoZoomed] = useState(false);
-  const [showClouds, setShowClouds] = useState(false);
+  const [showCircleTransition, setShowCircleTransition] = useState(false);
 
   const handleStartClick = () => {
     setIsVideoPlaying(true);
     
-    // Delay de 400ms antes de hacer zoom y reproducir video
+    // Delay de 400ms antes de reproducir video
     setTimeout(() => {
-      setVideoZoomed(true);
-      
       // Reproducir el video correspondiente según el tamaño de pantalla
       if (window.innerWidth >= 750) {
         if (videoRef.current) {
@@ -47,11 +43,6 @@ const HomePage: React.FC = () => {
         }
       }
     }, 400);
-
-    // Delay de 300ms para mostrar las nubes
-    setTimeout(() => {
-      setShowClouds(true);
-    }, 0);
   };
 
   const handleVideoTimeUpdate = (event: Event) => {
@@ -64,8 +55,13 @@ const HomePage: React.FC = () => {
       // Comenzar el proceso de transición
       setVideoEnded(true);
       setIsVideoPlaying(false);
-      setShowClouds(false);
-      setShowColumns(true);
+      setShowCircleTransition(true);
+      
+      // Después de la animación del círculo, mostrar las columnas
+      setTimeout(() => {
+        setShowColumns(true);
+        setShowCircleTransition(false);
+      }, 1000); // 1 segundo para la animación del círculo
       
       // Remover el listener para evitar múltiples ejecuciones
       video.removeEventListener('timeupdate', handleVideoTimeUpdate);
@@ -75,9 +71,13 @@ const HomePage: React.FC = () => {
   const handleVideoEnded = () => {
     setVideoEnded(true);
     setIsVideoPlaying(false);
-    setShowClouds(false);
-    // Pequeño delay para suavizar la transición
-    setShowColumns(true);
+    setShowCircleTransition(true);
+    
+    // Después de la animación del círculo, mostrar las columnas
+    setTimeout(() => {
+      setShowColumns(true);
+      setShowCircleTransition(false);
+    }, 1000); // 1 segundo para la animación del círculo
   };
 
   // Verificar localStorage al cargar el componente
@@ -209,8 +209,6 @@ const HomePage: React.FC = () => {
         ref={videoRef}
         className={`hidden min-[750px]:block absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
           isVideoPlaying ? 'z-20' : 'z-0'
-        } ${
-          videoZoomed ? 'transform scale-110' : 'transform scale-100'
         }`}
         muted
         playsInline
@@ -228,25 +226,20 @@ const HomePage: React.FC = () => {
 
       {/* Fondos y video para móviles (<750px) */}
       <div className="block min-[750px]:hidden absolute inset-0">
-        {/* Sección superior azul - Visible hasta que termine el video */}
-        <div className={`absolute top-0 left-0 right-0 flex items-center justify-center z-50 ${
-          // Altura: 300px inicial, 200px cuando aparecen las nubes
-          showClouds ? 'h-[270px]' : 'h-[300px]'
-        } ${
+        {/* Sección superior azul - TEMPORALMENTE OCULTA */}
+        {/* <div className={`absolute top-0 left-0 right-0 flex items-center justify-center z-50 transition-all duration-500 ease-in-out h-[300px] ${
           // Fondo: gradiente inicial, color sólido durante video
           isVideoPlaying ? 'bg-[#29447c]' : 'bg-gradient-to-b from-[#000c26] to-[#29447c]'
         } ${
           // Posición: oculto solo cuando termine el video
           videoEnded ? 'transform -translate-y-full opacity-0' : 'transform translate-y-0 opacity-100'
-        }`}></div>
+        }`}></div> */}
         
         {/* Video móvil en la parte inferior */}
         <video
           ref={mobileVideoRef}
           className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md h-auto transition-all duration-1000 ${
             isVideoPlaying ? 'z-20' : 'z-10'
-          } ${
-            videoZoomed ? 'scale-150' : 'scale-100'
           }`}
           muted
           playsInline
@@ -267,14 +260,10 @@ const HomePage: React.FC = () => {
         {/* <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-amber-800 z-5"></div> */}
       </div>
 
-      {/* Imagen top-clouds - Solo visible durante reproducción del video */}
-      {showClouds && isVideoPlaying && !videoEnded && (
-        <div className="block min-[750px]:hidden fixed top-0 left-0 right-0 z-[65] transition-all duration-500 ease-in-out transform translate-y-0 opacity-100 animate-slide-down">
-          <img 
-            src={topCloudsImage} 
-            alt="Top Clouds" 
-            className="w-full h-auto object-contain"
-          />
+      {/* Círculo de transición */}
+      {showCircleTransition && (
+        <div className="fixed inset-0 z-[80] pointer-events-none">
+          <div className="circle-expand bg-[#fdfdfb] rounded-full"></div>
         </div>
       )}
 
@@ -299,29 +288,29 @@ const HomePage: React.FC = () => {
               <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <button
                   onClick={handleStartClick}
-                  className="game-button group relative inline-flex items-center justify-center space-x-3 px-12 py-6 text-2xl font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                  className="game-button group relative inline-flex items-center justify-center space-x-2 px-8 py-4 text-lg font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
                 >
                   {/* Fondo del botón con gradiente verde */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 rounded-xl"></div>
                   
                   {/* Borde brillante verde */}
-                  <div className="absolute inset-0 rounded-2xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
+                  <div className="absolute inset-0 rounded-xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
                   
                   {/* Efecto de brillo verde */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
                   
                   {/* Contenido del botón */}
-                  <div className="relative z-10 flex items-center space-x-3">
-                    <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
-                      <Play className="h-8 w-8" />
+                  <div className="relative z-10 flex items-center space-x-2">
+                    <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
+                      <Play className="h-5 w-5" />
                     </div>
                     <span className="tracking-wide">COMIENZA TU AVENTURA</span>
                   </div>
                   
                   {/* Partículas decorativas verdes */}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                 </button>
               </div>
             </div>
@@ -331,29 +320,29 @@ const HomePage: React.FC = () => {
               <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <button
                   onClick={handleStartClick}
-                  className="game-button group relative inline-flex items-center justify-center space-x-3 px-8 py-4 text-xl font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                  className="game-button group relative inline-flex items-center justify-center space-x-2 px-6 py-3 text-base font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
                 >
                   {/* Fondo del botón con gradiente verde */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 rounded-xl"></div>
                   
                   {/* Borde brillante verde */}
-                  <div className="absolute inset-0 rounded-2xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
+                  <div className="absolute inset-0 rounded-xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
                   
                   {/* Efecto de brillo verde */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
                   
                   {/* Contenido del botón */}
-                  <div className="relative z-10 flex items-center space-x-3">
-                    <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
-                      <Play className="h-6 w-6" />
+                  <div className="relative z-10 flex items-center space-x-2">
+                    <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
+                      <Play className="h-4 w-4" />
                     </div>
                     <span className="tracking-wide whitespace-nowrap">COMIENZA TU AVENTURA</span>
                   </div>
                   
                   {/* Partículas decorativas verdes */}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                 </button>
               </div>
             </div>
