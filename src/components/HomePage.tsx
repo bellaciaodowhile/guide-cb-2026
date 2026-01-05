@@ -8,6 +8,8 @@ import bgHomeVideo from '../assets/bg-home.mp4';
 import bgHomeMobileVideo from '../assets/bg-home-mobile.mp4';
 import bgHomeImage from '../assets/bg-home.jpg';
 import topHeroImage from '../assets/top-hero.png';
+import topCloudsImage from '../assets/top-clouds.png';
+import posterMobile from '../assets/poster-mobile.png';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
@@ -20,24 +22,60 @@ const HomePage: React.FC = () => {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [videoZoomed, setVideoZoomed] = useState(false);
+  const [showClouds, setShowClouds] = useState(false);
 
   const handleStartClick = () => {
     setIsVideoPlaying(true);
-    // Reproducir el video correspondiente según el tamaño de pantalla
-    if (window.innerWidth >= 750) {
-      if (videoRef.current) {
-        videoRef.current.play();
+    
+    // Delay de 400ms antes de hacer zoom y reproducir video
+    setTimeout(() => {
+      setVideoZoomed(true);
+      
+      // Reproducir el video correspondiente según el tamaño de pantalla
+      if (window.innerWidth >= 750) {
+        if (videoRef.current) {
+          videoRef.current.play();
+          // Agregar listener para detectar cuando faltan 100ms
+          videoRef.current.addEventListener('timeupdate', handleVideoTimeUpdate);
+        }
+      } else {
+        if (mobileVideoRef.current) {
+          mobileVideoRef.current.play();
+          // Agregar listener para detectar cuando faltan 100ms
+          mobileVideoRef.current.addEventListener('timeupdate', handleVideoTimeUpdate);
+        }
       }
-    } else {
-      if (mobileVideoRef.current) {
-        mobileVideoRef.current.play();
-      }
+    }, 400);
+
+    // Delay de 300ms para mostrar las nubes
+    setTimeout(() => {
+      setShowClouds(true);
+    }, 0);
+  };
+
+  const handleVideoTimeUpdate = (event: Event) => {
+    const video = event.target as HTMLVideoElement;
+    const currentTime = video.currentTime;
+    const duration = video.duration;
+    
+    // Si faltan 100ms (0.1 segundos) para que termine el video
+    if (duration - currentTime <= 0.1 && !videoEnded) {
+      // Comenzar el proceso de transición
+      setVideoEnded(true);
+      setIsVideoPlaying(false);
+      setShowClouds(false);
+      setShowColumns(true);
+      
+      // Remover el listener para evitar múltiples ejecuciones
+      video.removeEventListener('timeupdate', handleVideoTimeUpdate);
     }
   };
 
   const handleVideoEnded = () => {
     setVideoEnded(true);
     setIsVideoPlaying(false);
+    setShowClouds(false);
     // Pequeño delay para suavizar la transición
     setShowColumns(true);
   };
@@ -53,6 +91,16 @@ const HomePage: React.FC = () => {
         return;
       }
     }
+
+    // Cleanup function para remover event listeners
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('timeupdate', handleVideoTimeUpdate);
+      }
+      if (mobileVideoRef.current) {
+        mobileVideoRef.current.removeEventListener('timeupdate', handleVideoTimeUpdate);
+      }
+    };
   }, [navigate]);
 
   // Mostrar modal después de que aparezcan las columnas
@@ -66,12 +114,7 @@ const HomePage: React.FC = () => {
         }
       }
       
-      // Delay para que aparezcan las columnas primero
-      const timer = setTimeout(() => {
-        setShowModal(true);
-      }, 0);
-      
-      return () => clearTimeout(timer);
+      setShowModal(true);
     }
   }, [showColumns]);
 
@@ -119,7 +162,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-blue-200',
       textColor: 'text-gray-800',
       icon: Users,
-      chapters: 'Daniel 1-3, 6 • PR 39, 41, 44 (Hasta los 9 años)',
+      chapters: 'Daniel 1-3, 6 • PR 39, 41, 44 <br> (Hasta los 9 años)',
       gradient: 'from-blue-500 to-blue-700',
       backgroundImage: bgAventureros
     },
@@ -136,7 +179,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-green-200',
       textColor: 'text-gray-800',
       icon: Award,
-      chapters: 'Daniel 1-6 • PR 39-44 (Hasta los 15 años)',
+      chapters: 'Daniel 1-6 • PR 39-44 <br> (Hasta los 15 años)',
       gradient: 'from-green-500 to-green-700',
       backgroundImage: bgConquistadores
     },
@@ -153,7 +196,7 @@ const HomePage: React.FC = () => {
       borderColor: 'border-purple-200',
       textColor: 'text-gray-800',
       icon: Crown,
-      chapters: 'Daniel 1-12 • PR 39-44 (16 años en adelante)',
+      chapters: 'Daniel 1-12 • PR 39-44 <br> (16 años en adelante)',
       gradient: 'from-purple-500 to-purple-700',
       backgroundImage: bgGuiasmayores
     }
@@ -164,8 +207,10 @@ const HomePage: React.FC = () => {
       {/* Video de fondo para pantallas grandes (>=750px) */}
       <video
         ref={videoRef}
-        className={`hidden min-[750px]:block absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+        className={`hidden min-[750px]:block absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
           isVideoPlaying ? 'z-20' : 'z-0'
+        } ${
+          videoZoomed ? 'transform scale-110' : 'transform scale-100'
         }`}
         muted
         playsInline
@@ -183,25 +228,31 @@ const HomePage: React.FC = () => {
 
       {/* Fondos y video para móviles (<750px) */}
       <div className="block min-[750px]:hidden absolute inset-0">
-        {/* Sección superior azul */}
-        <div className={`absolute top-0 left-0 right-0 h-[100px] flex items-center justify-center z-50 ${
+        {/* Sección superior azul - Visible hasta que termine el video */}
+        <div className={`absolute top-0 left-0 right-0 flex items-center justify-center z-50 ${
+          // Altura: 300px inicial, 200px cuando aparecen las nubes
+          showClouds ? 'h-[270px]' : 'h-[300px]'
+        } ${
           // Fondo: gradiente inicial, color sólido durante video
           isVideoPlaying ? 'bg-[#29447c]' : 'bg-gradient-to-b from-[#000c26] to-[#29447c]'
         } ${
-          // Posición: oculto solo cuando el video termina
-          videoEnded ? 'transform -translate-y-full' : 'transform translate-y-0'
+          // Posición: oculto solo cuando termine el video
+          videoEnded ? 'transform -translate-y-full opacity-0' : 'transform translate-y-0 opacity-100'
         }`}></div>
         
         {/* Video móvil en la parte inferior */}
         <video
           ref={mobileVideoRef}
-          className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md h-auto transition-opacity duration-1000 ${
+          className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md h-auto transition-all duration-1000 ${
             isVideoPlaying ? 'z-20' : 'z-10'
+          } ${
+            videoZoomed ? 'scale-150' : 'scale-100'
           }`}
           muted
           playsInline
           onEnded={handleVideoEnded}
           preload="auto"
+          poster={posterMobile}
         >
           <source src={bgHomeMobileVideo} type="video/mp4" />
           {/* Fallback para navegadores sin soporte de video */}
@@ -215,6 +266,17 @@ const HomePage: React.FC = () => {
         {/* Sección inferior marrón */}
         {/* <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-amber-800 z-5"></div> */}
       </div>
+
+      {/* Imagen top-clouds - Solo visible durante reproducción del video */}
+      {showClouds && isVideoPlaying && !videoEnded && (
+        <div className="block min-[750px]:hidden fixed top-0 left-0 right-0 z-[65] transition-all duration-500 ease-in-out transform translate-y-0 opacity-100 animate-slide-down">
+          <img 
+            src={topCloudsImage} 
+            alt="Top Clouds" 
+            className="w-full h-auto object-contain"
+          />
+        </div>
+      )}
 
       {/* Imagen top-hero fija en la parte superior para móviles */}
       <div className={`block min-[750px]:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
@@ -254,7 +316,7 @@ const HomePage: React.FC = () => {
                     <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
                       <Play className="h-8 w-8" />
                     </div>
-                    <span className="tracking-wide">COMENZAR AVENTURA</span>
+                    <span className="tracking-wide">COMIENZA TU AVENTURA</span>
                   </div>
                   
                   {/* Partículas decorativas verdes */}
@@ -286,7 +348,7 @@ const HomePage: React.FC = () => {
                     <div className="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
                       <Play className="h-6 w-6" />
                     </div>
-                    <span className="tracking-wide whitespace-nowrap">COMENZAR AVENTURA</span>
+                    <span className="tracking-wide whitespace-nowrap">COMIENZA TU AVENTURA</span>
                   </div>
                   
                   {/* Partículas decorativas verdes */}
@@ -300,7 +362,7 @@ const HomePage: React.FC = () => {
 
         {/* Three Expandable Columns */}
         {showColumns && (
-          <div className="absolute inset-0 z-50 h-screen flex items-center">
+          <div className="absolute inset-0 z-[70] h-screen flex items-center">
             <div className="columns-container h-screen w-full mx-auto">
               {categories.map((category) => (
                 <div
@@ -355,8 +417,10 @@ const HomePage: React.FC = () => {
                   <div className="column-expanded-content absolute inset-0 p-8 text-white">
                     <div className="h-full flex flex-col justify-end">
                       {/* Descripción corta */}
-                      <p className="column-description text-white/90 mb-4 leading-relaxed text-xl text-center font-bold">
-                        {category.chapters}
+                      <p className="column-description text-white/90 mb-4 leading-relaxed text-2xl text-center font-bold">
+                        <div 
+                          dangerouslySetInnerHTML={{ __html: category.chapters }} 
+                        />
                       </p>
                       {/* Botones de acción */}
                       <div className="flex flex-col sm:flex-row gap-4">

@@ -1,3 +1,4 @@
+@import './assets/css/styles.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -101,13 +102,26 @@ body {
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out forwards;
 }
 
 /* Estilos para las secciones del libro */
 .book-section {
   position: relative;
 }
-/* Importar estilos adicionales */
-@import './assets/css/styles.css';

@@ -90,7 +90,7 @@ body, html {
   transform: translateY(0);
   pointer-events: auto;
   transition-delay: 0.2s;
-  background: linear-gradient(0deg, #20120d6e, transparent);
+  background: linear-gradient(0deg, #130703, transparent);
 }
 
 .column-shine-effect::before {
