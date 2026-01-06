@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, Book, AlertTriangle, RefreshCw } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ChevronLeft, Book, AlertTriangle, MousePointer2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 import { LocalBibleService } from '../services/localBibleService';
 import type { ChapterInfo } from '../types/bible';
 import ChapterCard from './ChapterCard';
@@ -8,14 +10,63 @@ import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
 import bgAventureros from '../assets/bg-aventureros.webp';
+import bgConquistadores from '../assets/bg-conquistadores.webp';
+import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
+import aventurerosImg from '../assets/aventureros.png';
+import conquistadoresImg from '../assets/conquistadores.png';
+import guiasmayoresImg from '../assets/guiasmayores.png';
 
 const AventurerosDaniel: React.FC = () => {
+  const navigate = useNavigate();
   const [chapters, setChapters] = useState<ChapterInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeCardIndex, setActiveCardIndex] = useState(0); // Aventureros es el índice 0
 
   // Capítulos para Aventureros: 1, 2, 3, 6
   const aventurerosChapters = [1, 2, 3, 6];
+
+  // Configuración del carousel de categorías
+  const categories = [
+    {
+      id: 'aventureros',
+      name: 'Aventureros',
+      image: aventurerosImg,
+      bgImage: bgAventureros,
+      route: '/aventureros',
+      description: 'Hasta los 9 años',
+      subtitle: 'Capítulos seleccionados',
+      color: 'from-blue-500 to-blue-700'
+    },
+    {
+      id: 'conquistadores',
+      name: 'Conquistadores',
+      image: conquistadoresImg,
+      bgImage: bgConquistadores,
+      route: '/conquistadores',
+      description: 'Hasta los 15 años',
+      subtitle: 'Primera parte completa',
+      color: 'from-green-500 to-green-700'
+    },
+    {
+      id: 'guiasmayores',
+      name: 'Guías Mayores',
+      image: guiasmayoresImg,
+      bgImage: bgGuiasmayores,
+      route: '/guiasmayores',
+      description: '16 años en adelante',
+      subtitle: 'Estudio completo',
+      color: 'from-purple-500 to-purple-700'
+    }
+  ];
+
+  const handleExploreClick = () => {
+    navigate(categories[activeCardIndex].route);
+  };
+
+  const handleSplideMove = (_splide: any, newIndex: number) => {
+    setActiveCardIndex(newIndex);
+  };
 
   useEffect(() => {
     loadAventurerosChapters();
@@ -35,13 +86,6 @@ const AventurerosDaniel: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleChangeCategory = () => {
-    // Limpiar preferencias guardadas
-    localStorage.removeItem('daniel-bible-preference');
-    // Redirigir al home
-    window.location.href = '/';
   };
 
   return (
@@ -81,35 +125,98 @@ const AventurerosDaniel: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-8">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl p-6 shadow-xl border border-white/20">
-              <div className="flex flex-col md:flex-row items-start md:items-center space-x-1 md:space-x-4">
+            {/* Carousel de Categorías */}
+            <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
+              {/* Título del carousel */}
+              <div className="text-center mb-6">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  Categorías de Estudio
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Navega entre las diferentes categorías
+                </p>
+              </div>
+
+              {/* Carousel Container con Splide */}
+              <div className="relative">
+                <Splide
+                  options={{
+                    type: 'loop',
+                    perPage: 3,
+                    perMove: 1,
+                    gap: '1rem',
+                    pagination: false,
+                    arrows: true,
+                    focus: 'center',
+                    trimSpace: false,
+                    autoplay: false,
+                    breakpoints: {
+                      768: {
+                        perPage: 1,
+                        gap: '0.5rem',
+                      },
+                    },
+                  }}
+                  onMove={handleSplideMove}
+                  className="splide-carousel"
+                >
+                  {categories.map((category, index) => (
+                    <SplideSlide key={category.id}>
+                      <div
+                        onClick={() => handleExploreClick()}
+                        className={`relative cursor-pointer transition-all duration-300 mx-2 ${
+                          index === activeCardIndex 
+                            ? 'transform -translate-y-4 scale-105' 
+                            : 'transform translate-y-0 scale-95 opacity-75 hover:opacity-90'
+                        }`}
+                      >
+                        {/* Card */}
+                        <div className={`relative w-full h-64 rounded-xl overflow-hidden shadow-lg ${
+                          index === activeCardIndex ? 'shadow-2xl' : 'shadow-md'
+                        }`}>
+                          {/* Imagen de fondo */}
+                          <div 
+                            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                            style={{
+                              backgroundImage: `url(${category.bgImage})`
+                            }}
+                          />
+                          
+                          {/* Overlay con gradiente */}
+                          <div className={`absolute inset-0 bg-gradient-to-b from-transparent to-amber`} />
+                          
+                          {/* Contenido de la card */}
+                          <div className="relative z-10 h-full flex flex-col justify-end items-center p-4 text-white text-center">
+                            {/* Información */}
+                            <div className="mb-4 flex items-center">
+                              <h3 className="text-xl font-bold mb-2">{category.name}</h3>
+                              {index === activeCardIndex && (
+                                <div className="flex flex-col items-center space-y-1 ml-2">
+                                  <MousePointer2 className="h-4 w-4 text-white animate-click-bounce" />
+                                </div>
+                              )}
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </SplideSlide>
+                  ))}
+                </Splide>
+              </div>
+
+              {/* Indicadores del carousel - Removidos ya que Splide maneja la navegación */}
+
+              {/* Botón Volver al Home */}
+              <div className="text-center mt-6">
                 <Link
                   to="/"
-                  className="p-3 md:p-4 rounded-lg transition-colors duration-200 group absolute md:relative top-0 -left-1"
-                  aria-label="Volver al inicio"
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors duration-200"
                 >
-                  <ChevronLeft className="h-4 md:h-5 w-4 md:w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
+                  <ChevronLeft className="h-4 w-4" />
+                  <span>Volver al Inicio</span>
                 </Link>
-                <div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                    Aventureros - Daniel
-                  </h1>
-                  <p className="text-lg text-gray-600 dark:text-gray-300">
-                    Capítulos seleccionados para el nivel Aventureros
-                  </p>
-                </div>
               </div>
-              
-              {/* Botón Cambiar Categoría */}
-              <button
-                onClick={handleChangeCategory}
-                className="change-category-btn flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200"
-                title="Cambiar categoría"
-              >
-                <RefreshCw className="h-4 w-4" />
-                <span>Cambiar categoría</span>
-              </button>
             </div>
             {/* Stats */}
             <StatsCard chapters={chapters} />

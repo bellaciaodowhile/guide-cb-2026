@@ -1,83 +1,31 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Users, Award, Crown, Play, MousePointer2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
-import bgHomeVideo from '../assets/bg-home.mp4';
-import bgHomeMobileVideo from '../assets/bg-home-mobile.mp4';
 import bgHomeImage from '../assets/bg-home.jpg';
 import topHeroImage from '../assets/top-hero.png';
-import posterMobile from '../assets/poster-mobile.png';
+import posterMobileBackup from '../assets/poster-mobile-backup.png';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const [showColumns, setShowColumns] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [videoEnded, setVideoEnded] = useState(false);
   const [showCircleTransition, setShowCircleTransition] = useState(false);
 
   const handleStartClick = () => {
-    setIsVideoPlaying(true);
-    
-    // Delay de 400ms antes de reproducir video
-    setTimeout(() => {
-      // Reproducir el video correspondiente según el tamaño de pantalla
-      if (window.innerWidth >= 750) {
-        if (videoRef.current) {
-          videoRef.current.play();
-          // Agregar listener para detectar cuando faltan 100ms
-          videoRef.current.addEventListener('timeupdate', handleVideoTimeUpdate);
-        }
-      } else {
-        if (mobileVideoRef.current) {
-          mobileVideoRef.current.play();
-          // Agregar listener para detectar cuando faltan 100ms
-          mobileVideoRef.current.addEventListener('timeupdate', handleVideoTimeUpdate);
-        }
-      }
-    }, 400);
-  };
-
-  const handleVideoTimeUpdate = (event: Event) => {
-    const video = event.target as HTMLVideoElement;
-    const currentTime = video.currentTime;
-    const duration = video.duration;
-    
-    // Si faltan 100ms (0.1 segundos) para que termine el video
-    if (duration - currentTime <= 0.1 && !videoEnded) {
-      // Comenzar el proceso de transición
-      setVideoEnded(true);
-      setIsVideoPlaying(false);
-      setShowCircleTransition(true);
-      
-      // Después de la animación del círculo, mostrar las columnas
-      setTimeout(() => {
-        setShowColumns(true);
-        setShowCircleTransition(false);
-      }, 1000); // 1 segundo para la animación del círculo
-      
-      // Remover el listener para evitar múltiples ejecuciones
-      video.removeEventListener('timeupdate', handleVideoTimeUpdate);
-    }
-  };
-
-  const handleVideoEnded = () => {
-    setVideoEnded(true);
-    setIsVideoPlaying(false);
+    // Mostrar el círculo inmediatamente
     setShowCircleTransition(true);
     
-    // Después de la animación del círculo, mostrar las columnas
+    // Después de 1 segundo, mostrar las columnas
     setTimeout(() => {
       setShowColumns(true);
       setShowCircleTransition(false);
-    }, 1000); // 1 segundo para la animación del círculo
+    }, 1000);
   };
 
   // Verificar localStorage al cargar el componente
@@ -91,16 +39,6 @@ const HomePage: React.FC = () => {
         return;
       }
     }
-
-    // Cleanup function para remover event listeners
-    return () => {
-      if (videoRef.current) {
-        videoRef.current.removeEventListener('timeupdate', handleVideoTimeUpdate);
-      }
-      if (mobileVideoRef.current) {
-        mobileVideoRef.current.removeEventListener('timeupdate', handleVideoTimeUpdate);
-      }
-    };
   }, [navigate]);
 
   // Mostrar modal después de que aparezcan las columnas
@@ -204,61 +142,21 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Video de fondo para pantallas grandes (>=750px) */}
-      <video
-        ref={videoRef}
-        className={`hidden min-[750px]:block absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
-          isVideoPlaying ? 'z-20' : 'z-0'
-        }`}
-        muted
-        playsInline
-        onEnded={handleVideoEnded}
-        preload="auto"
-      >
-        <source src={bgHomeVideo} type="video/mp4" />
-        {/* Fallback para navegadores sin soporte de video */}
-        <img 
-          src={bgHomeImage} 
-          alt="Daniel Bible Study Background" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </video>
+      {/* Imagen de fondo estática para pantallas grandes */}
+      <div 
+        className="hidden min-[750px]:block absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${bgHomeImage})`
+        }}
+      />
 
-      {/* Fondos y video para móviles (<750px) */}
-      <div className="block min-[750px]:hidden absolute inset-0">
-        {/* Sección superior azul - TEMPORALMENTE OCULTA */}
-        {/* <div className={`absolute top-0 left-0 right-0 flex items-center justify-center z-50 transition-all duration-500 ease-in-out h-[300px] ${
-          // Fondo: gradiente inicial, color sólido durante video
-          isVideoPlaying ? 'bg-[#29447c]' : 'bg-gradient-to-b from-[#000c26] to-[#29447c]'
-        } ${
-          // Posición: oculto solo cuando termine el video
-          videoEnded ? 'transform -translate-y-full opacity-0' : 'transform translate-y-0 opacity-100'
-        }`}></div> */}
-        
-        {/* Video móvil en la parte inferior */}
-        <video
-          ref={mobileVideoRef}
-          className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md h-auto transition-all duration-1000 ${
-            isVideoPlaying ? 'z-20' : 'z-10'
-          }`}
-          muted
-          playsInline
-          onEnded={handleVideoEnded}
-          preload="auto"
-          poster={posterMobile}
-        >
-          <source src={bgHomeMobileVideo} type="video/mp4" />
-          {/* Fallback para navegadores sin soporte de video */}
-          <img 
-            src={bgHomeImage} 
-            alt="Daniel Bible Study Background" 
-            className="w-full max-w-md h-auto"
-          />
-        </video>
-        
-        {/* Sección inferior marrón */}
-        {/* <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-amber-800 z-5"></div> */}
-      </div>
+      {/* Imagen de fondo para móviles */}
+      <div 
+        className="block min-[750px]:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${posterMobileBackup})`
+        }}
+      />
 
       {/* Círculo de transición */}
       {showCircleTransition && (
@@ -269,7 +167,7 @@ const HomePage: React.FC = () => {
 
       {/* Imagen top-hero fija en la parte superior para móviles */}
       <div className={`block min-[750px]:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
-        isVideoPlaying || videoEnded ? 'transform -translate-y-full' : 'transform translate-y-0'
+        showColumns ? 'transform -translate-y-full' : 'transform translate-y-0'
       }`}>
         <img 
           src={topHeroImage} 
@@ -280,12 +178,12 @@ const HomePage: React.FC = () => {
 
       {/* Contenido principal */}
       <div className="relative z-30 mx-auto min-h-screen">
-        {/* Hero Section - Solo se muestra si no se han mostrado las columnas y no está reproduciendo video */}
-        {!showColumns && !isVideoPlaying && (
+        {/* Hero Section - Solo se muestra si no se han mostrado las columnas */}
+        {!showColumns && (
           <>
             {/* Botón para pantallas grandes - en la parte inferior con margen */}
             <div className="hidden min-[750px]:block fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
-              <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <button
                   onClick={handleStartClick}
                   className="game-button group relative inline-flex items-center justify-center space-x-2 px-8 py-4 text-lg font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
@@ -317,7 +215,7 @@ const HomePage: React.FC = () => {
 
             {/* Botón para móviles - fijo en la parte inferior */}
             <div className="block min-[750px]:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
-              <div className={`transition-all duration-500 ${videoEnded ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <button
                   onClick={handleStartClick}
                   className="game-button group relative inline-flex items-center justify-center space-x-2 px-6 py-3 text-base font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"

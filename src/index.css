@@ -147,3 +147,47 @@ body {
 .book-section {
   position: relative;
 }
+/* Estilos personalizados para Splide Carousel */
+.splide-carousel .splide__arrow {
+  @apply bg-white/20 backdrop-blur-sm border border-white/30 text-white;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.splide-carousel .splide__arrow:hover {
+  @apply bg-white/30 scale-110;
+}
+
+.splide-carousel .splide__arrow svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.splide-carousel .splide__arrow--prev {
+  left: -1.5rem;
+}
+
+.splide-carousel .splide__arrow--next {
+  right: -1.5rem;
+}
+
+.splide-carousel .splide__track {
+  padding: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .splide-carousel .splide__arrow--prev {
+    left: -0.5rem;
+  }
+  
+  .splide-carousel .splide__arrow--next {
+    right: -0.5rem;
+  }
+  
+  .splide-carousel .splide__track {
+    padding: 2rem 1rem;
+  }
+}
