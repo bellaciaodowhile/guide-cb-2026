@@ -148,7 +148,7 @@ const ConquistadoresDaniel: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-8">
             {/* Carousel de Categorías */}
             <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
               {/* Título del carousel */}
@@ -257,8 +257,7 @@ const ConquistadoresDaniel: React.FC = () => {
                 className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-300 ease-in-out rounded-t-xl group"
               >
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                  <Book className={`h-5 w-5 mr-2 text-green-600 dark:text-green-400 transition-transform duration-300 ${isContentOpen ? 'rotate-12 scale-110' : 'group-hover:scale-105'}`} />
-                  Contenido para Conquistadores
+                  Detalles de la categoría
                 </h3>
                 <div className="flex items-center space-x-2">
                   <div className={`transition-transform duration-300 ease-in-out ${isContentOpen ? 'rotate-180' : 'rotate-0'}`}>
@@ -277,7 +276,7 @@ const ConquistadoresDaniel: React.FC = () => {
                   <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                       <div>
-                        <h5 className="font-medium text-green-600 dark:text-green-400 mb-2">Capítulos Bíblicos (1-6)</h5>
+                        <h5 className="font-medium text-green-600 dark:text-green-400 mb-2">Primera parte: Narrativa (1-6)</h5>
                         <ul className="space-y-1 text-gray-600 dark:text-gray-300">
                           <li>• Capítulo 1: Daniel y sus compañeros en Babilonia</li>
                           <li>• Capítulo 2: Daniel interpreta el sueño de Nabucodonosor</li>

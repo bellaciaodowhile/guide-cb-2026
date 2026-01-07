@@ -148,7 +148,7 @@ const AventurerosDaniel: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-8">
             {/* Carousel de Categorías */}
             <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
               {/* Título del carousel */}
@@ -249,8 +249,7 @@ const AventurerosDaniel: React.FC = () => {
                 className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-300 ease-in-out rounded-t-xl group"
               >
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                  <Book className={`h-5 w-5 mr-2 text-blue-600 dark:text-blue-400 transition-transform duration-300 ${isContentOpen ? 'rotate-12 scale-110' : 'group-hover:scale-105'}`} />
-                  Contenido para Aventureros
+                  Detalles de la categoría
                 </h3>
                 <div className="flex items-center space-x-2">
                   <div className={`transition-transform duration-300 ease-in-out ${isContentOpen ? 'rotate-180' : 'rotate-0'}`}>

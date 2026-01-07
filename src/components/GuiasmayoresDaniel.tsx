@@ -248,8 +248,7 @@ const GuiasmayoresDaniel: React.FC = () => {
                 className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-300 ease-in-out rounded-t-xl group"
               >
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                  <Book className={`h-5 w-5 mr-2 text-purple-600 dark:text-purple-400 transition-transform duration-300 ${isContentOpen ? 'rotate-12 scale-110' : 'group-hover:scale-105'}`} />
-                  Contenido para Guías Mayores
+                  Detalles de la categoría
                 </h3>
                 <div className="flex items-center space-x-2">
                   <div className={`transition-transform duration-300 ease-in-out ${isContentOpen ? 'rotate-180' : 'rotate-0'}`}>
@@ -268,7 +267,7 @@ const GuiasmayoresDaniel: React.FC = () => {
                   <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                       <div>
-                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Narrativa (1-6)</h5>
+                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Primera parte: Narrativa (1-6)</h5>
                         <ul className="space-y-1 text-gray-600 dark:text-gray-300">
                           <li>• Daniel y sus compañeros</li>
                           <li>• Sueño de Nabucodonosor</li>
@@ -279,7 +278,7 @@ const GuiasmayoresDaniel: React.FC = () => {
                         </ul>
                       </div>
                       <div>
-                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Visiones (7-12)</h5>
+                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Segunda parte: Visiones (7-12)</h5>
                         <ul className="space-y-1 text-gray-600 dark:text-gray-300">
                           <li>• Las cuatro bestias</li>
                           <li>• El carnero y el macho cabrío</li>

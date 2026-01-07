@@ -61,7 +61,6 @@ const StatsCard: React.FC<StatsCardProps> = ({ chapters }) => {
         className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-300 ease-in-out rounded-t-xl group"
       >
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-          <ShieldQuestionIcon className={`h-5 w-5 mr-2 text-primary-600 dark:text-primary-400 transition-transform duration-300 ${isOpen ? 'rotate-12 scale-110' : 'group-hover:scale-105'}`} />
           Datos curiosos
         </h3>
         <div className="flex items-center space-x-2">
