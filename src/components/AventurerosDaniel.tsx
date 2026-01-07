@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, Undo2, Book, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
+import { ChevronLeft, Undo2, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
