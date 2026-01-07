@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, Book, AlertTriangle, MousePointer2 } from 'lucide-react';
+import { ChevronLeft, Undo2, Book, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
@@ -15,6 +15,8 @@ import bgConquistadores from '../assets/bg-conquistadores.webp';
 import aventurerosImg from '../assets/aventureros.png';
 import conquistadoresImg from '../assets/conquistadores.png';
 import guiasmayoresImg from '../assets/guiasmayores.png';
+import maskAventureros from '../assets/mask-aventureros.png';
+import maskConquistadores from '../assets/mask-conquistadores.png';
 
 const GuiasmayoresDaniel: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const GuiasmayoresDaniel: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(2); // Guías Mayores es el índice 2
+  const [isContentOpen, setIsContentOpen] = useState(false);
 
   // Configuración del carousel de categorías
   const categories = [
@@ -86,6 +89,27 @@ const GuiasmayoresDaniel: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <div className="w-[190px] h-80 absolute top-[0] left-0 z-10 " style={{
+          backgroundImage: `url(${maskAventureros})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat'
+        }}>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+      <Link to="/aventureros" className="absolute h-80 w-[120px]">
+        <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
+      </Link>
+      </div>
+      <div className="w-[190px] h-80 absolute top-[0] right-0 z-10" style={{
+          backgroundImage: `url(${maskConquistadores})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          transform: 'rotateY(180deg)'
+        }}>
+       <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+       <Link to="/conquistadores" className="absolute h-80 w-[120px]">
+        <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
+       </Link>
+      </div>
       {/* Background Hero Section */}
       <div 
         className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat"
@@ -98,7 +122,7 @@ const GuiasmayoresDaniel: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-40 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-20 relative z-10">
         {loading ? (
           <div className="flex justify-center items-center h-96">
             <LoadingSpinner size="lg" text="Cargando capítulos para Guías Mayores..." />
@@ -120,21 +144,30 @@ const GuiasmayoresDaniel: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-8">
             {/* Carousel de Categorías */}
             <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
               {/* Título del carousel */}
-              <div className="text-center mb-6">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  Categorías de Estudio
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Navega entre las diferentes categorías
+              <div className="text-left">
+                
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Guías Mayores
+                  </h2>
+                  <Link
+                    to="/"
+                    className=""
+                  >
+                    <Undo2 className='w-7 h-7  mt-1'></Undo2>
+                  </Link>
+                </div>
+                <p className="text-gray-600 text-md md:text-xl dark:text-gray-300 italic">
+                  "La Bíblia es un mapa para volver a casa." - Jiménez
                 </p>
               </div>
 
               {/* Carousel Container con Splide */}
-              <div className="relative">
+              <div className="relative hidden">
                 <Splide
                   options={{
                     type: 'loop',
@@ -202,21 +235,76 @@ const GuiasmayoresDaniel: React.FC = () => {
               </div>
 
               {/* Indicadores del carousel - Removidos ya que Splide maneja la navegación */}
-
-              {/* Botón Volver al Home */}
-              <div className="text-center mt-6">
-                <Link
-                  to="/"
-                  className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors duration-200"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span>Volver al Inicio</span>
-                </Link>
-              </div>
             </div>
 
             {/* Stats */}
             <StatsCard chapters={chapters} />
+
+            {/* Contenido Accordion */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+              {/* Accordion Header */}
+              <button
+                onClick={() => setIsContentOpen(!isContentOpen)}
+                className="w-full p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-300 ease-in-out rounded-t-xl group"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                  <Book className={`h-5 w-5 mr-2 text-purple-600 dark:text-purple-400 transition-transform duration-300 ${isContentOpen ? 'rotate-12 scale-110' : 'group-hover:scale-105'}`} />
+                  Contenido para Guías Mayores
+                </h3>
+                <div className="flex items-center space-x-2">
+                  <div className={`transition-transform duration-300 ease-in-out ${isContentOpen ? 'rotate-180' : 'rotate-0'}`}>
+                    <ChevronDown className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                  </div>
+                </div>
+              </button>
+
+              {/* Accordion Content */}
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                isContentOpen ? 'h-full opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'
+              }`}>
+                <div className={`px-6 pb-6 transition-all duration-300 delay-100 ${
+                  isContentOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
+                }`}>
+                  <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                      <div>
+                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Narrativa (1-6)</h5>
+                        <ul className="space-y-1 text-gray-600 dark:text-gray-300">
+                          <li>• Daniel y sus compañeros</li>
+                          <li>• Sueño de Nabucodonosor</li>
+                          <li>• El horno de fuego</li>
+                          <li>• La locura del rey</li>
+                          <li>• La escritura en la pared</li>
+                          <li>• El foso de los leones</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Visiones (7-12)</h5>
+                        <ul className="space-y-1 text-gray-600 dark:text-gray-300">
+                          <li>• Las cuatro bestias</li>
+                          <li>• El carnero y el macho cabrío</li>
+                          <li>• Las setenta semanas</li>
+                          <li>• Visión junto al río</li>
+                          <li>• Reyes del norte y sur</li>
+                          <li>• El tiempo del fin</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Profetas y Reyes</h5>
+                        <ul className="space-y-1 text-gray-600 dark:text-gray-300">
+                          <li>• En la corte de Babilonia</li>
+                          <li>• El sueño de Nabucodonosor</li>
+                          <li>• El horno de fuego</li>
+                          <li>• La verdadera grandeza</li>
+                          <li>• El vigía invisible</li>
+                          <li>• En el foso de los leones</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Chapters Grid - Divided into Two Parts */}
             <div className="space-y-12">
@@ -277,48 +365,7 @@ const GuiasmayoresDaniel: React.FC = () => {
               </div>
             </div>
 
-            {/* Info Section */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                <Book className="h-5 w-5 mr-2 text-purple-600 dark:text-purple-400" />
-                Contenido para Guías Mayores
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-                <div>
-                  <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Narrativa (1-6)</h5>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                    <li>• Daniel y sus compañeros</li>
-                    <li>• Sueño de Nabucodonosor</li>
-                    <li>• El horno de fuego</li>
-                    <li>• La locura del rey</li>
-                    <li>• La escritura en la pared</li>
-                    <li>• El foso de los leones</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Visiones (7-12)</h5>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                    <li>• Las cuatro bestias</li>
-                    <li>• El carnero y el macho cabrío</li>
-                    <li>• Las setenta semanas</li>
-                    <li>• Visión junto al río</li>
-                    <li>• Reyes del norte y sur</li>
-                    <li>• El tiempo del fin</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium text-purple-600 dark:text-purple-400 mb-2">Profetas y Reyes</h5>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                    <li>• En la corte de Babilonia</li>
-                    <li>• El sueño de Nabucodonosor</li>
-                    <li>• El horno de fuego</li>
-                    <li>• La verdadera grandeza</li>
-                    <li>• El vigía invisible</li>
-                    <li>• En el foso de los leones</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+
           </div>
         )}
       </main>
