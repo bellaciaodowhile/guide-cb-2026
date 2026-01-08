@@ -94,7 +94,7 @@ const AventurerosDaniel: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="w-[190px] h-80 absolute top-[0] left-0 z-10 " style={{
-          backgroundImage: `url(${maskConquistadores})`,
+          backgroundImage: `url(${maskGuiasmayores})`,
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat'
         }}>
@@ -104,7 +104,7 @@ const AventurerosDaniel: React.FC = () => {
       </Link>
       </div>
       <div className="w-[190px] h-80 absolute top-[0] right-0 z-10" style={{
-          backgroundImage: `url(${maskGuiasmayores})`,
+          backgroundImage: `url(${maskConquistadores})`,
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           transform: 'rotateY(180deg)'
