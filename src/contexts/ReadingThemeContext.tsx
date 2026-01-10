@@ -121,6 +121,109 @@ export const READING_THEMES: ReadingTheme[] = [
       buttonHoverBackground: '#a16207',
       buttonText: '#ffffff'
     }
+  },
+  // TEMAS OSCUROS
+  {
+    id: 'dark-slate',
+    name: 'Pizarra Oscura',
+    description: 'Tema oscuro elegante con tonos grises suaves',
+    styles: {
+      background: '#0f172a',
+      cardBackground: '#1e293b',
+      textColor: '#cbd5e1',
+      headingColor: '#f1f5f9',
+      borderColor: '#334155',
+      verseBackground: '#334155',
+      verseHoverBackground: '#475569',
+      buttonBackground: '#3b82f6',
+      buttonHoverBackground: '#2563eb',
+      buttonText: '#ffffff'
+    }
+  },
+  {
+    id: 'dark-forest',
+    name: 'Bosque Nocturno',
+    description: 'Verde oscuro que descansa la vista en ambientes con poca luz',
+    styles: {
+      background: '#0c1f17',
+      cardBackground: '#1a2e23',
+      textColor: '#86efac',
+      headingColor: '#bbf7d0',
+      borderColor: '#166534',
+      verseBackground: '#166534',
+      verseHoverBackground: '#15803d',
+      buttonBackground: '#22c55e',
+      buttonHoverBackground: '#16a34a',
+      buttonText: '#ffffff'
+    }
+  },
+  {
+    id: 'dark-ocean',
+    name: 'Océano Profundo',
+    description: 'Azul oscuro relajante para lectura nocturna',
+    styles: {
+      background: '#0c1426',
+      cardBackground: '#1e293b',
+      textColor: '#7dd3fc',
+      headingColor: '#bae6fd',
+      borderColor: '#1e40af',
+      verseBackground: '#1e40af',
+      verseHoverBackground: '#1d4ed8',
+      buttonBackground: '#3b82f6',
+      buttonHoverBackground: '#2563eb',
+      buttonText: '#ffffff'
+    }
+  },
+  {
+    id: 'dark-purple',
+    name: 'Violeta Nocturno',
+    description: 'Púrpura oscuro que reduce la fatiga visual nocturna',
+    styles: {
+      background: '#1e1b3a',
+      cardBackground: '#2d2a4a',
+      textColor: '#c4b5fd',
+      headingColor: '#e9d5ff',
+      borderColor: '#6b21a8',
+      verseBackground: '#6b21a8',
+      verseHoverBackground: '#7c3aed',
+      buttonBackground: '#8b5cf6',
+      buttonHoverBackground: '#7c3aed',
+      buttonText: '#ffffff'
+    }
+  },
+  {
+    id: 'dark-amber',
+    name: 'Ámbar Oscuro',
+    description: 'Tonos cálidos oscuros perfectos para lectura nocturna',
+    styles: {
+      background: '#1c1917',
+      cardBackground: '#292524',
+      textColor: '#fbbf24',
+      headingColor: '#fde047',
+      borderColor: '#a16207',
+      verseBackground: '#a16207',
+      verseHoverBackground: '#ca8a04',
+      buttonBackground: '#f59e0b',
+      buttonHoverBackground: '#d97706',
+      buttonText: '#ffffff'
+    }
+  },
+  {
+    id: 'dark-minimal',
+    name: 'Minimalista Oscuro',
+    description: 'Negro puro con texto suave para máximo contraste',
+    styles: {
+      background: '#000000',
+      cardBackground: '#111111',
+      textColor: '#d1d5db',
+      headingColor: '#f9fafb',
+      borderColor: '#374151',
+      verseBackground: '#1f2937',
+      verseHoverBackground: '#374151',
+      buttonBackground: '#6b7280',
+      buttonHoverBackground: '#4b5563',
+      buttonText: '#ffffff'
+    }
   }
 ];
 

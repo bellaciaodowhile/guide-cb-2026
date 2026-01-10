@@ -121,7 +121,6 @@ const BibleChapterPage: React.FC = () => {
         onBack={handleBack}
         getNavigationUrl={(chapterNum) => `/bible/daniel/${chapterNum}`}
         fromParam={searchParams.get('from') ? `?from=${searchParams.get('from')}` : ''}
-        buttonColor="primary"
       />
     </div>
   );

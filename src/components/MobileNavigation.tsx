@@ -1,5 +1,6 @@
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useReadingTheme } from '../hooks/useReadingTheme';
 
 interface MobileNavigationProps {
   currentChapter: number;
@@ -7,7 +8,6 @@ interface MobileNavigationProps {
   onBack: () => void;
   getNavigationUrl: (chapter: number) => string;
   fromParam: string;
-  buttonColor?: 'primary' | 'purple';
 }
 
 const MobileNavigation: React.FC<MobileNavigationProps> = ({
@@ -15,15 +15,11 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
   totalChapters,
   onBack,
   getNavigationUrl,
-  fromParam,
-  buttonColor = 'primary'
+  fromParam
 }) => {
+  const { theme } = useReadingTheme();
   const hasPrevious = currentChapter > 1;
   const hasNext = currentChapter < totalChapters;
-  
-  const buttonColorClasses = buttonColor === 'purple' 
-    ? 'bg-purple-600 hover:bg-purple-700' 
-    : 'bg-primary-600 hover:bg-primary-700';
 
   return (
     <>
@@ -34,7 +30,11 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
         
         {/* Fixed Bottom Navigation */}
         <div 
-          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-lg mobile-navigation-container"
+          className="backdrop-blur-md border-t px-4 py-3 shadow-lg mobile-navigation-container transition-colors duration-300"
+          style={{
+            backgroundColor: `${theme.styles.cardBackground}F5`, // F5 para 95% transparencia
+            borderColor: theme.styles.borderColor
+          }}
         >
           <div className="flex items-center justify-between space-x-3">
             {/* Botón Anterior */}
@@ -42,13 +42,29 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
               {hasPrevious ? (
                 <Link
                   to={`${getNavigationUrl(currentChapter - 1)}${fromParam}`}
-                  className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1 text-sm"
+                  className="w-full px-3 py-2 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-1 text-sm hover:opacity-90"
+                  style={{
+                    backgroundColor: theme.styles.verseBackground,
+                    color: theme.styles.textColor
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = theme.styles.verseHoverBackground;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = theme.styles.verseBackground;
+                  }}
                 >
                   <ChevronLeft className="h-4 w-4" />
                   <span>Cap. {currentChapter - 1}</span>
                 </Link>
               ) : (
-                <div className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed text-sm">
+                <div 
+                  className="w-full px-3 py-2 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed text-sm opacity-50"
+                  style={{
+                    backgroundColor: theme.styles.verseBackground,
+                    color: theme.styles.textColor
+                  }}
+                >
                   <ChevronLeft className="h-4 w-4" />
                   <span>Primer</span>
                 </div>
@@ -58,7 +74,17 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
             {/* Botón Volver */}
             <button
               onClick={onBack}
-              className={`px-4 py-2 ${buttonColorClasses} text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-1 text-sm`}
+              className="px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-1 text-sm hover:opacity-90"
+              style={{
+                backgroundColor: theme.styles.buttonBackground,
+                color: theme.styles.buttonText
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.styles.buttonHoverBackground;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme.styles.buttonBackground;
+              }}
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Volver</span>
@@ -69,13 +95,29 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
               {hasNext ? (
                 <Link
                   to={`${getNavigationUrl(currentChapter + 1)}${fromParam}`}
-                  className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1 text-sm"
+                  className="w-full px-3 py-2 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-1 text-sm hover:opacity-90"
+                  style={{
+                    backgroundColor: theme.styles.verseBackground,
+                    color: theme.styles.textColor
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = theme.styles.verseHoverBackground;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = theme.styles.verseBackground;
+                  }}
                 >
                   <span>Cap. {currentChapter + 1}</span>
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               ) : (
-                <div className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed text-sm">
+                <div 
+                  className="w-full px-3 py-2 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed text-sm opacity-50"
+                  style={{
+                    backgroundColor: theme.styles.verseBackground,
+                    color: theme.styles.textColor
+                  }}
+                >
                   <span>Último</span>
                   <ChevronRight className="h-4 w-4" />
                 </div>

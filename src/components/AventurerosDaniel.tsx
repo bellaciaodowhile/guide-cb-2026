@@ -28,6 +28,16 @@ const AventurerosDaniel: React.FC = () => {
   // Capítulos para Aventureros: 1, 2, 3, 6
   const aventurerosChapters = [1, 2, 3, 6];
 
+  // Función para limpiar localStorage y navegar al home
+  const handleGoHome = () => {
+    try {
+      localStorage.removeItem('daniel-bible-preference');
+    } catch (error) {
+      console.warn('No se pudo limpiar localStorage');
+    }
+    navigate('/');
+  };
+
   // Configuración del carousel de categorías
   const categories = [
     {
@@ -170,9 +180,9 @@ const AventurerosDaniel: React.FC = () => {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     Aventureros
                   </h2>
-                  <Link to="/" className="">
+                  <button onClick={handleGoHome} className="">
                     <Undo2 className='w-7 h-7 mt-1'></Undo2>
-                  </Link>
+                  </button>
                 </div>
                 <p className="text-gray-600 text-md md:text-xl dark:text-gray-300 italic">
                   "La Bíblia es un mapa para volver a casa." - Jiménez
@@ -236,12 +246,12 @@ const AventurerosDaniel: React.FC = () => {
                   <h2 className="text-2xl font-bold text-white/90">
                     Aventureros
                   </h2>
-                  <Link
-                    to="/"
+                  <button
+                    onClick={handleGoHome}
                     className=""
                   >
                     <Undo2 className='w-7 h-7 -mt-4 text-white'></Undo2>
-                  </Link>
+                  </button>
                 </div>
                 <p className="text-gray-600 text-md md:text-xl text-white/50 italic">
                   "La Bíblia es un mapa para volver a casa." - Jiménez

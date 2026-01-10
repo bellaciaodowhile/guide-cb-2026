@@ -63,78 +63,169 @@ const ThemeSelector: React.FC = () => {
               </p>
               
               <div className="space-y-2 max-h-80 overflow-y-auto">
-                {themes.map((themeOption: ReadingTheme) => (
-                  <button
-                    key={themeOption.id}
-                    onClick={() => handleThemeChange(themeOption.id)}
-                    className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left group ${
-                      currentTheme === themeOption.id
-                        ? 'ring-2 ring-primary-200'
-                        : 'hover:opacity-80'
-                    }`}
-                    style={{
-                      backgroundColor: currentTheme === themeOption.id 
-                        ? theme.styles.verseBackground 
-                        : theme.styles.background,
-                      borderColor: currentTheme === themeOption.id 
-                        ? theme.styles.buttonBackground 
-                        : theme.styles.borderColor
-                    }}
+                {/* Temas Claros */}
+                <div className="mb-4">
+                  <h4 
+                    className="text-sm font-semibold mb-2 transition-colors duration-300"
+                    style={{ color: theme.styles.headingColor }}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-3">
-                        {/* Vista previa del tema */}
-                        <div 
-                          className="w-8 h-8 rounded-lg border-2 relative overflow-hidden shadow-sm"
-                          style={{
-                            backgroundColor: themeOption.styles.cardBackground,
-                            borderColor: themeOption.styles.borderColor
-                          }}
-                        >
+                    Temas Claros
+                  </h4>
+                  {themes.filter(themeOption => !themeOption.id.startsWith('dark-')).map((themeOption: ReadingTheme) => (
+                    <button
+                      key={themeOption.id}
+                      onClick={() => handleThemeChange(themeOption.id)}
+                      className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left group mb-2 ${
+                        currentTheme === themeOption.id
+                          ? 'ring-2 ring-primary-200'
+                          : 'hover:opacity-80'
+                      }`}
+                      style={{
+                        backgroundColor: currentTheme === themeOption.id 
+                          ? theme.styles.verseBackground 
+                          : theme.styles.background,
+                        borderColor: currentTheme === themeOption.id 
+                          ? theme.styles.buttonBackground 
+                          : theme.styles.borderColor
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          {/* Vista previa del tema */}
                           <div 
-                            className="absolute inset-1 rounded"
-                            style={{ backgroundColor: themeOption.styles.verseBackground }}
-                          ></div>
-                          <div 
-                            className="absolute bottom-1 right-1 w-2 h-1 rounded-sm"
-                            style={{ backgroundColor: themeOption.styles.buttonBackground }}
-                          ></div>
+                            className="w-8 h-8 rounded-lg border-2 relative overflow-hidden shadow-sm"
+                            style={{
+                              backgroundColor: themeOption.styles.cardBackground,
+                              borderColor: themeOption.styles.borderColor
+                            }}
+                          >
+                            <div 
+                              className="absolute inset-1 rounded"
+                              style={{ backgroundColor: themeOption.styles.verseBackground }}
+                            ></div>
+                            <div 
+                              className="absolute bottom-1 right-1 w-2 h-1 rounded-sm"
+                              style={{ backgroundColor: themeOption.styles.buttonBackground }}
+                            ></div>
+                          </div>
+                          
+                          <div>
+                            <h4 
+                              className="font-medium transition-colors duration-300"
+                              style={{ color: theme.styles.headingColor }}
+                            >
+                              {themeOption.name}
+                            </h4>
+                          </div>
                         </div>
                         
-                        <div>
-                          <h4 
-                            className="font-medium transition-colors duration-300"
-                            style={{ color: theme.styles.headingColor }}
-                          >
-                            {themeOption.name}
-                          </h4>
-                        </div>
+                        {currentTheme === themeOption.id && (
+                          <div className="flex items-center space-x-1">
+                            <Check 
+                              className="h-5 w-5"
+                              style={{ color: theme.styles.buttonBackground }}
+                            />
+                            <span 
+                              className="text-xs font-medium"
+                              style={{ color: theme.styles.buttonBackground }}
+                            >
+                              Activo
+                            </span>
+                          </div>
+                        )}
                       </div>
                       
-                      {currentTheme === themeOption.id && (
-                        <div className="flex items-center space-x-1">
-                          <Check 
-                            className="h-5 w-5"
-                            style={{ color: theme.styles.buttonBackground }}
-                          />
-                          <span 
-                            className="text-xs font-medium"
-                            style={{ color: theme.styles.buttonBackground }}
-                          >
-                            Activo
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <p 
-                      className="text-sm opacity-80 transition-colors duration-300"
-                      style={{ color: theme.styles.textColor }}
+                      <p 
+                        className="text-sm opacity-80 transition-colors duration-300"
+                        style={{ color: theme.styles.textColor }}
+                      >
+                        {themeOption.description}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Temas Oscuros */}
+                <div>
+                  <h4 
+                    className="text-sm font-semibold mb-2 transition-colors duration-300"
+                    style={{ color: theme.styles.headingColor }}
+                  >
+                    Temas Oscuros
+                  </h4>
+                  {themes.filter(themeOption => themeOption.id.startsWith('dark-')).map((themeOption: ReadingTheme) => (
+                    <button
+                      key={themeOption.id}
+                      onClick={() => handleThemeChange(themeOption.id)}
+                      className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left group mb-2 ${
+                        currentTheme === themeOption.id
+                          ? 'ring-2 ring-primary-200'
+                          : 'hover:opacity-80'
+                      }`}
+                      style={{
+                        backgroundColor: currentTheme === themeOption.id 
+                          ? theme.styles.verseBackground 
+                          : theme.styles.background,
+                        borderColor: currentTheme === themeOption.id 
+                          ? theme.styles.buttonBackground 
+                          : theme.styles.borderColor
+                      }}
                     >
-                      {themeOption.description}
-                    </p>
-                  </button>
-                ))}
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          {/* Vista previa del tema */}
+                          <div 
+                            className="w-8 h-8 rounded-lg border-2 relative overflow-hidden shadow-sm"
+                            style={{
+                              backgroundColor: themeOption.styles.cardBackground,
+                              borderColor: themeOption.styles.borderColor
+                            }}
+                          >
+                            <div 
+                              className="absolute inset-1 rounded"
+                              style={{ backgroundColor: themeOption.styles.verseBackground }}
+                            ></div>
+                            <div 
+                              className="absolute bottom-1 right-1 w-2 h-1 rounded-sm"
+                              style={{ backgroundColor: themeOption.styles.buttonBackground }}
+                            ></div>
+                          </div>
+                          
+                          <div>
+                            <h4 
+                              className="font-medium transition-colors duration-300"
+                              style={{ color: theme.styles.headingColor }}
+                            >
+                              {themeOption.name}
+                            </h4>
+                          </div>
+                        </div>
+                        
+                        {currentTheme === themeOption.id && (
+                          <div className="flex items-center space-x-1">
+                            <Check 
+                              className="h-5 w-5"
+                              style={{ color: theme.styles.buttonBackground }}
+                            />
+                            <span 
+                              className="text-xs font-medium"
+                              style={{ color: theme.styles.buttonBackground }}
+                            >
+                              Activo
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <p 
+                        className="text-sm opacity-80 transition-colors duration-300"
+                        style={{ color: theme.styles.textColor }}
+                      >
+                        {themeOption.description}
+                      </p>
+                    </button>
+                  ))}
+                </div>
               </div>
               
               <div 

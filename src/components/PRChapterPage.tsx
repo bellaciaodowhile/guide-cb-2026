@@ -121,7 +121,6 @@ const PRChapterPage: React.FC = () => {
         onBack={handleBack}
         getNavigationUrl={(chapterNum) => `/profetas-y-reyes/${chapterNum + 38}`}
         fromParam={searchParams.get('from') ? `?from=${searchParams.get('from')}` : ''}
-        buttonColor="purple"
       />
     </div>
   );
