@@ -7,7 +7,6 @@ const ThemeSelector: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleThemeChange = (themeId: string) => {
-    console.log('Seleccionando tema:', themeId); // Debug
     changeTheme(themeId);
     setIsOpen(false);
   };

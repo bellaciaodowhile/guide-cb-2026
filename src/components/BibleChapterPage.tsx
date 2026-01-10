@@ -16,8 +16,6 @@ const BibleChapterPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { theme } = useReadingTheme();
-  
-  console.log('BibleChapterPage renderizado con tema:', theme.id); // Debug
 
   useEffect(() => {
     if (chapterNumber) {

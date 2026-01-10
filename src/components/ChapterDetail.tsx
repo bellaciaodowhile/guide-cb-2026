@@ -18,8 +18,6 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
   const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
   const { theme } = useReadingTheme();
   
-  console.log('ChapterDetail renderizado con tema:', theme.id); // Debug
-  
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -115,7 +113,7 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
                 >
                   Secciones del capítulo:
                 </h4>
-                {chapterDetail.sections.map((section: any, index: number) => (
+                {chapterDetail.sections.map((section: { title: string; description: string; verses: string }, index: number) => (
                   <div 
                     key={index} 
                     className="rounded-lg p-3 border border-primary-200 dark:border-primary-700"

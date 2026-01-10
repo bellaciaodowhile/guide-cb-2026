@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 
 export interface ReadingTheme {
   id: string;
@@ -141,16 +142,25 @@ export const ReadingThemeProvider: React.FC<ReadingThemeProviderProps> = ({ chil
 
   useEffect(() => {
     // Cargar tema guardado al inicializar
-    const savedTheme = localStorage.getItem('reading-theme');
-    if (savedTheme && READING_THEMES.find(theme => theme.id === savedTheme)) {
-      setCurrentTheme(savedTheme);
+    try {
+      const savedTheme = localStorage.getItem('reading-theme');
+      if (savedTheme && READING_THEMES.find(theme => theme.id === savedTheme)) {
+        setCurrentTheme(savedTheme);
+      }
+    } catch {
+      // Fallback si localStorage no está disponible
+      console.warn('localStorage no disponible, usando tema por defecto');
     }
   }, []);
 
   const changeTheme = (themeId: string) => {
-    console.log('Cambiando tema a:', themeId); // Debug
     setCurrentTheme(themeId);
-    localStorage.setItem('reading-theme', themeId);
+    try {
+      localStorage.setItem('reading-theme', themeId);
+    } catch {
+      // Fallback si localStorage no está disponible
+      console.warn('No se pudo guardar el tema en localStorage');
+    }
   };
 
   const theme = READING_THEMES.find(theme => theme.id === currentTheme) || READING_THEMES[0];

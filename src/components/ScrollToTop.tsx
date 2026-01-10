@@ -10,6 +10,9 @@ const ScrollToTop: React.FC = () => {
   const isChapterPage = location.pathname.includes('/bible/daniel/') || location.pathname.includes('/profetas-y-reyes/');
 
   useEffect(() => {
+    // Verificar que estamos en el navegador
+    if (typeof window === 'undefined') return;
+
     // Función para manejar el scroll
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -29,10 +32,12 @@ const ScrollToTop: React.FC = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   // Mostrar si hay scroll suficiente
