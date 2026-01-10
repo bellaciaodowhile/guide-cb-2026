@@ -6,6 +6,7 @@ import ChapterDetail from './ChapterDetail';
 import MobileNavigation from './MobileNavigation';
 import LoadingSpinner from './LoadingSpinner';
 import { AlertTriangle } from 'lucide-react';
+import { useReadingTheme } from '../hooks/useReadingTheme';
 
 const BibleChapterPage: React.FC = () => {
   const { chapterNumber } = useParams<{ chapterNumber: string }>();
@@ -14,6 +15,9 @@ const BibleChapterPage: React.FC = () => {
   const [chapter, setChapter] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { theme } = useReadingTheme();
+  
+  console.log('BibleChapterPage renderizado con tema:', theme.id); // Debug
 
   useEffect(() => {
     if (chapterNumber) {
@@ -65,7 +69,10 @@ const BibleChapterPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex justify-center items-center">
+      <div 
+        className="min-h-screen flex justify-center items-center"
+        style={{ backgroundColor: theme.styles.background }}
+      >
         <LoadingSpinner size="lg" text="Cargando capítulo..." />
       </div>
     );
@@ -73,7 +80,10 @@ const BibleChapterPage: React.FC = () => {
 
   if (error || !chapter) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex justify-center items-center">
+      <div 
+        className="min-h-screen flex justify-center items-center"
+        style={{ backgroundColor: theme.styles.background }}
+      >
         <div className="text-center py-12">
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-8 max-w-md mx-auto">
             <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
@@ -94,7 +104,10 @@ const BibleChapterPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 relative chapter-page-container">
+    <div 
+      className="min-h-screen relative chapter-page-container transition-colors duration-300"
+      style={{ backgroundColor: theme.styles.background }}
+    >
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 min-[750px]:pb-8">
         <ChapterDetail
           chapter={chapter}

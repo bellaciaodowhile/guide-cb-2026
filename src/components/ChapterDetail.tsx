@@ -4,6 +4,8 @@ import type { ApiResponse } from '../types/bible';
 import { CHAPTER_DETAILS } from '../utils/constants';
 import { PRService } from '../services/prService';
 import LoadingSpinner from './LoadingSpinner';
+import ThemeSelector from './ThemeSelector';
+import { useReadingTheme } from '../hooks/useReadingTheme';
 
 interface ChapterDetailProps {
   chapter: ApiResponse;
@@ -14,6 +16,9 @@ interface ChapterDetailProps {
 const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading }) => {
   const [searchParams] = useSearchParams();
   const fromParam = searchParams.get('from') ? `?from=${searchParams.get('from')}` : '';
+  const { theme } = useReadingTheme();
+  
+  console.log('ChapterDetail renderizado con tema:', theme.id); // Debug
   
   if (loading) {
     return (
@@ -32,32 +37,59 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
       {/* Header */}
-      <div className="flex items-center space-x-4 mb-8">
-        <button
-          onClick={onBack}
-          className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 group"
-          aria-label="Volver a capítulos"
-        >
-          <ArrowLeft className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100" />
-        </button>
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Daniel {chapter.chapter}
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            {chapter.verses.length} versículos
-          </p>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={onBack}
+            className="p-3 rounded-lg border hover:opacity-80 transition-all duration-300 group"
+            style={{
+              backgroundColor: theme.styles.cardBackground,
+              borderColor: theme.styles.borderColor
+            }}
+            aria-label="Volver a capítulos"
+          >
+            <ArrowLeft 
+              className="h-5 w-5 group-hover:opacity-80 transition-colors duration-300"
+              style={{ color: theme.styles.textColor }}
+            />
+          </button>
+          <div>
+            <h1 
+              className="text-3xl font-bold transition-colors duration-300"
+              style={{ color: theme.styles.headingColor }}
+            >
+              Daniel {chapter.chapter}
+            </h1>
+            <p 
+              className="text-lg opacity-70 transition-colors duration-300"
+              style={{ color: theme.styles.textColor }}
+            >
+              {chapter.verses.length} versículos
+            </p>
+          </div>
         </div>
+        
+        {/* Selector de tema */}
+        <ThemeSelector />
       </div>
 
       {/* Chapter Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-4 md:mb-6 animate-slide-up">
+      <div 
+        className="rounded-xl shadow-sm border p-6 mb-4 md:mb-6 animate-slide-up transition-colors duration-300"
+        style={{
+          backgroundColor: theme.styles.cardBackground,
+          borderColor: theme.styles.borderColor
+        }}
+      >
         <div className="flex-col md:flex items-start space-x-1 md:space-x-4">
           <div className="hidden md:block p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
             <Book className="h-6 w-6 text-primary-600 dark:text-primary-400" />
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <h2 
+              className="text-2xl font-bold mb-2 transition-colors duration-300"
+              style={{ color: theme.styles.headingColor }}
+            >
               {chapterDetail.title}
             </h2>
             {chapterDetail.subtitle && (
@@ -66,7 +98,10 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
               </p>
             )}
             {chapterDetail.summary && (
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              <p 
+                className="leading-relaxed mb-4 transition-colors duration-300"
+                style={{ color: theme.styles.textColor }}
+              >
                 {chapterDetail.summary}
               </p>
             )}
@@ -74,17 +109,30 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             {/* Secciones especiales para el capítulo 9 */}
             {chapter.chapter === 9 && 'sections' in chapterDetail && chapterDetail.sections && (
               <div className="mt-4 space-y-3">
-                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                <h4 
+                  className="text-sm font-semibold mb-2"
+                  style={{ color: theme.styles.headingColor }}
+                >
                   Secciones del capítulo:
                 </h4>
                 {chapterDetail.sections.map((section: any, index: number) => (
-                  <div key={index} className="bg-white dark:bg-gray-800/50 rounded-lg p-3 border border-primary-200 dark:border-primary-700">
+                  <div 
+                    key={index} 
+                    className="rounded-lg p-3 border border-primary-200 dark:border-primary-700"
+                    style={{ backgroundColor: theme.styles.cardBackground }}
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-0 md:flex-1">
-                        <h5 className="font-medium text-gray-900 dark:text-white text-sm">
+                        <h5 
+                          className="font-medium text-sm"
+                          style={{ color: theme.styles.headingColor }}
+                        >
                           {section.title}
                         </h5>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                        <p 
+                          className="text-xs opacity-70 mt-1"
+                          style={{ color: theme.styles.textColor }}
+                        >
                           {section.description}
                         </p>
                       </div>
@@ -103,17 +151,39 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
 
       {/* Botón para ir a Profetas y Reyes (solo para capítulos 1-6) */}
         {hasPRChapter && prChapterTitle && (
-          <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 md:p-6 border border-purple-200 dark:border-purple-800 mb-4 md:mb-6">
-            <h4 className="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center">
+          <div 
+            className="rounded-xl p-6 md:p-6 border mb-4 md:mb-6 transition-colors duration-300"
+            style={{
+              backgroundColor: theme.styles.verseBackground,
+              borderColor: theme.styles.borderColor
+            }}
+          >
+            <h4 
+              className="text-lg font-semibold mb-2 flex items-center transition-colors duration-300"
+              style={{ color: theme.styles.headingColor }}
+            >
               <BookOpen className="h-5 w-5 mr-2" />
               Contenido Relacionado
             </h4>
-            <p className="text-purple-600 dark:text-purple-300 mb-4">
+            <p 
+              className="mb-4 transition-colors duration-300"
+              style={{ color: theme.styles.textColor }}
+            >
               Lee el comentario inspirado sobre este capítulo en Profetas y Reyes
             </p>
             <Link
               to={`/profetas-y-reyes/${chapter.chapter + 38}${fromParam}`}
-              className="w-full sm:w-auto px-2 md:px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-2 md:px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 hover:opacity-90 transform hover:scale-105"
+              style={{
+                backgroundColor: theme.styles.buttonBackground,
+                color: theme.styles.buttonText
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.styles.buttonHoverBackground;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme.styles.buttonBackground;
+              }}
             >
               <Book className="hidden md:block h-4 w-4" />
               <span>Leer: {prChapterTitle}</span>
@@ -122,9 +192,24 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
         )}
 
       {/* Verses */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div className="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+      <div 
+        className="rounded-xl shadow-sm border overflow-hidden transition-colors duration-300"
+        style={{
+          backgroundColor: theme.styles.cardBackground,
+          borderColor: theme.styles.borderColor
+        }}
+      >
+        <div 
+          className="px-6 py-4 border-b transition-colors duration-300"
+          style={{
+            backgroundColor: theme.styles.verseBackground,
+            borderColor: theme.styles.borderColor
+          }}
+        >
+          <h3 
+            className="text-lg font-semibold flex items-center transition-colors duration-300"
+            style={{ color: theme.styles.headingColor }}
+          >
             <Quote className="h-5 w-5 mr-2 text-primary-600 dark:text-primary-400" />
             Versículos
           </h3>
@@ -135,16 +220,31 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             {chapter.verses.map((verse, index) => (
               <div
                 key={verse.verse}
-                className="flex space-x-2 md:space-x-4 p-3 md:p-4 rounded-lg bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-200 animate-slide-up"
-                style={{ animationDelay: `${index * 50}ms` }}
+                className="flex space-x-2 md:space-x-4 p-3 md:p-4 rounded-lg transition-all duration-300 animate-slide-up hover:opacity-90"
+                style={{ 
+                  backgroundColor: theme.styles.verseBackground,
+                  animationDelay: `${index * 50}ms`
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseHoverBackground;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseBackground;
+                }}
               >
                 <div className="flex-shrink-0">
-                  <span className="font-bold">
+                  <span 
+                    className="font-bold transition-colors duration-300"
+                    style={{ color: theme.styles.headingColor }}
+                  >
                     {verse.verse}
                   </span>
                 </div>
                 <div className="flex-1">
-                  <p className="text-gray-900 dark:text-gray-100 leading-relaxed text-lg">
+                  <p 
+                    className="leading-relaxed text-lg transition-colors duration-300"
+                    style={{ color: theme.styles.textColor }}
+                  >
                     {verse.text}
                   </p>
                 </div>
@@ -163,13 +263,30 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             {hasPrevious ? (
               <Link
                 to={`/bible/daniel/${chapter.chapter - 1}${fromParam}`}
-                className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
+                className="w-full px-2 md:px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-1 hover:opacity-90"
+                style={{
+                  backgroundColor: theme.styles.verseBackground,
+                  color: theme.styles.textColor,
+                  borderColor: theme.styles.borderColor
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseHoverBackground;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseBackground;
+                }}
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Cap. {chapter.chapter - 1}</span>
               </Link>
             ) : (
-              <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
+              <div 
+                className="w-full px-2 md:px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed opacity-50"
+                style={{
+                  backgroundColor: theme.styles.verseBackground,
+                  color: theme.styles.textColor
+                }}
+              >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Primer cap.</span>
               </div>
@@ -179,7 +296,17 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
           {/* Botón Volver */}
           <button
             onClick={onBack}
-            className="px-2 md:px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center space-x-1 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="px-2 md:px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center space-x-1 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 hover:opacity-90"
+            style={{
+              backgroundColor: theme.styles.buttonBackground,
+              color: theme.styles.buttonText
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = theme.styles.buttonHoverBackground;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = theme.styles.buttonBackground;
+            }}
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Capítulos</span>
@@ -190,13 +317,30 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             {hasNext ? (
               <Link
                 to={`/bible/daniel/${chapter.chapter + 1}${fromParam}`}
-                className="w-full px-2 md:px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-1"
+                className="w-full px-2 md:px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-1 hover:opacity-90"
+                style={{
+                  backgroundColor: theme.styles.verseBackground,
+                  color: theme.styles.textColor,
+                  borderColor: theme.styles.borderColor
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseHoverBackground;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = theme.styles.verseBackground;
+                }}
               >
                 <span>Cap. {chapter.chapter + 1}</span>
                 <ChevronRight className="h-4 w-4" />
               </Link>
             ) : (
-              <div className="w-full px-2 md:px-6 py-3 bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-600 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed">
+              <div 
+                className="w-full px-2 md:px-6 py-3 rounded-lg font-medium flex items-center justify-center space-x-1 cursor-not-allowed opacity-50"
+                style={{
+                  backgroundColor: theme.styles.verseBackground,
+                  color: theme.styles.textColor
+                }}
+              >
                 <span>Último cap.</span>
                 <ChevronRight className="h-4 w-4" />
               </div>

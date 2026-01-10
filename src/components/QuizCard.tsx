@@ -26,7 +26,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ animationDelay = '0ms' }) => {
             <button className="bg-white border border-gray-200 rounded-lg px-6 py-3 hover:bg-gray-50 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
               <div className="text-center">
                 <h3 className="text-lg font-bold text-gray-800 mb-1 flex items-center justify-center gap-2">
-                  🧠 Prueba tu conocimiento
+                  Prueba tu conocimiento
                 </h3>
                 <p className="text-gray-600 text-xs font-medium">
                   Próximamente...

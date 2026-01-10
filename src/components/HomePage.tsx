@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
-import bgHomeImage from '../assets/bg-home.jpg';
+import bgHomeImage from '../assets/bg-home.png';
 import topHeroImage from '../assets/top-hero.png';
-import posterMobileBackup from '../assets/poster-mobile-backup.png';
+import posterMobileBackup from '../assets/bg-home-mobile.png';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
@@ -165,16 +165,6 @@ const HomePage: React.FC = () => {
         </div>
       )}
 
-      {/* Imagen top-hero fija en la parte superior para móviles */}
-      <div className={`block min-[750px]:hidden fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${
-        showColumns ? 'transform -translate-y-full' : 'transform translate-y-0'
-      }`}>
-        <img 
-          src={topHeroImage} 
-          alt="Daniel Bible Study Hero" 
-          className="w-full h-auto object-contain"
-        />
-      </div>
 
       {/* Contenido principal */}
       <div className="relative z-30 mx-auto min-h-screen">
@@ -184,64 +174,86 @@ const HomePage: React.FC = () => {
             {/* Botón para pantallas grandes - en la parte inferior con margen */}
             <div className="hidden min-[750px]:block fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
-                <button
-                  onClick={handleStartClick}
-                  className="game-button group relative inline-flex items-center justify-center space-x-2 px-8 py-4 text-lg font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
-                >
-                  {/* Fondo del botón con gradiente verde */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-xl"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 rounded-xl"></div>
-                  
-                  {/* Borde brillante verde */}
-                  <div className="absolute inset-0 rounded-xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
-                  
-                  {/* Efecto de brillo verde */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
-                  
-                  {/* Contenido del botón */}
-                  <div className="relative z-10 flex items-center space-x-2">
-                    <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
-                      <Play className="h-5 w-5" />
+                <div className="animate-float">
+                  <button
+                    onClick={handleStartClick}
+                    className="game-button group relative inline-flex items-center justify-center space-x-2 px-8 py-4 text-lg font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                  >
+                    {/* Fondo del botón con gradiente verde mejorado */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-xl animate-gradient-x"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl"></div>
+                    
+                    {/* Borde brillante verde con pulso */}
+                    <div className="absolute inset-0 rounded-xl border-4 border-green-300/50 group-hover:border-green-200/70 transition-all duration-300 animate-pulse-border"></div>
+                    
+                    {/* Efecto de brillo verde mejorado */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 animate-shimmer"></div>
+                    
+                    {/* Partículas flotantes */}
+                    <div className="absolute inset-0 overflow-hidden rounded-xl">
+                      <div className="absolute top-2 left-4 w-1 h-1 bg-green-300 rounded-full animate-float-particle-1"></div>
+                      <div className="absolute top-6 right-6 w-1.5 h-1.5 bg-emerald-300 rounded-full animate-float-particle-2"></div>
+                      <div className="absolute bottom-4 left-8 w-1 h-1 bg-green-400 rounded-full animate-float-particle-3"></div>
+                      <div className="absolute bottom-2 right-4 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-float-particle-4"></div>
                     </div>
-                    <span className="tracking-wide">COMIENZA TU AVENTURA</span>
-                  </div>
-                  
-                  {/* Partículas decorativas verdes */}
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                </button>
+                    
+                    {/* Contenido del botón */}
+                    <div className="relative z-10 flex items-center space-x-2">
+                      <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300 animate-pulse">
+                        <Play className="h-5 w-5" />
+                      </div>
+                      <span className="tracking-wide">COMIENZA TU AVENTURA</span>
+                    </div>
+                    
+                    {/* Partículas decorativas verdes mejoradas */}
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="absolute -top-2 left-1/2 w-1 h-1 bg-green-300 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Botón para móviles - fijo en la parte inferior */}
             <div className="block min-[750px]:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
-                <button
-                  onClick={handleStartClick}
-                  className="game-button group relative inline-flex items-center justify-center space-x-2 px-6 py-3 text-base font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
-                >
-                  {/* Fondo del botón con gradiente verde */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 rounded-xl"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 rounded-xl"></div>
-                  
-                  {/* Borde brillante verde */}
-                  <div className="absolute inset-0 rounded-xl border-4 border-green-300/40 group-hover:border-green-200/60 transition-all duration-300"></div>
-                  
-                  {/* Efecto de brillo verde */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12"></div>
-                  
-                  {/* Contenido del botón */}
-                  <div className="relative z-10 flex items-center space-x-2">
-                    <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300">
-                      <Play className="h-4 w-4" />
+                <div className="animate-float">
+                  <button
+                    onClick={handleStartClick}
+                    className="game-button group relative inline-flex items-center justify-center space-x-2 px-6 py-3 text-base font-bold text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl hover:shadow-3xl"
+                  >
+                    {/* Fondo del botón con gradiente verde mejorado */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-xl animate-gradient-x"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl"></div>
+                    
+                    {/* Borde brillante verde con pulso */}
+                    <div className="absolute inset-0 rounded-xl border-4 border-green-300/50 group-hover:border-green-200/70 transition-all duration-300 animate-pulse-border"></div>
+                    
+                    {/* Efecto de brillo verde mejorado */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-green-200/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 animate-shimmer"></div>
+                    
+                    {/* Partículas flotantes */}
+                    <div className="absolute inset-0 overflow-hidden rounded-xl">
+                      <div className="absolute top-1 left-3 w-1 h-1 bg-green-300 rounded-full animate-float-particle-1"></div>
+                      <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-emerald-300 rounded-full animate-float-particle-2"></div>
+                      <div className="absolute bottom-3 left-6 w-1 h-1 bg-green-400 rounded-full animate-float-particle-3"></div>
+                      <div className="absolute bottom-1 right-3 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-float-particle-4"></div>
                     </div>
-                    <span className="tracking-wide whitespace-nowrap">COMIENZA TU AVENTURA</span>
-                  </div>
-                  
-                  {/* Partículas decorativas verdes */}
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                </button>
+                    
+                    {/* Contenido del botón */}
+                    <div className="relative z-10 flex items-center space-x-2">
+                      <div className="p-1.5 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors duration-300 animate-pulse">
+                        <Play className="h-4 w-4" />
+                      </div>
+                      <span className="tracking-wide whitespace-nowrap">COMIENZA TU AVENTURA</span>
+                    </div>
+                    
+                    {/* Partículas decorativas verdes mejoradas */}
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="absolute -top-2 left-1/2 w-1 h-1 bg-green-300 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                  </button>
+                </div>
               </div>
             </div>
           </>
