@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, Undo2, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
 import { LocalBibleService } from '../services/localBibleService';
 import type { ChapterInfo } from '../types/bible';
 import ChapterCard from './ChapterCard';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
+import QuizCard from './QuizCard';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
@@ -60,12 +59,8 @@ const GuiasmayoresDaniel: React.FC = () => {
     }
   ];
 
-  const handleExploreClick = () => {
-    navigate(categories[activeCardIndex].route);
-  };
-
-  const handleSplideMove = (_splide: any, newIndex: number) => {
-    setActiveCardIndex(newIndex);
+  const handleExploreClick = (route: string) => {
+    navigate(route);
   };
 
   useEffect(() => {
@@ -89,36 +84,52 @@ const GuiasmayoresDaniel: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="w-[190px] h-80 absolute top-[0] left-0 z-10 " style={{
-          backgroundImage: `url(${maskAventureros})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat'
-        }}>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
-      <Link to="/aventureros" className="absolute h-80 w-[120px]">
-        <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
-      </Link>
+      
+      {/* Background Hero Section para pantallas > 770px */}
+      <div className="hidden min-[771px]:block">
+        <div 
+          className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat transition-all duration-500"
+          style={{
+            backgroundImage: `url(${categories[activeCardIndex].bgImage})`
+          }}
+        >
+          {/* Gradiente que permite ver más imagen y se extiende detrás del header */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+        </div>
       </div>
-      <div className="w-[190px] h-80 absolute top-[0] right-0 z-10" style={{
-          backgroundImage: `url(${maskConquistadores})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          transform: 'rotateY(180deg)'
-        }}>
-       <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
-       <Link to="/conquistadores" className="absolute h-80 w-[120px]">
-        <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
-       </Link>
-      </div>
-      {/* Background Hero Section */}
-      <div 
-        className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${bgGuiasmayores})`
-        }}
-      >
-        {/* Gradiente que permite ver más imagen y se extiende detrás del header */}
+      
+      <div className='block min-[771px]:hidden'>
+        <div className="w-[190px] h-80 absolute top-[0] left-0 z-10 " style={{
+            backgroundImage: `url(${maskAventureros})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+          }}>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+        <Link to="/aventureros" className="absolute h-80 w-[120px]">
+          <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
+        </Link>
+        </div>
+        <div className="w-[190px] h-80 absolute top-[0] right-0 z-10" style={{
+            backgroundImage: `url(${maskConquistadores})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            transform: 'rotateY(180deg)'
+          }}>
+         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+         <Link to="/conquistadores" className="absolute h-80 w-[120px]">
+          <ChevronLeft className='absolute top-[100px] text-white w-10 h-10 left-2'></ChevronLeft>
+         </Link>
+        </div>
+        {/* Background Hero Section */}
+        <div 
+          className="category-hero-bg relative h-80 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${bgGuiasmayores})`
+          }}
+        >
+          {/* Gradiente que permite ver más imagen y se extiende detrás del header */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% to-white dark:to-gray-900"></div>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -144,104 +155,98 @@ const GuiasmayoresDaniel: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-4 md:space-y-8">
-            {/* Carousel de Categorías */}
-            <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
-              {/* Título del carousel */}
-              <div className="text-left">
-                
+          <div className="space-y-4 md:space-y-8 mt-0 min-[771px]:mt-32">
+            {/* Cards en flex-row - Solo pantallas > 770px */}
+            <div className="hidden min-[771px]:block bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
+              <div className="text-left mb-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     Guías Mayores
                   </h2>
-                  <Link
-                    to="/"
-                    className=""
-                  >
-                    <Undo2 className='w-7 h-7  mt-1'></Undo2>
+                  <Link to="/" className="">
+                    <Undo2 className='w-7 h-7 mt-1'></Undo2>
                   </Link>
                 </div>
                 <p className="text-gray-600 text-md md:text-xl dark:text-gray-300 italic">
                   "La Bíblia es un mapa para volver a casa." - Jiménez
                 </p>
               </div>
-
-              {/* Carousel Container con Splide */}
-              <div className="relative hidden">
-                <Splide
-                  options={{
-                    type: 'loop',
-                    perPage: 3,
-                    perMove: 1,
-                    gap: '1rem',
-                    pagination: false,
-                    arrows: true,
-                    focus: 'center',
-                    trimSpace: false,
-                    autoplay: false,
-                    breakpoints: {
-                      768: {
-                        perPage: 1,
-                        gap: '0.5rem',
-                      },
-                    },
-                  }}
-                  onMove={handleSplideMove}
-                  className="splide-carousel"
-                >
-                  {categories.map((category, index) => (
-                    <SplideSlide key={category.id}>
-                      <div
-                        onClick={() => handleExploreClick()}
-                        className={`relative cursor-pointer transition-all duration-300 mx-2 ${
-                          index === activeCardIndex 
-                            ? 'transform -translate-y-4 scale-105' 
-                            : 'transform translate-y-0 scale-95 opacity-75 hover:opacity-90'
-                        }`}
-                      >
-                        {/* Card */}
-                        <div className={`relative w-full h-64 rounded-xl overflow-hidden shadow-lg ${
-                          index === activeCardIndex ? 'shadow-2xl' : 'shadow-md'
-                        }`}>
-                          {/* Imagen de fondo */}
-                          <div 
-                            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                            style={{
-                              backgroundImage: `url(${category.bgImage})`
-                            }}
-                          />
-                          
-                          {/* Overlay con gradiente */}
-                          <div className={`absolute inset-0 bg-gradient-to-b from-transparent to-amber`} />
-                          
-                          {/* Contenido de la card */}
-                          <div className="relative z-10 h-full flex flex-col justify-end items-center p-4 text-white text-center">
-                            {/* Información */}
-                            <div className="mb-4 flex items-center">
-                              <h3 className="text-xl font-bold mb-2">{category.name}</h3>
-                              {index === activeCardIndex && (
-                                <div className="flex flex-col items-center space-y-1 ml-2">
-                                  <MousePointer2 className="h-4 w-4 text-white animate-click-bounce" />
-                                </div>
-                              )}
+              
+              <div className="flex flex-row gap-4 justify-center">
+                {categories.map((category, index) => (
+                  <div
+                    key={category.id}
+                    onClick={() => handleExploreClick(category.route)}
+                    onMouseEnter={() => setActiveCardIndex(index)}
+                    className={`relative cursor-pointer transition-all duration-300 flex-1 max-w-sm ${
+                      index === activeCardIndex 
+                        ? 'transform -translate-y-2 scale-105' 
+                        : 'transform translate-y-0 scale-100 opacity-90 hover:opacity-100 hover:-translate-y-1'
+                    }`}
+                  >
+                    {/* Card */}
+                    <div className={`relative w-full h-64 rounded-xl overflow-hidden shadow-lg ${
+                      index === activeCardIndex ? 'shadow-2xl ring-2 ring-purple-500' : 'shadow-md hover:shadow-lg'
+                    }`}>
+                      {/* Imagen de fondo */}
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                        style={{
+                          backgroundImage: `url(${category.bgImage})`
+                        }}
+                      />
+                      
+                      {/* Overlay con gradiente */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
+                      
+                      {/* Contenido de la card */}
+                      <div className="relative z-10 h-full flex flex-col justify-end items-center p-4 text-white text-center">
+                        <div className="mb-4 flex items-center">
+                          <h3 className="text-xl font-bold mb-2">{category.name}</h3>
+                          {index === activeCardIndex && (
+                            <div className="flex flex-col items-center space-y-1 ml-2">
+                              <MousePointer2 className="h-4 w-4 text-white animate-bounce" />
                             </div>
-                            
-                          </div>
+                          )}
                         </div>
+                        <p className="text-sm opacity-90">{category.description}</p>
+                        <p className="text-xs opacity-75 mt-1">{category.subtitle}</p>
                       </div>
-                    </SplideSlide>
-                  ))}
-                </Splide>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Indicadores del carousel - Removidos ya que Splide maneja la navegación */}
+            {/* Carousel de Categorías mobile - Solo pantallas ≤ 770px */}
+            <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6 block min-[771px]:hidden" style={
+             {background: 'linear-gradient(45deg, #0a113c, #083f6b)'}
+            }>
+              {/* Título del carousel */}
+              <div className="text-left">
+                
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-white/90">
+                    Guías Mayores
+                  </h2>
+                  <Link
+                    to="/"
+                    className=""
+                  >
+                    <Undo2 className='w-7 h-7 -mt-4 text-white'></Undo2>
+                  </Link>
+                </div>
+                <p className="text-gray-600 text-md md:text-xl text-white/50 italic">
+                  "La Bíblia es un mapa para volver a casa." - Jiménez
+                </p>
+              </div>
             </div>
 
             {/* Stats */}
             <StatsCard chapters={chapters} />
 
             {/* Contenido Accordion */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+            <div className="bg-[#fff] dark:bg-gray-800 rounded-xl shadow-sm animate-fade-in border">
               {/* Accordion Header */}
               <button
                 onClick={() => setIsContentOpen(!isContentOpen)}
@@ -259,9 +264,9 @@ const GuiasmayoresDaniel: React.FC = () => {
 
               {/* Accordion Content */}
               <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                isContentOpen ? 'h-full opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'
+                isContentOpen ? 'max-h-[32rem] opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'
               }`}>
-                <div className={`px-6 pb-6 transition-all duration-300 delay-100 ${
+                <div className={`px-6 pb-6 transition-all duration-500 delay-75 ${
                   isContentOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
                 }`}>
                   <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -321,17 +326,43 @@ const GuiasmayoresDaniel: React.FC = () => {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {chapters.filter(chapter => chapter.chapter >= 1 && chapter.chapter <= 6).map((chapter, index) => (
-                    <div
-                      key={chapter.chapter}
-                      className="animate-fade-in"
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <ChapterCard
-                        chapter={chapter}
-                      />
-                    </div>
-                  ))}
+                  {chapters.filter(chapter => chapter.chapter >= 1 && chapter.chapter <= 6).map((chapter, index) => {
+                    // Insertar la card de quiz como el tercer elemento (índice 2)
+                    if (index === 2) {
+                      return (
+                        <>
+                          {/* Quiz Card como tercer elemento */}
+                          <QuizCard
+                            key="quiz-card"
+                            animationDelay={`${index * 100}ms`}
+                          />
+                          
+                          {/* Chapter Card actual */}
+                          <div
+                            key={chapter.chapter}
+                            className="animate-fade-in"
+                            style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                          >
+                            <ChapterCard
+                              chapter={chapter}
+                            />
+                          </div>
+                        </>
+                      );
+                    }
+                    
+                    return (
+                      <div
+                        key={chapter.chapter}
+                        className="animate-fade-in"
+                        style={{ animationDelay: `${index < 2 ? index * 100 : (index + 1) * 100}ms` }}
+                      >
+                        <ChapterCard
+                          chapter={chapter}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -363,7 +394,6 @@ const GuiasmayoresDaniel: React.FC = () => {
                 </div>
               </div>
             </div>
-
 
           </div>
         )}
