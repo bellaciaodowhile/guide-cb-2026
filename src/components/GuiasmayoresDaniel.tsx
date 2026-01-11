@@ -271,7 +271,7 @@ const GuiasmayoresDaniel: React.FC = () => {
 
               {/* Accordion Content */}
               <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                isContentOpen ? 'max-h-[32rem] opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'
+                isContentOpen ? 'max-h-[40rem] opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'
               }`}>
                 <div className={`px-6 pb-6 transition-all duration-500 delay-75 ${
                   isContentOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
