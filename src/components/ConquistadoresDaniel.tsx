@@ -29,7 +29,13 @@ const ConquistadoresDaniel: React.FC = () => {
   const conquistadoresChapters = [1, 2, 3, 4, 5, 6];
 
   // Función para navegar al home y mostrar columnas
-  const handleGoHome = () => {
+  const handleShowColumns = () => {
+    // Limpiar la categoría guardada en localStorage
+    try {
+      localStorage.removeItem('daniel-bible-preference');
+    } catch (error) {
+      console.warn('No se pudo limpiar localStorage');
+    }
     // Marcar que queremos mostrar las columnas en el HomePage
     sessionStorage.setItem('showColumns', 'true');
     navigate('/');
@@ -174,7 +180,7 @@ const ConquistadoresDaniel: React.FC = () => {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     Conquistadores
                   </h2>
-                  <button onClick={handleGoHome} className="">
+                  <button onClick={handleShowColumns} className="">
                     <Undo2 className='w-7 h-7 mt-1'></Undo2>
                   </button>
                 </div>
@@ -241,7 +247,7 @@ const ConquistadoresDaniel: React.FC = () => {
                     Conquistadores
                   </h2>
                   <button
-                    onClick={handleGoHome}
+                    onClick={handleShowColumns}
                     className=""
                   >
                     <Undo2 className='w-7 h-7 -mt-4 text-white'></Undo2>

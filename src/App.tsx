@@ -61,23 +61,6 @@ const App: React.FC = () => {
 
         {/* Scroll to Top Button */}
         <ScrollToTop />
-
-        {/* Footer */}
-        <footer className="hidden mt-16 py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="text-gray-600 dark:text-gray-400">
-                By{' '}
-                <a
-                  href="mailto:codezardi@gmail.com"
-                  className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors duration-200 hover:underline"
-                >
-                  Codezardi
-                </a>
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
     </Router>
   );

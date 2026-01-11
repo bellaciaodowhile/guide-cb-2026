@@ -27,6 +27,12 @@ const GuiasmayoresDaniel: React.FC = () => {
 
   // Función para navegar al home y mostrar columnas
   const handleShowColumns = () => {
+    // Limpiar la categoría guardada en localStorage
+    try {
+      localStorage.removeItem('daniel-bible-preference');
+    } catch (error) {
+      console.warn('No se pudo limpiar localStorage');
+    }
     // Marcar que queremos mostrar las columnas en el HomePage
     sessionStorage.setItem('showColumns', 'true');
     navigate('/');
