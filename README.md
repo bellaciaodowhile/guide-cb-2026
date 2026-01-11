@@ -1,197 +1,134 @@
-# 📖 Explorador del Libro de Daniel
+# 📖 Libro de Daniel - Explorador Bíblico Interactivo
 
-Una aplicación web moderna e interactiva para explorar el libro de Daniel de la Biblia, construida con React, Vite y Tailwind CSS.
+Una aplicación web interactiva para explorar el libro de Daniel con contenido adaptado para diferentes edades: **Aventureros**, **Conquistadores** y **Guías Mayores**.
 
-## ✨ Características
+## 🌟 Características
 
-- 📚 **Navegación completa**: Explora los 12 capítulos del libro de Daniel
-- 🌙 **Tema oscuro/claro**: Cambia entre temas con un solo clic
-- 📱 **Diseño responsive**: Optimizado para móviles, tablets y desktop
-- 🎨 **Interfaz moderna**: Diseño elegante con Tailwind CSS
-- 📊 **Estadísticas detalladas**: Información sobre versículos, capítulos y más
-- ⚡ **Carga rápida**: Construido con Vite para máximo rendimiento
-- 🔍 **Información contextual**: Títulos, subtítulos y resúmenes de cada capítulo
-- 🎯 **Experiencia intuitiva**: Navegación fluida y animaciones suaves
+- **📱 Responsive Design**: Optimizado para móviles, tablets y desktop
+- **🎨 Temas Personalizables**: 12 temas de lectura (6 claros + 6 oscuros) para reducir fatiga visual
+- **📚 Contenido Adaptado**: 
+  - **Aventureros** (hasta 9 años): Capítulos 1-3, 6
+  - **Conquistadores** (hasta 15 años): Capítulos 1-6
+  - **Guías Mayores** (16+ años): Capítulos 1-12 completos
+- **📖 Comentarios Inspirados**: Incluye capítulos relacionados de "Profetas y Reyes" de Elena G. White
+- **🔍 SEO Optimizado**: Meta tags completas, sitemap, robots.txt
+- **⚡ PWA Ready**: Funciona como aplicación web progresiva
 
-## 🛠️ Tecnologías Utilizadas
+## 🚀 Tecnologías
 
-- **React 18** - Biblioteca de interfaz de usuario
-- **TypeScript** - Tipado estático para JavaScript
-- **Vite** - Herramienta de construcción rápida
-- **Tailwind CSS** - Framework de CSS utilitario
-- **Lucide React** - Iconos modernos y elegantes
-- **Bible API** - API de bible-api.deno.dev
-- **Reina Valera 1995** - Versión bíblica utilizada
+- **React 18** con TypeScript
+- **Tailwind CSS** para estilos
+- **React Router** para navegación
+- **Vite** como bundler
+- **Lucide React** para iconos
 
-## 🚀 Instalación y Uso
+## 📱 Características PWA
 
-### Prerrequisitos
-- Node.js 18+ 
-- npm o yarn
+- Instalable en dispositivos móviles
+- Funciona offline (próximamente)
+- Iconos y splash screens optimizados
+- Shortcuts a categorías principales
 
-### Pasos de instalación
+## 🎨 Temas de Lectura
 
-1. **Clonar el repositorio**:
-   ```bash
-   git clone <url-del-repositorio>
-   cd daniel-bible-app
-   ```
+### Temas Claros
+- **Clásico**: Tema por defecto con contraste equilibrado
+- **Sepia**: Tonos cálidos que reducen la fatiga visual
+- **Crema**: Fondo suave color crema para lectura prolongada
+- **Salvia**: Verde suave que relaja la vista
+- **Lavanda**: Púrpura suave que calma y reduce el estrés visual
+- **Papel**: Simula papel envejecido para una experiencia clásica
 
-2. **Instalar dependencias**:
-   ```bash
-   npm install
-   ```
+### Temas Oscuros
+- **Pizarra Oscura**: Elegante gris oscuro con azul
+- **Bosque Nocturno**: Verde oscuro relajante
+- **Océano Profundo**: Azul oscuro para lectura nocturna
+- **Violeta Nocturno**: Púrpura oscuro que reduce fatiga visual
+- **Ámbar Oscuro**: Tonos cálidos oscuros
+- **Minimalista Oscuro**: Negro puro con máximo contraste
 
-3. **Iniciar el servidor de desarrollo**:
-   ```bash
-   npm run dev
-   ```
+## 📊 SEO y Performance
 
-4. **Abrir en el navegador**:
-   La aplicación se abrirá automáticamente en `http://localhost:5173`
+- **Meta tags completas** para redes sociales (Open Graph, Twitter Cards)
+- **Schema.org structured data** para mejor indexación
+- **Sitemap XML** con todas las páginas
+- **Robots.txt** optimizado
+- **Canonical URLs** para evitar contenido duplicado
+- **Compresión GZIP** habilitada
+- **Cache headers** optimizados
 
-## 📁 Estructura del Proyecto
+## 🔗 Enlaces Importantes
 
-```
-src/
-├── components/          # Componentes React reutilizables
-│   ├── ChapterCard.tsx     # Tarjeta de capítulo
-│   ├── ChapterDetail.tsx   # Vista detallada del capítulo
-│   ├── LoadingSpinner.tsx  # Indicador de carga
-│   └── StatsCard.tsx       # Tarjeta de estadísticas
-├── hooks/              # Hooks personalizados
-│   └── useTheme.ts        # Hook para manejo de temas
-├── services/           # Servicios de API
-│   └── bibleApi.ts        # Servicio para consumir la API
-├── types/              # Definiciones de TypeScript
-│   └── bible.ts           # Tipos para datos bíblicos
-├── utils/              # Utilidades y constantes
-│   └── constants.ts       # Configuración y datos estáticos
-├── App.tsx             # Componente principal
-├── main.tsx            # Punto de entrada
-└── index.css           # Estilos globales
-```
+- **Sitio Web**: [https://daniel-bible-app.vercel.app/](https://daniel-bible-app.vercel.app/)
+- **Sitemap**: [https://daniel-bible-app.vercel.app/sitemap.xml](https://daniel-bible-app.vercel.app/sitemap.xml)
+- **Robots.txt**: [https://daniel-bible-app.vercel.app/robots.txt](https://daniel-bible-app.vercel.app/robots.txt)
 
-## 🎯 Funcionalidades Principales
+## 📖 Contenido
 
-### 🏠 Vista Principal
-- Lista interactiva de los 12 capítulos
-- Información detallada de cada capítulo (título, subtítulo, resumen)
-- Estadísticas del libro completo
-- Cambio de tema claro/oscuro
+### Capítulos Bíblicos (Daniel)
+- Texto completo de los 12 capítulos del libro de Daniel
+- Versión Reina Valera 1995
+- Navegación intuitiva entre capítulos
+- Información contextual de cada capítulo
 
-### 📖 Vista de Capítulo
-- Lectura completa del capítulo seleccionado
-- Numeración clara de versículos
-- Información contextual del capítulo
-- Navegación fácil de regreso
+### Comentarios (Profetas y Reyes)
+- Capítulos 39-44 de "Profetas y Reyes" de Elena G. White
+- Comentarios inspirados sobre los capítulos de Daniel
+- Enlaces cruzados entre contenido bíblico y comentarios
 
-### 📊 Estadísticas Interactivas
-- Total de capítulos y versículos
-- Promedio de versículos por capítulo
-- Capítulo más largo y más corto
-- Información adicional del libro
+## 🎯 Audiencia
 
-## 🎨 Características de Diseño
+- **Estudiantes de la Biblia** de todas las edades
+- **Iglesia Adventista del Séptimo Día**
+- **Educadores religiosos**
+- **Familias** que estudian juntas
+- **Jóvenes** en programas de Aventureros, Conquistadores y Guías Mayores
 
-- **Paleta de colores**: Azul y blanco como colores principales
-- **Responsive**: Adaptable a todos los tamaños de pantalla
-- **Animaciones**: Transiciones suaves y efectos visuales
-- **Accesibilidad**: Contraste adecuado y navegación por teclado
-- **Tipografía**: Fuentes legibles y jerarquía clara
+## 📱 Instalación como PWA
 
-## 🔌 API Utilizada
+1. Visita [daniel-bible-app.vercel.app](https://daniel-bible-app.vercel.app/)
+2. En tu navegador móvil, busca la opción "Agregar a pantalla de inicio"
+3. La aplicación se instalará como una app nativa
 
-La aplicación consume la API de `bible-api.deno.dev`:
-
-- **Base URL**: `https://bible-api.deno.dev/api`
-- **Endpoints utilizados**:
-  - `/read/rv1995/daniel/{chapter}` - Obtener capítulo completo
-  - `/read/rv1995/daniel/{chapter}/{verse}` - Obtener versículo específico
-- **Versión**: Reina Valera 1995 (rv1995)
-- **Libro**: Daniel (12 capítulos)
-
-## 📜 Scripts Disponibles
+## 🔧 Desarrollo Local
 
 ```bash
-# Desarrollo
-npm run dev          # Inicia el servidor de desarrollo
+# Clonar repositorio
+git clone [repository-url]
 
-# Construcción
-npm run build        # Construye la aplicación para producción
-npm run preview      # Previsualiza la construcción de producción
+# Instalar dependencias
+npm install
 
-# Linting
-npm run lint         # Ejecuta ESLint para verificar el código
+# Ejecutar en desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
+
+# Vista previa de producción
+npm run preview
 ```
 
-## 🎛️ Configuración
+## 📈 Analytics
 
-### Cambiar Versión de la Biblia
-Para usar una versión diferente, modifica `API_CONFIG.VERSION` en `src/utils/constants.ts`:
+La aplicación incluye Google Analytics (G-PRPGXSWQGT) para monitorear:
+- Páginas más visitadas
+- Tiempo de permanencia
+- Dispositivos utilizados
+- Flujo de navegación de usuarios
 
-```typescript
-export const API_CONFIG = {
-  VERSION: 'rv1960', // Cambiar aquí
-  // ... otras configuraciones
-};
-```
+## 🤝 Contribuciones
 
-Versiones disponibles:
-- `rv1960` - Reina Valera 1960
-- `rv1995` - Reina Valera 1995
-- `dhh` - Dios Habla Hoy
-- `nvi` - Nueva Versión Internacional
-
-### Personalizar Colores
-Los colores se pueden modificar en `tailwind.config.js`:
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        // Personalizar la paleta de colores aquí
-      }
-    }
-  }
-}
-```
-
-## 🌟 Características Avanzadas
-
-### Información Contextual
-Cada capítulo incluye:
-- **Título descriptivo**: Nombre temático del capítulo
-- **Subtítulo**: Descripción específica del contenido
-- **Resumen**: Breve explicación del capítulo
-- **Estadísticas**: Número de versículos y posición en el libro
-
-### Experiencia de Usuario
-- **Carga progresiva**: Los capítulos se cargan de forma asíncrona
-- **Estados de carga**: Indicadores visuales durante las operaciones
-- **Manejo de errores**: Mensajes informativos y opciones de reintento
-- **Navegación intuitiva**: Flujo natural entre vistas
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+Este proyecto está desarrollado para la comunidad adventista. Las contribuciones son bienvenidas para mejorar la experiencia de estudio bíblico.
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🙏 Agradecimientos
-
-- [Bible API](https://bible-api.deno.dev/) por proporcionar acceso gratuito a las Escrituras
-- [Lucide](https://lucide.dev/) por los hermosos iconos
-- [Tailwind CSS](https://tailwindcss.com/) por el framework de CSS
-- [Vite](https://vitejs.dev/) por la herramienta de construcción rápida
+Contenido bíblico: Dominio público (Reina Valera 1995)
+Comentarios: Elena G. White Estate
+Código: Desarrollado para uso educativo y religioso
 
 ---
 
-**Hecho con ❤️ para el estudio bíblico interactivo**
+**Desarrollado con ❤️ para la comunidad adventista**
+
+*"Pero tú, Daniel, cierra las palabras y sella el libro hasta el tiempo del fin. Muchos correrán de aquí para allá, y la ciencia se aumentará."* - Daniel 12:4

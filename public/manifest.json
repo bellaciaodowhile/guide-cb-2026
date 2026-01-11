@@ -1,0 +1,73 @@
+{
+  "name": "Libro de Daniel - Explorador Bíblico",
+  "short_name": "Daniel Bíblico",
+  "description": "Explora el libro de Daniel de manera interactiva con contenido adaptado para Aventureros, Conquistadores y Guías Mayores",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["education", "books", "religion"],
+  "icons": [
+    {
+      "src": "/src/assets/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/src/assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/src/assets/poster-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Aventureros",
+      "short_name": "Aventureros",
+      "description": "Contenido para Aventureros (hasta 9 años)",
+      "url": "/aventureros",
+      "icons": [
+        {
+          "src": "/src/assets/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Conquistadores",
+      "short_name": "Conquistadores",
+      "description": "Contenido para Conquistadores (hasta 15 años)",
+      "url": "/conquistadores",
+      "icons": [
+        {
+          "src": "/src/assets/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Guías Mayores",
+      "short_name": "Guías Mayores",
+      "description": "Contenido para Guías Mayores (16+ años)",
+      "url": "/guiasmayores",
+      "icons": [
+        {
+          "src": "/src/assets/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

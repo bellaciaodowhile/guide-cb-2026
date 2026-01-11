@@ -7,6 +7,7 @@ import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import bgHomeImage from '../assets/bg-home.png';
 import topHeroImage from '../assets/top-hero.png';
 import posterMobileBackup from '../assets/bg-home-mobile.png';
+import SEOHead from './SEOHead';
 import '../assets/css/styles.css';
 
 const HomePage: React.FC = () => {
@@ -142,6 +143,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
+      <SEOHead 
+        title="Libro de Daniel - Explorador Bíblico Interactivo | Aventureros, Conquistadores y Guías Mayores"
+        description="Explora el libro de Daniel de manera interactiva con contenido adaptado para Aventureros, Conquistadores y Guías Mayores. Incluye capítulos bíblicos, comentarios de Profetas y Reyes, y temas de lectura personalizables."
+        keywords="libro de daniel, biblia, aventureros, conquistadores, guías mayores, profetas y reyes, elena white, estudio bíblico, reina valera 1995, daniel biblia, iglesia adventista"
+      />
+      
       {/* Imagen de fondo estática para pantallas grandes */}
       <div 
         className="hidden min-[750px]:block absolute inset-0 bg-cover bg-center bg-no-repeat"
