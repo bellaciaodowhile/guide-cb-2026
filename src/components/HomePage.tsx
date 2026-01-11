@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users, Award, Crown, Play, MousePointer2 } from 'lucide-react';
+import { Users, Award, Crown, Play, MousePointer2, Home } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
@@ -39,6 +39,13 @@ const HomePage: React.FC = () => {
         navigate(selectedRoute);
         return;
       }
+    }
+
+    // Verificar si se debe mostrar las columnas automáticamente
+    const shouldShowColumns = sessionStorage.getItem('showColumns');
+    if (shouldShowColumns === 'true') {
+      sessionStorage.removeItem('showColumns'); // Limpiar la marca
+      setShowColumns(true);
     }
   }, [navigate]);
 
@@ -269,6 +276,23 @@ const HomePage: React.FC = () => {
         {/* Three Expandable Columns */}
         {showColumns && (
           <div className="absolute inset-0 z-[70] h-screen flex items-center">
+            {/* Home button fijo en top-right */}
+            <button
+              onClick={() => {
+                try {
+                  localStorage.removeItem('daniel-bible-preference');
+                } catch (error) {
+                  console.warn('No se pudo limpiar localStorage');
+                }
+                setShowColumns(false);
+                setSelectedCategory(null);
+              }}
+              className="fixed top-6 right-6 z-[80] p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full border border-white/30 text-white transition-all duration-300 hover:scale-110"
+              aria-label="Cerrar columnas"
+            >
+              <Home className="h-6 w-6" />
+            </button>
+
             <div className="columns-container h-screen w-full mx-auto">
               {categories.map((category) => (
                 <div

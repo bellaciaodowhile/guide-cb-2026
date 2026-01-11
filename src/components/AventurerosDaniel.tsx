@@ -28,13 +28,10 @@ const AventurerosDaniel: React.FC = () => {
   // Capítulos para Aventureros: 1, 2, 3, 6
   const aventurerosChapters = [1, 2, 3, 6];
 
-  // Función para limpiar localStorage y navegar al home
+  // Función para navegar al home y mostrar columnas
   const handleGoHome = () => {
-    try {
-      localStorage.removeItem('daniel-bible-preference');
-    } catch (error) {
-      console.warn('No se pudo limpiar localStorage');
-    }
+    // Marcar que queremos mostrar las columnas en el HomePage
+    sessionStorage.setItem('showColumns', 'true');
     navigate('/');
   };
 

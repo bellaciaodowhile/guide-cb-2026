@@ -25,13 +25,10 @@ const GuiasmayoresDaniel: React.FC = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(2); // Guías Mayores es el índice 2
   const [isContentOpen, setIsContentOpen] = useState(false);
 
-  // Función para limpiar localStorage y navegar al home
-  const handleGoHome = () => {
-    try {
-      localStorage.removeItem('daniel-bible-preference');
-    } catch (error) {
-      console.warn('No se pudo limpiar localStorage');
-    }
+  // Función para navegar al home y mostrar columnas
+  const handleShowColumns = () => {
+    // Marcar que queremos mostrar las columnas en el HomePage
+    sessionStorage.setItem('showColumns', 'true');
     navigate('/');
   };
 
@@ -173,7 +170,7 @@ const GuiasmayoresDaniel: React.FC = () => {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     Guías Mayores
                   </h2>
-                  <button onClick={handleGoHome} className="">
+                  <button onClick={handleShowColumns} className="">
                     <Undo2 className='w-7 h-7 mt-1'></Undo2>
                   </button>
                 </div>
@@ -240,7 +237,7 @@ const GuiasmayoresDaniel: React.FC = () => {
                     Guías Mayores
                   </h2>
                   <button
-                    onClick={handleGoHome}
+                    onClick={handleShowColumns}
                     className=""
                   >
                     <Undo2 className='w-7 h-7 -mt-4 text-white'></Undo2>
