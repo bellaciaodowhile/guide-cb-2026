@@ -185,8 +185,8 @@ const HomePage: React.FC = () => {
         {/* Hero Section - Solo se muestra si no se han mostrado las columnas */}
         {!showColumns && (
           <>
-            {/* Botón para pantallas grandes - en la parte inferior con margen */}
-            <div className="hidden min-[750px]:block fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
+            {/* Botón para pantallas grandes - subido más arriba */}
+            <div className="hidden min-[750px]:block fixed bottom-24 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <div className="animate-float">
                   <button
@@ -228,8 +228,27 @@ const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Botón para móviles - fijo en la parte inferior */}
-            <div className="block min-[750px]:hidden fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+            {/* Texto flotante debajo del botón para pantallas grandes */}
+            <div className="hidden w-max min-[750px]:block fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <div className="animate-float">
+                  <p className="text-white text-center text-lg font-medium bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
+                    Desarrollado con{' '}
+                    <span className="inline-block animate-heartbeat text-red-500">❤️</span>
+                    {' '}por{' '}
+                    <a 
+                      href="#" 
+                      className="text-blue-300 hover:text-blue-200 font-semibold transition-colors duration-200 hover:underline"
+                    >
+                      codezardi
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Botón para móviles - subido más arriba */}
+            <div className="block min-[750px]:hidden fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <div className="animate-float">
                   <button
@@ -267,6 +286,25 @@ const HomePage: React.FC = () => {
                     <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute -top-2 left-1/2 w-1 h-1 bg-green-300 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                   </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Texto flotante debajo del botón para móviles */}
+            <div className="block w-max min-[750px]:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <div className="animate-float">
+                  <p className="text-white text-center text-base font-medium bg-black/30 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
+                    Desarrollado con{' '}
+                    <span className="inline-block animate-heartbeat text-red-500">❤️</span>
+                    {' '}por{' '}
+                    <a 
+                      href="#" 
+                      className="text-blue-300 hover:text-blue-200 font-semibold transition-colors duration-200 hover:underline"
+                    >
+                      codezardi
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>

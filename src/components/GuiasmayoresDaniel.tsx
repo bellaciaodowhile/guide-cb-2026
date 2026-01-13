@@ -8,6 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
 import QuizCard from './QuizCard';
+import Footer from './Footer';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
@@ -412,6 +413,7 @@ const GuiasmayoresDaniel: React.FC = () => {
         )}
       </main>
 
+      <Footer />
       <ScrollToTop />
     </div>
   );
