@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
 
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent('¿Sientes que el papeleo y los procesos lentos frenan tu crecimiento? Es momento de transformar tu administración. Desarrollo sistemas personalizados para: Automatizar tareas repetitivas, Digitalizar toda tu información, Tener el control de tu negocio en un solo lugar. Pídeme una asesoría por mensaje directo.');
-    window.open(`https://api.whatsapp.com/send/?phone=584249317720&text=${message}&type=phone_number&app_absent=0`, '_blank');
+    window.open(`https://api.whatsapp.com/send/?phone=584122974011&text=${message}&type=phone_number&app_absent=0`, '_blank');
     setShowModal(false);
   };
 
