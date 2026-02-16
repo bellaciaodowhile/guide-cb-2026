@@ -7,7 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fetch-bible": "node scripts/fetchBibleData.js",
+    "fetch-bible-rv1960": "node scripts/fetchBibleDataRV1960.js",
+    "fetch-bible-nvi": "node scripts/fetchBibleDataNVI.js",
+    "fetch-bible-dhh": "node scripts/fetchBibleDataDHH.js",
+    "fetch-all-bibles": "node scripts/fetchAllBibleVersions.js",
+    "create-chapter-text": "node scripts/createChapterTextRV1995.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
