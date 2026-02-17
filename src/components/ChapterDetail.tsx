@@ -1,4 +1,4 @@
-import { ArrowLeft, Book, Quote, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { ArrowLeft, Book, Quote, ChevronLeft, ChevronRight, BookOpen, Youtube } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import type { ApiResponse } from '../types/bible';
 import { CHAPTER_DETAILS } from '../utils/constants';
@@ -6,6 +6,7 @@ import { PRService } from '../services/prService';
 import LoadingSpinner from './LoadingSpinner';
 import ThemeSelector from './ThemeSelector';
 import { useReadingTheme } from '../hooks/useReadingTheme';
+import { getYouTubeLink } from '../utils/youtubeLinks';
 
 interface ChapterDetailProps {
   chapter: ApiResponse;
@@ -31,6 +32,7 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
   const hasNext = chapter.chapter < 12;
   const hasPRChapter = chapter.chapter <= 6; // Solo los primeros 6 capítulos tienen PR
   const prChapterTitle = hasPRChapter ? PRService.getPRChapterTitle(chapter.chapter) : null;
+  const youtubeLink = getYouTubeLink(chapter.chapter);
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
@@ -188,6 +190,40 @@ const ChapterDetail: React.FC<ChapterDetailProps> = ({ chapter, onBack, loading 
             </Link>
           </div>
         )}
+
+      {/* Botón para escuchar en YouTube */}
+      {youtubeLink && (
+        <div 
+          className="rounded-xl p-6 md:p-6 border mb-4 md:mb-6 transition-colors duration-300"
+          style={{
+            backgroundColor: theme.styles.verseBackground,
+            borderColor: theme.styles.borderColor
+          }}
+        >
+          <h4 
+            className="text-lg font-semibold mb-2 flex items-center transition-colors duration-300"
+            style={{ color: theme.styles.headingColor }}
+          >
+            <Youtube className="h-5 w-5 mr-2" />
+            Escucha este capítulo
+          </h4>
+          <p 
+            className="mb-4 transition-colors duration-300"
+            style={{ color: theme.styles.textColor }}
+          >
+            Escucha la narración en audio de Daniel {chapter.chapter} en YouTube
+          </p>
+          <a
+            href={youtubeLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-2 md:px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 text-white transform hover:scale-105"
+          >
+            <Youtube className="h-4 w-4" />
+            <span>Estudiar Daniel en Audio</span>
+          </a>
+        </div>
+      )}
 
       {/* Verses */}
       <div 

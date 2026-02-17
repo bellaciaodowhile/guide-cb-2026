@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users, Award, Crown, Play, MousePointer2, Home, Mail, MessageCircle, X } from 'lucide-react';
+import { Users, Award, Crown, Play, MousePointer2, Home, Mail, MessageCircle, X, Youtube, Instagram, Facebook } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
@@ -9,6 +9,14 @@ import topHeroImage from '../assets/top-hero.png';
 import posterMobileBackup from '../assets/bg-home-mobile.png';
 import SEOHead from './SEOHead';
 import '../assets/css/styles.css';
+
+// CONFIGURACIÓN DE REDES SOCIALES
+const SOCIAL_LINKS = {
+  youtube: 'https://www.youtube.com/@GuiaConexionBiblica',
+  instagram: 'https://instagram.com/guiaconexionbiblica',
+  facebook: 'https://facebook.com/profile.php?id=61587070436182',
+  tiktok: 'https://tiktok.com/@guiaconexionbiblica26'
+};
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -203,7 +211,7 @@ const HomePage: React.FC = () => {
         {!showColumns && (
           <>
             {/* Botón para pantallas grandes - subido más arriba */}
-            <div className="hidden min-[750px]:block fixed bottom-24 left-1/2 transform -translate-x-1/2 z-40">
+            <div className="hidden min-[750px]:block fixed bottom-32 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <div className="animate-float">
                   <button
@@ -245,10 +253,62 @@ const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Texto flotante debajo del botón para pantallas grandes */}
+            {/* Redes sociales debajo del botón para pantallas grandes */}
+            <div className="hidden min-[750px]:block fixed bottom-20 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <div className="animate-float" style={{ animationDelay: '0.2s' }}>
+                  <div className="flex items-center justify-center space-x-4">
+                    <a
+                      href={SOCIAL_LINKS.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="YouTube"
+                    >
+                      <Youtube className="h-5 w-5 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="h-5 w-5 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="h-5 w-5 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.tiktok}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="TikTok"
+                    >
+                      <svg 
+                        className="h-5 w-5 text-white group-hover:text-gray-200 transition-colors duration-200" 
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Texto flotante debajo de las redes sociales para pantallas grandes */}
             <div className="hidden w-max min-[750px]:block fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
-                <div className="animate-float">
+                <div className="animate-float" style={{ animationDelay: '0.4s' }}>
                   <p className="text-white text-center text-lg font-medium bg-black/30 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
                     Desarrollado con{' '}
                     <span className="inline-block animate-heartbeat text-red-500">❤️</span>
@@ -265,7 +325,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Botón para móviles - subido más arriba */}
-            <div className="block min-[750px]:hidden fixed bottom-16 left-1/2 transform -translate-x-1/2 z-40">
+            <div className="block min-[750px]:hidden fixed bottom-24 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
                 <div className="animate-float">
                   <button
@@ -307,10 +367,62 @@ const HomePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Texto flotante debajo del botón para móviles */}
+            {/* Redes sociales debajo del botón para móviles */}
+            <div className="block min-[750px]:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 z-40">
+              <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
+                <div className="animate-float" style={{ animationDelay: '0.2s' }}>
+                  <div className="flex items-center justify-center space-x-3">
+                    <a
+                      href={SOCIAL_LINKS.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="YouTube"
+                    >
+                      <Youtube className="h-4 w-4 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="h-4 w-4 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="h-4 w-4 text-white group-hover:text-gray-200 transition-colors duration-200" />
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.tiktok}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/20 shadow-lg"
+                      aria-label="TikTok"
+                    >
+                      <svg 
+                        className="h-4 w-4 text-white group-hover:text-gray-200 transition-colors duration-200" 
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Texto flotante debajo de las redes sociales para móviles */}
             <div className="block w-max min-[750px]:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40">
               <div className={`transition-all duration-500 ${showCircleTransition ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'}`}>
-                <div className="animate-float">
+                <div className="animate-float" style={{ animationDelay: '0.4s' }}>
                   <p className="text-white text-center text-base font-medium bg-black/30 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
                     Desarrollado con{' '}
                     <span className="inline-block animate-heartbeat text-red-500">❤️</span>

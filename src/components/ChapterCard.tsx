@@ -1,7 +1,8 @@
-import { BookOpen, Hash, ArrowRight, Book } from 'lucide-react';
+import { BookOpen, Hash, ArrowRight, Book, Youtube } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import type { ChapterInfo } from '../types/bible';
 import { PRService } from '../services/prService';
+import { getYouTubeLink } from '../utils/youtubeLinks';
 
 interface ChapterCardProps {
   chapter: ChapterInfo;
@@ -26,6 +27,9 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
   
   // Obtener el título del capítulo de Profetas y Reyes
   const prChapterTitle = showPRButton ? PRService.getPRChapterTitle(chapter.chapter) : null;
+  
+  // Obtener el enlace de YouTube para este capítulo
+  const youtubeLink = getYouTubeLink(chapter.chapter);
 
   return (
     <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in">
@@ -103,6 +107,24 @@ const ChapterCard: React.FC<ChapterCardProps> = ({ chapter }) => {
                 <ArrowRight className="h-4 w-4 text-green-600 dark:text-green-400 transform group-hover/btn:translate-x-1 transition-transform duration-200 flex-shrink-0 ml-2 mt-1" />
               </div>
             </Link>
+          )}
+
+          {/* Botón para escuchar en YouTube */}
+          {youtubeLink && (
+            <a
+              href={youtubeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors duration-200 group/btn"
+            >
+              <div className="flex items-center space-x-2">
+                <Youtube className="h-4 w-4 text-red-600 dark:text-red-400" />
+                <span className="text-sm font-medium text-red-700 dark:text-red-300">
+                  Estudiar Daniel en Audio
+                </span>
+              </div>
+              <ArrowRight className="h-4 w-4 text-red-600 dark:text-red-400 transform group-hover/btn:translate-x-1 transition-transform duration-200" />
+            </a>
           )}
         </div>
       </div>
