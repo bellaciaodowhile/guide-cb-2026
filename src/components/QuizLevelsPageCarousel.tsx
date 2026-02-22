@@ -66,7 +66,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
   const [startX, setStartX] = useState(0);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const scrollAccumulator = useRef(0);
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeout = useRef<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const speedDrag = -0.3;

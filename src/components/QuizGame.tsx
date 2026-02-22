@@ -21,7 +21,7 @@ interface UserAnswer {
 
 const QuizGame: React.FC = () => {
   const navigate = useNavigate();
-  const { category, level, section } = useParams<{ category: string; level: string; section: string }>();
+  const { category, level } = useParams<{ category: string; level: string; section: string }>();
   
   // Cargar preguntas inmediatamente de forma síncrona
   const loadQuestions = (): Question[] => {

@@ -220,7 +220,9 @@ const QuizLevelsPageCandyCrush: React.FC = () => {
           {quizLevels.map((level, index) => (
             <div
               key={level.id}
-              ref={(el) => (levelsRef.current[index] = el)}
+              ref={(el) => {
+                levelsRef.current[index] = el;
+              }}
               className="absolute"
               style={{
                 left: '50%',
