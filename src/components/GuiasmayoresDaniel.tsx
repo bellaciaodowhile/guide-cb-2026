@@ -324,6 +324,11 @@ const GuiasmayoresDaniel: React.FC = () => {
               </div>
             </div>
 
+            {/* Quiz Card - Debajo de los detalles de la categoría */}
+            <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <QuizCard category="guiasmayores" />
+            </div>
+
             {/* Chapters Grid - Divided into Two Parts */}
             <div className="space-y-12">
               {/* Primera Parte: Narrativa */}
@@ -340,43 +345,17 @@ const GuiasmayoresDaniel: React.FC = () => {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {chapters.filter(chapter => chapter.chapter >= 1 && chapter.chapter <= 6).map((chapter, index) => {
-                    // Insertar la card de quiz como el tercer elemento (índice 2)
-                    if (index === 2) {
-                      return (
-                        <>
-                          {/* Quiz Card como tercer elemento */}
-                          <QuizCard
-                            key="quiz-card"
-                            animationDelay={`${index * 100}ms`}
-                          />
-                          
-                          {/* Chapter Card actual */}
-                          <div
-                            key={chapter.chapter}
-                            className="animate-fade-in"
-                            style={{ animationDelay: `${(index + 1) * 100}ms` }}
-                          >
-                            <ChapterCard
-                              chapter={chapter}
-                            />
-                          </div>
-                        </>
-                      );
-                    }
-                    
-                    return (
-                      <div
-                        key={chapter.chapter}
-                        className="animate-fade-in"
-                        style={{ animationDelay: `${index < 2 ? index * 100 : (index + 1) * 100}ms` }}
-                      >
-                        <ChapterCard
-                          chapter={chapter}
-                        />
-                      </div>
-                    );
-                  })}
+                  {chapters.filter(chapter => chapter.chapter >= 1 && chapter.chapter <= 6).map((chapter, index) => (
+                    <div
+                      key={chapter.chapter}
+                      className="animate-fade-in"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <ChapterCard
+                        chapter={chapter}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 

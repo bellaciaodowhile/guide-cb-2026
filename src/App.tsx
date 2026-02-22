@@ -8,6 +8,9 @@ import ConquistadoresDaniel from './components/ConquistadoresDaniel';
 import GuiasmayoresDaniel from './components/GuiasmayoresDaniel';
 import BibleChapterPage from './components/BibleChapterPage';
 import PRChapterPage from './components/PRChapterPage';
+import QuizLevelsPageCarousel from './components/QuizLevelsPageCarousel';
+import QuizBookSelector from './components/QuizBookSelector';
+import QuizGame from './components/QuizGame';
 import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
@@ -57,6 +60,10 @@ const App: React.FC = () => {
           <Route path="/guiasmayores" element={<GuiasmayoresDaniel />} />
           <Route path="/bible/daniel/:chapterNumber" element={<BibleChapterPage />} />
           <Route path="/profetas-y-reyes/:chapterNumber" element={<PRChapterPage />} />
+          <Route path="/quiz" element={<QuizLevelsPageCarousel />} />
+          <Route path="/:category/quiz" element={<QuizLevelsPageCarousel />} />
+          <Route path="/:category/quiz/:level" element={<QuizBookSelector />} />
+          <Route path="/:category/quiz/:level/:section" element={<QuizGame />} />
         </Routes>
 
         {/* Scroll to Top Button */}

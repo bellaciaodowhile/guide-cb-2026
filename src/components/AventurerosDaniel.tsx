@@ -310,6 +310,11 @@ const AventurerosDaniel: React.FC = () => {
               </div>
             </div>
 
+            {/* Quiz Card - Debajo de los detalles de la categoría */}
+            <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+              <QuizCard category="aventureros" />
+            </div>
+
             {/* Chapters Grid */}
             <div className="space-y-4 md:space-y-8">
               <div className="mb-8 px-2">
@@ -322,43 +327,17 @@ const AventurerosDaniel: React.FC = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {chapters.map((chapter, index) => {
-                  // Insertar la card de quiz como el tercer elemento (índice 2)
-                  if (index === 2) {
-                    return (
-                      <>
-                        {/* Quiz Card como tercer elemento */}
-                        <QuizCard
-                          key="quiz-card"
-                          animationDelay={`${index * 100}ms`}
-                        />
-                        
-                        {/* Chapter Card actual */}
-                        <div
-                          key={chapter.chapter}
-                          className="animate-fade-in"
-                          style={{ animationDelay: `${(index + 1) * 100}ms` }}
-                        >
-                          <ChapterCard
-                            chapter={chapter}
-                          />
-                        </div>
-                      </>
-                    );
-                  }
-                  
-                  return (
-                    <div
-                      key={chapter.chapter}
-                      className="animate-fade-in"
-                      style={{ animationDelay: `${index < 2 ? index * 100 : (index + 1) * 100}ms` }}
-                    >
-                      <ChapterCard
-                        chapter={chapter}
-                      />
-                    </div>
-                  );
-                })}
+                {chapters.map((chapter, index) => (
+                  <div
+                    key={chapter.chapter}
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <ChapterCard
+                      chapter={chapter}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
