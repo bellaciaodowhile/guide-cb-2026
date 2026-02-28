@@ -50,15 +50,15 @@ const QuizLevelsPageCarousel: React.FC = () => {
   const navigate = useNavigate();
   const { category } = useParams<{ category: string }>();
   
-  // Filtrar niveles según la categoría
-  const getQuizLevels = (): QuizLevel[] => {
-    if (!category) return allQuizLevels; // Si no hay categoría, mostrar todos
-    
-    const allowedChapters = categoryChapters[category] || allQuizLevels.map(l => l.id);
-    return allQuizLevels.filter(level => allowedChapters.includes(level.id));
-  };
+  // Mostrar todos los niveles siempre
+  const quizLevels = allQuizLevels;
   
-  const quizLevels = getQuizLevels();
+  // Función para verificar si un capítulo pertenece a la categoría
+  const isChapterInCategory = (chapterId: number): boolean => {
+    if (!category) return true; // Si no hay categoría, permitir todos
+    const allowedChapters = categoryChapters[category] || [];
+    return allowedChapters.includes(chapterId);
+  };
   
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(0);
@@ -68,9 +68,13 @@ const QuizLevelsPageCarousel: React.FC = () => {
   const scrollAccumulator = useRef(0);
   const scrollTimeout = useRef<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  
+  // Estado para el modal de confirmación
+  const [showModal, setShowModal] = useState(false);
+  const [pendingLevelId, setPendingLevelId] = useState<number | null>(null);
 
   const speedDrag = -0.3;
-  const scrollThreshold = 150; // Umbral más alto para evitar cambios accidentales
+  const scrollThreshold = 250; // Umbral más alto para evitar cambios accidentales
 
   const getZindex = (index: number, activeIndex: number) => {
     const length = quizLevels.length;
@@ -173,6 +177,35 @@ const QuizLevelsPageCarousel: React.FC = () => {
     const newProgress = (index / (quizLevels.length - 1)) * 100;
     animate(newProgress);
   };
+  
+  const handleExploreClick = (levelId: number) => {
+    if (!isChapterInCategory(levelId)) {
+      // Mostrar modal de confirmación
+      setPendingLevelId(levelId);
+      setShowModal(true);
+    } else {
+      // Navegar directamente
+      navigateToLevel(levelId);
+    }
+  };
+  
+  const navigateToLevel = (levelId: number) => {
+    const route = category ? `/${category}/quiz/${levelId}` : `/quiz/${levelId}`;
+    navigate(route);
+  };
+  
+  const handleConfirmContinue = () => {
+    if (pendingLevelId) {
+      navigateToLevel(pendingLevelId);
+    }
+    setShowModal(false);
+    setPendingLevelId(null);
+  };
+  
+  const handleCancelContinue = () => {
+    setShowModal(false);
+    setPendingLevelId(null);
+  };
 
   return (
     <div className="quiz-carousel-container">
@@ -231,8 +264,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        const route = category ? `/${category}/quiz/${level.id}` : `/quiz/${level.id}`;
-                        navigate(route);
+                        handleExploreClick(level.id);
                       }}
                       className="quiz-button group/btn relative w-full"
                     >
@@ -256,6 +288,28 @@ const QuizLevelsPageCarousel: React.FC = () => {
 
       <div className="cursor" style={{ transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)` }}></div>
       <div className="cursor cursor2" style={{ transform: `translate(${cursorPos.x}px, ${cursorPos.y}px)` }}></div>
+      
+      {/* Modal de confirmación */}
+      {showModal && (
+        <div className="modal-overlay" onClick={handleCancelContinue}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2 className="modal-title" style={{ fontFamily: "'Bungee', cursive" }}>
+              Capítulo fuera de tu categoría
+            </h2>
+            <p className="modal-message">
+              Este capítulo no pertenece a tu categoría actual. ¿Estás seguro que deseas continuar?
+            </p>
+            <div className="modal-buttons">
+              <button onClick={handleCancelContinue} className="modal-button modal-button-cancel">
+                Cancelar
+              </button>
+              <button onClick={handleConfirmContinue} className="modal-button modal-button-confirm">
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
