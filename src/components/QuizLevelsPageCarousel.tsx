@@ -70,7 +70,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const speedDrag = -0.3;
-  const scrollThreshold = 50; // Umbral de scroll acumulado para cambiar de slide
+  const scrollThreshold = 150; // Umbral más alto para evitar cambios accidentales
 
   const getZindex = (index: number, activeIndex: number) => {
     const length = quizLevels.length;
@@ -98,20 +98,12 @@ const QuizLevelsPageCarousel: React.FC = () => {
     
     // Si el scroll acumulado supera el umbral, cambiar de slide
     if (Math.abs(scrollAccumulator.current) >= scrollThreshold) {
-      if (scrollAccumulator.current > 0) {
-        // Scroll hacia abajo - siguiente slide
-        const nextIndex = Math.min(active + 1, quizLevels.length - 1);
-        if (nextIndex !== active) {
-          const newProgress = (nextIndex / (quizLevels.length - 1)) * 100;
-          animate(newProgress);
-        }
-      } else {
-        // Scroll hacia arriba - slide anterior
-        const prevIndex = Math.max(active - 1, 0);
-        if (prevIndex !== active) {
-          const newProgress = (prevIndex / (quizLevels.length - 1)) * 100;
-          animate(newProgress);
-        }
+      const direction = scrollAccumulator.current > 0 ? 1 : -1;
+      const nextIndex = Math.max(0, Math.min(active + direction, quizLevels.length - 1));
+      
+      if (nextIndex !== active) {
+        const newProgress = (nextIndex / (quizLevels.length - 1)) * 100;
+        animate(newProgress);
       }
       
       // Resetear el acumulador
@@ -119,7 +111,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
     }
     
     // Resetear el acumulador después de un tiempo sin scroll
-    scrollTimeout.current = setTimeout(() => {
+    scrollTimeout.current = window.setTimeout(() => {
       scrollAccumulator.current = 0;
     }, 200);
   };

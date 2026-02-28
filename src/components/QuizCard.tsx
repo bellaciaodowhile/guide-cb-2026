@@ -67,7 +67,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ animationDelay = '0ms', category })
                     <div className="p-1.5 sm:p-2 bg-white/40 rounded-full border-2 border-white/50 animate-pulse">
                       <Play className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white fill-white" />
                     </div>
-                    <span className="text-lg sm:text-2xl md:text-3xl font-black text-white tracking-wider uppercase" style={{ fontFamily: "'Bungee', cursive" }}>
+                    <span className="text-md sm:text-2xl md:text-3xl font-black text-white tracking-wider uppercase" style={{ fontFamily: "'Bungee', cursive" }}>
                       Explorar Niveles
                     </span>
                   </div>
