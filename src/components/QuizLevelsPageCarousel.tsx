@@ -129,9 +129,10 @@ const QuizLevelsPageCarousel: React.FC = () => {
     if (!isDown) return;
 
     const x = e instanceof MouseEvent ? e.clientX : (e as TouchEvent).touches[0].clientX;
-    const mouseProgress = (x - startX) * speedDrag;
-    animate(progress + mouseProgress);
-    setStartX(x);
+    const distance = x - startX;
+    
+    // En lugar de animar continuamente, solo detectar la dirección del swipe
+    // No actualizar el progreso durante el movimiento
   };
 
   const handleMouseDown = (e: MouseEvent | TouchEvent) => {
@@ -140,7 +141,32 @@ const QuizLevelsPageCarousel: React.FC = () => {
     setStartX(x);
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (e: MouseEvent | TouchEvent) => {
+    if (!isDown) return;
+    
+    const x = e instanceof MouseEvent ? e.clientX : (e as TouchEvent).changedTouches?.[0]?.clientX || startX;
+    const distance = x - startX;
+    const threshold = 50; // Umbral mínimo de movimiento para cambiar de slide
+    
+    if (Math.abs(distance) > threshold) {
+      // Determinar dirección y cambiar solo una card
+      if (distance > 0) {
+        // Swipe derecha - ir a la anterior
+        const prevIndex = Math.max(active - 1, 0);
+        if (prevIndex !== active) {
+          const newProgress = (prevIndex / (quizLevels.length - 1)) * 100;
+          animate(newProgress);
+        }
+      } else {
+        // Swipe izquierda - ir a la siguiente
+        const nextIndex = Math.min(active + 1, quizLevels.length - 1);
+        if (nextIndex !== active) {
+          const newProgress = (nextIndex / (quizLevels.length - 1)) * 100;
+          animate(newProgress);
+        }
+      }
+    }
+    
     setIsDown(false);
   };
 
@@ -149,22 +175,26 @@ const QuizLevelsPageCarousel: React.FC = () => {
     if (!carousel) return;
 
     const wheelHandler = (e: WheelEvent) => handleWheel(e);
+    const mouseDownHandler = (e: MouseEvent | TouchEvent) => handleMouseDown(e);
+    const mouseMoveHandler = (e: MouseEvent | TouchEvent) => handleMouseMove(e);
+    const mouseUpHandler = (e: MouseEvent | TouchEvent) => handleMouseUp(e);
+    
     carousel.addEventListener('wheel', wheelHandler, { passive: false });
-    document.addEventListener('mousedown', handleMouseDown as any);
-    document.addEventListener('mousemove', handleMouseMove as any);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('touchstart', handleMouseDown as any);
-    document.addEventListener('touchmove', handleMouseMove as any);
-    document.addEventListener('touchend', handleMouseUp);
+    document.addEventListener('mousedown', mouseDownHandler as any);
+    document.addEventListener('mousemove', mouseMoveHandler as any);
+    document.addEventListener('mouseup', mouseUpHandler as any);
+    document.addEventListener('touchstart', mouseDownHandler as any);
+    document.addEventListener('touchmove', mouseMoveHandler as any, { passive: true });
+    document.addEventListener('touchend', mouseUpHandler as any);
 
     return () => {
       carousel.removeEventListener('wheel', wheelHandler);
-      document.removeEventListener('mousedown', handleMouseDown as any);
-      document.removeEventListener('mousemove', handleMouseMove as any);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchstart', handleMouseDown as any);
-      document.removeEventListener('touchmove', handleMouseMove as any);
-      document.removeEventListener('touchend', handleMouseUp);
+      document.removeEventListener('mousedown', mouseDownHandler as any);
+      document.removeEventListener('mousemove', mouseMoveHandler as any);
+      document.removeEventListener('mouseup', mouseUpHandler as any);
+      document.removeEventListener('touchstart', mouseDownHandler as any);
+      document.removeEventListener('touchmove', mouseMoveHandler as any);
+      document.removeEventListener('touchend', mouseUpHandler as any);
       
       // Limpiar timeout al desmontar
       if (scrollTimeout.current) {
