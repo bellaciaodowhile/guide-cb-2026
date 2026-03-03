@@ -65,6 +65,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const scrollAccumulator = useRef(0);
   const scrollTimeout = useRef<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -202,6 +203,16 @@ const QuizLevelsPageCarousel: React.FC = () => {
     };
   }, [active, isDown, startX]);
 
+  // Detectar cambios de tamaño de pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleItemClick = (index: number) => {
     const newProgress = (index / (quizLevels.length - 1)) * 100;
     animate(newProgress);
@@ -281,7 +292,9 @@ const QuizLevelsPageCarousel: React.FC = () => {
       <div 
         className="carousel-background"
         style={{
-          backgroundImage: quizLevels[active].id === 13 ? `url(${daniel12})` : `url(${quizLevels[active].image})`
+          backgroundImage: isMobile 
+            ? `url(${daniel11})` 
+            : (quizLevels[active].id === 13 ? `url(${daniel12})` : `url(${quizLevels[active].image})`)
         }}
       />
       <div className="carousel-background-overlay" />

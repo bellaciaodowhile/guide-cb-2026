@@ -645,12 +645,24 @@ body {
   background-size: cover;
   background-position: center;
   filter: blur(40px);
-  transform: scale(1.2);
+  transform: scale(1.2) translateZ(0);
   transition: background-image 0.3s ease-in-out;
   z-index: 0;
   will-change: background-image;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform: scale(1.2) translateZ(0);
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  transform-style: preserve-3d;
+}
+
+/* Transición instantánea en móviles */
+@media (max-width: 768px) {
+  .carousel-background {
+    transition: none;
+    filter: blur(30px);
+  }
 }
 
 .carousel-background-overlay {
@@ -696,11 +708,14 @@ body {
   box-shadow: none;
   background: black;
   pointer-events: all;
-  transform: translate(var(--x), var(--y)) rotate(var(--rot));
+  transform: translate(var(--x), var(--y)) rotate(var(--rot)) translateZ(0);
   transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1), box-shadow 0.3s ease;
   cursor: pointer;
   animation: card-fly-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
   animation-delay: calc(var(--card-index, 0) * 0.1s);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate(var(--x), var(--y)) rotate(var(--rot)) translateZ(0);
 }
 
 /* Solo el slide activo tiene box-shadow */
