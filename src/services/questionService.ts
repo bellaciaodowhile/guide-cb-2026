@@ -3,9 +3,12 @@ import type { CollaborativeQuestion, QuestionSubmission } from '../types/collabo
 
 export class QuestionService {
   // Enviar nueva pregunta
-  static async submitQuestion(userId: string, question: QuestionSubmission): Promise<{ success: boolean; message: string }> {
+  static async submitQuestion(userId: string, question: QuestionSubmission, userRole?: string): Promise<{ success: boolean; message: string }> {
     try {
-      console.log('Submitting question:', { userId, question });
+      console.log('Submitting question:', { userId, question, userRole });
+
+      // Si es moderador o superadmin, aprobar automáticamente
+      const status = (userRole === 'moderator' || userRole === 'superadmin') ? 'approved' : 'pending';
 
       const { data, error } = await supabase
         .from('collaborative_questions')
@@ -20,7 +23,9 @@ export class QuestionService {
           correct_answer: question.correct_answer,
           verse_reference: question.verse_reference,
           difficulty: question.difficulty,
-          status: 'pending'
+          status: status,
+          reviewed_by: (status === 'approved') ? userId : null,
+          reviewed_at: (status === 'approved') ? new Date().toISOString() : null
         })
         .select()
         .single();
@@ -31,7 +36,10 @@ export class QuestionService {
       }
 
       console.log('Question submitted successfully:', data);
-      return { success: true, message: 'Pregunta enviada exitosamente. Está en espera de aprobación.' };
+      const message = status === 'approved' 
+        ? 'Pregunta publicada exitosamente.' 
+        : 'Pregunta enviada exitosamente. Está en espera de aprobación.';
+      return { success: true, message };
     } catch (error) {
       console.error('Error:', error);
       return { success: false, message: 'Error al procesar la pregunta' };
@@ -247,7 +255,8 @@ export class QuestionService {
     try {
       const { data, error } = await supabase
         .from('collaborative_questions')
-        .select('chapter');
+        .select('chapter')
+        .eq('status', 'approved'); // Solo contar preguntas aprobadas
 
       if (error || !data) {
         return {};
@@ -302,6 +311,51 @@ export class QuestionService {
     } catch (error) {
       console.error('Error:', error);
       return null;
+    }
+  }
+
+  // Obtener todas las preguntas (para administradores)
+  static async getAllQuestions(): Promise<CollaborativeQuestion[]> {
+    try {
+      const { data, error } = await supabase
+        .from('collaborative_questions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error al obtener todas las preguntas:', error);
+        return [];
+      }
+
+      return data as CollaborativeQuestion[];
+    } catch (error) {
+      console.error('Error:', error);
+      return [];
+    }
+  }
+
+  // Obtener estadísticas globales (para administradores)
+  static async getGlobalStats(): Promise<{ total: number; pending: number; approved: number; rejected: number }> {
+    try {
+      const { data, error } = await supabase
+        .from('collaborative_questions')
+        .select('status');
+
+      if (error || !data) {
+        return { total: 0, pending: 0, approved: 0, rejected: 0 };
+      }
+
+      const stats = {
+        total: data.length,
+        pending: data.filter(q => q.status === 'pending').length,
+        approved: data.filter(q => q.status === 'approved').length,
+        rejected: data.filter(q => q.status === 'rejected').length
+      };
+
+      return stats;
+    } catch (error) {
+      console.error('Error:', error);
+      return { total: 0, pending: 0, approved: 0, rejected: 0 };
     }
   }
 }

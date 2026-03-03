@@ -35,17 +35,12 @@ const NewQuestionForm: React.FC = () => {
     setLoading(true);
 
     try {
-      const result = await QuestionService.submitQuestion(currentUser.id, formData);
+      const result = await QuestionService.submitQuestion(currentUser.id, formData, currentUser.role);
       
       if (result.success) {
         setSuccess(true);
         setTimeout(() => {
-          const returnCategory = sessionStorage.getItem('returnCategory');
-          if (returnCategory) {
-            navigate(returnCategory);
-          } else {
-            navigate('/colaborador/dashboard');
-          }
+          navigate('/colaborador/dashboard');
         }, 2000);
       } else {
         setError(result.message);
@@ -72,14 +67,7 @@ const NewQuestionForm: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <button
-            onClick={() => {
-              const returnCategory = sessionStorage.getItem('returnCategory');
-              if (returnCategory) {
-                navigate(returnCategory);
-              } else {
-                navigate('/colaborador/dashboard');
-              }
-            }}
+            onClick={() => navigate('/colaborador/dashboard')}
             className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-4"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -279,14 +267,7 @@ const NewQuestionForm: React.FC = () => {
           <div className="flex gap-4">
             <button
               type="button"
-              onClick={() => {
-                const returnCategory = sessionStorage.getItem('returnCategory');
-                if (returnCategory) {
-                  navigate(returnCategory);
-                } else {
-                  navigate('/colaborador/dashboard');
-                }
-              }}
+              onClick={() => navigate('/colaborador/dashboard')}
               className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancelar

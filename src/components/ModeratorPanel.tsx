@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/authService';
 import { QuestionService } from '../services/questionService';
 import { LogOut, Home, CheckCircle, XCircle, Clock, AlertTriangle, Eye, EyeOff, Edit } from 'lucide-react';
+import NotificationBell from './NotificationBell';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
 const ModeratorPanel: React.FC = () => {
@@ -135,6 +136,7 @@ const ModeratorPanel: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-3">
+              <NotificationBell userId={user.id} userRole={user.role} />
               <button
                 onClick={() => navigate('/colaborador/dashboard')}
                 className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl transition-all"

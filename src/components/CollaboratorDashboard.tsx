@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/authService';
 import { QuestionService } from '../services/questionService';
 import { LogOut, Plus, Clock, CheckCircle, XCircle, Award, TrendingUp, Sparkles, Home, ChevronDown, Edit } from 'lucide-react';
+import NotificationBell from './NotificationBell';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
 const CollaboratorDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [questions, setQuestions] = useState<CollaborativeQuestion[]>([]);
+  const [allQuestions, setAllQuestions] = useState<CollaborativeQuestion[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<CollaborativeQuestion[]>([]);
   const [selectedChapterFilter, setSelectedChapterFilter] = useState<number | 'all'>('all');
   const [stats, setStats] = useState({ total: 0, pending: 0, approved: 0, rejected: 0 });
@@ -16,6 +18,7 @@ const CollaboratorDashboard: React.FC = () => {
   const [globalStatsByChapter, setGlobalStatsByChapter] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
   const [isChapterStatsOpen, setIsChapterStatsOpen] = useState(false);
+  const [questionsTab, setQuestionsTab] = useState<'all' | 'mine'>('all'); // Tab para admin
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser();
@@ -29,28 +32,53 @@ const CollaboratorDashboard: React.FC = () => {
 
   const loadData = async (userId: string) => {
     setLoading(true);
-    const [userQuestions, userStats, userChapterStats, globalChapterStats] = await Promise.all([
-      QuestionService.getUserQuestions(userId),
-      QuestionService.getUserStats(userId),
-      QuestionService.getUserStatsByChapter(userId),
-      QuestionService.getGlobalStatsByChapter()
-    ]);
-    setQuestions(userQuestions);
-    setFilteredQuestions(userQuestions);
-    setStats(userStats);
-    setUserStatsByChapter(userChapterStats);
-    setGlobalStatsByChapter(globalChapterStats);
+    
+    // Si es admin, cargar estadísticas globales y todas las preguntas
+    const isAdmin = user?.role === 'moderator' || user?.role === 'superadmin';
+    
+    if (isAdmin) {
+      const [userQuestions, allQuestionsData, globalStats, userChapterStats, globalChapterStats] = await Promise.all([
+        QuestionService.getUserQuestions(userId),
+        QuestionService.getAllQuestions(),
+        QuestionService.getGlobalStats(),
+        QuestionService.getUserStatsByChapter(userId),
+        QuestionService.getGlobalStatsByChapter()
+      ]);
+      setQuestions(userQuestions);
+      setAllQuestions(allQuestionsData);
+      setFilteredQuestions(allQuestionsData); // Por defecto mostrar todas
+      setStats(globalStats); // Estadísticas globales
+      setUserStatsByChapter(userChapterStats);
+      setGlobalStatsByChapter(globalChapterStats);
+    } else {
+      const [userQuestions, userStats, userChapterStats, globalChapterStats] = await Promise.all([
+        QuestionService.getUserQuestions(userId),
+        QuestionService.getUserStats(userId),
+        QuestionService.getUserStatsByChapter(userId),
+        QuestionService.getGlobalStatsByChapter()
+      ]);
+      setQuestions(userQuestions);
+      setAllQuestions(userQuestions);
+      setFilteredQuestions(userQuestions);
+      setStats(userStats);
+      setUserStatsByChapter(userChapterStats);
+      setGlobalStatsByChapter(globalChapterStats);
+    }
+    
     setLoading(false);
   };
 
-  // Filtrar preguntas cuando cambia el capítulo seleccionado
+  // Filtrar preguntas cuando cambia el capítulo seleccionado o el tab
   useEffect(() => {
+    const isAdmin = user?.role === 'moderator' || user?.role === 'superadmin';
+    const sourceQuestions = (isAdmin && questionsTab === 'all') ? allQuestions : questions;
+    
     if (selectedChapterFilter === 'all') {
-      setFilteredQuestions(questions);
+      setFilteredQuestions(sourceQuestions);
     } else {
-      setFilteredQuestions(questions.filter(q => q.chapter === selectedChapterFilter));
+      setFilteredQuestions(sourceQuestions.filter(q => q.chapter === selectedChapterFilter));
     }
-  }, [selectedChapterFilter, questions]);
+  }, [selectedChapterFilter, questions, allQuestions, questionsTab, user]);
 
   const handleLogout = () => {
     AuthService.logout();
@@ -74,12 +102,12 @@ const CollaboratorDashboard: React.FC = () => {
 
   const getRoleGradient = (role: string) => {
     const gradients: Record<string, string> = {
-      collaborator: 'from-blue-500 to-cyan-500',
-      trusted_collaborator: 'from-purple-500 to-pink-500',
-      moderator: 'from-green-500 to-emerald-500',
-      superadmin: 'from-red-500 to-orange-500'
+      collaborator: 'from-blue-700 to-cyan-700',
+      trusted_collaborator: 'from-purple-600 to-pink-600',
+      moderator: 'from-green-600 to-emerald-600',
+      superadmin: 'from-red-600 to-orange-600'
     };
-    return gradients[role] || 'from-gray-500 to-gray-600';
+    return gradients[role] || 'from-gray-600 to-gray-700';
   };
 
   const getStatusBadge = (status: string) => {
@@ -127,6 +155,7 @@ const CollaboratorDashboard: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-3">
+              <NotificationBell userId={user.id} userRole={user.role} />
               <button
                 onClick={() => {
                   const returnCategory = sessionStorage.getItem('returnCategory');
@@ -270,7 +299,7 @@ const CollaboratorDashboard: React.FC = () => {
               <p className="text-sm text-white/80">
                 {10 - stats.approved > 0
                   ? `¡${10 - stats.approved} más para el siguiente nivel!`
-                  : '¡Nivel alcanzado! 🎉'}
+                  : '¡Nivel alcanzado!'}
               </p>
             </div>
           )}
@@ -369,14 +398,42 @@ const CollaboratorDashboard: React.FC = () => {
 
         {/* Lista de Preguntas */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+          {/* Tabs para administradores */}
+          {(user.role === 'moderator' || user.role === 'superadmin') && (
+            <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+              <button
+                onClick={() => setQuestionsTab('all')}
+                className={`px-4 py-2 font-medium transition-colors ${
+                  questionsTab === 'all'
+                    ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                }`}
+              >
+                Todas las Preguntas
+              </button>
+              <button
+                onClick={() => setQuestionsTab('mine')}
+                className={`px-4 py-2 font-medium transition-colors ${
+                  questionsTab === 'mine'
+                    ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                }`}
+              >
+                Mis Preguntas
+              </button>
+            </div>
+          )}
+          
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Mis Preguntas
+                {(user.role === 'moderator' || user.role === 'superadmin') && questionsTab === 'all' 
+                  ? 'Todas las Preguntas' 
+                  : 'Mis Preguntas'}
               </h3>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {filteredQuestions.length} {filteredQuestions.length === 1 ? 'pregunta' : 'preguntas'}
-                {selectedChapterFilter !== 'all' && ` / ${questions.length} total`}
+                {selectedChapterFilter !== 'all' && ` / ${(questionsTab === 'all' ? allQuestions : questions).length} total`}
               </span>
             </div>
 
@@ -397,7 +454,8 @@ const CollaboratorDashboard: React.FC = () => {
               >
                 <option value="all">Todos los capítulos</option>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map(num => {
-                  const count = questions.filter(q => q.chapter === num).length;
+                  const sourceQuestions = (user.role === 'moderator' || user.role === 'superadmin') && questionsTab === 'all' ? allQuestions : questions;
+                  const count = sourceQuestions.filter(q => q.chapter === num).length;
                   return count > 0 ? (
                     <option key={num} value={num}>
                       Capítulo {num} ({count})

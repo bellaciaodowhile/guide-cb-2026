@@ -646,7 +646,7 @@ body {
   background-position: center;
   filter: blur(40px);
   transform: scale(1.2);
-  transition: background-image 0.8s ease-out;
+  transition: background-image 0s;
   z-index: 0;
 }
 

@@ -4,6 +4,8 @@ export type QuestionStatus = 'pending' | 'approved' | 'rejected';
 
 export type QuestionDifficulty = 'easy' | 'medium' | 'hard';
 
+export type NotificationType = 'question_approved' | 'question_rejected' | 'new_question_pending';
+
 export interface User {
   id: string;
   username: string;
@@ -44,4 +46,15 @@ export interface QuestionSubmission {
   correct_answer: number;
   verse_reference: string;
   difficulty: QuestionDifficulty;
+}
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  question_id?: string;
+  is_read: boolean;
+  created_at: string;
 }

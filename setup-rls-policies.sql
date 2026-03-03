@@ -9,6 +9,7 @@
 ALTER TABLE users DISABLE ROW LEVEL SECURITY;
 ALTER TABLE collaborative_questions DISABLE ROW LEVEL SECURITY;
 ALTER TABLE approval_history DISABLE ROW LEVEL SECURITY;
+ALTER TABLE notifications DISABLE ROW LEVEL SECURITY;
 
 -- Eliminar políticas existentes si las hay
 DROP POLICY IF EXISTS "Users are viewable by everyone" ON users;
@@ -18,13 +19,20 @@ DROP POLICY IF EXISTS "Questions are viewable by everyone" ON collaborative_ques
 DROP POLICY IF EXISTS "Anyone can create questions" ON collaborative_questions;
 DROP POLICY IF EXISTS "Moderators can update questions" ON collaborative_questions;
 DROP POLICY IF EXISTS "Superadmins can delete questions" ON collaborative_questions;
+DROP POLICY IF EXISTS "Anyone can update questions" ON collaborative_questions;
+DROP POLICY IF EXISTS "Anyone can delete questions" ON collaborative_questions;
 DROP POLICY IF EXISTS "Approval history is viewable by everyone" ON approval_history;
 DROP POLICY IF EXISTS "Anyone can create approval history" ON approval_history;
+DROP POLICY IF EXISTS "Notifications are viewable by everyone" ON notifications;
+DROP POLICY IF EXISTS "Anyone can create notifications" ON notifications;
+DROP POLICY IF EXISTS "Anyone can update notifications" ON notifications;
+DROP POLICY IF EXISTS "Anyone can delete notifications" ON notifications;
 
 -- Habilitar RLS en las tablas
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE collaborative_questions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE approval_history ENABLE ROW LEVEL SECURITY;
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 
 -- ============================================
 -- POLÍTICAS PARA TABLA USERS
@@ -75,6 +83,26 @@ CREATE POLICY "Anyone can create approval history" ON approval_history
   FOR INSERT WITH CHECK (true);
 
 -- ============================================
+-- POLÍTICAS PARA TABLA NOTIFICATIONS
+-- ============================================
+
+-- Permitir lectura de notificaciones
+CREATE POLICY "Notifications are viewable by everyone" ON notifications
+  FOR SELECT USING (true);
+
+-- Permitir inserción de notificaciones
+CREATE POLICY "Anyone can create notifications" ON notifications
+  FOR INSERT WITH CHECK (true);
+
+-- Permitir actualización de notificaciones
+CREATE POLICY "Anyone can update notifications" ON notifications
+  FOR UPDATE USING (true);
+
+-- Permitir eliminación de notificaciones
+CREATE POLICY "Anyone can delete notifications" ON notifications
+  FOR DELETE USING (true);
+
+-- ============================================
 -- VERIFICACIÓN
 -- ============================================
 
@@ -82,7 +110,7 @@ CREATE POLICY "Anyone can create approval history" ON approval_history
 SELECT schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check
 FROM pg_policies
 WHERE schemaname = 'public'
-  AND tablename IN ('users', 'collaborative_questions', 'approval_history')
+  AND tablename IN ('users', 'collaborative_questions', 'approval_history', 'notifications')
 ORDER BY tablename, policyname;
 
 -- ============================================
