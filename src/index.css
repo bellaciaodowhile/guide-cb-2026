@@ -646,8 +646,11 @@ body {
   background-position: center;
   filter: blur(40px);
   transform: scale(1.2);
-  transition: background-image 0s;
+  transition: background-image 0.3s ease-in-out;
   z-index: 0;
+  will-change: background-image;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .carousel-background-overlay {
