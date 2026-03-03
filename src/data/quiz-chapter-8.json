@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 8,
+  "title": "Visión del carnero y el macho cabrío",
+  "questions": [
+    {
+      "id": "d8-q1",
+      "question": "¿En qué año del reinado de Belsasar tuvo Daniel esta visión?",
+      "options": ["Primer año", "Segundo año", "Tercer año", "Cuarto año"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 8:1"
+    },
+    {
+      "id": "d8-q2",
+      "question": "¿Dónde estaba Daniel en la visión?",
+      "options": ["En Babilonia", "En Susa", "En Jerusalén", "En Egipto"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:2"
+    },
+    {
+      "id": "d8-q3",
+      "question": "¿Junto a qué río estaba Daniel?",
+      "options": ["Éufrates", "Tigris", "Ulai", "Jordán"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 8:2"
+    },
+    {
+      "id": "d8-q4",
+      "question": "¿Qué animal vio Daniel junto al río?",
+      "options": ["Un león", "Un carnero", "Un oso", "Un leopardo"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 8:3"
+    },
+    {
+      "id": "d8-q5",
+      "question": "¿Cuántos cuernos tenía el carnero?",
+      "options": ["Uno", "Dos", "Tres", "Cuatro"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 8:3"
+    },
+    {
+      "id": "d8-q6",
+      "question": "¿Cuál cuerno del carnero era más alto?",
+      "options": ["El primero", "El último", "Eran iguales", "El del medio"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:3"
+    },
+    {
+      "id": "d8-q7",
+      "question": "¿Hacia dónde acometía el carnero?",
+      "options": ["Solo al norte", "Al poniente, al norte y al sur", "Solo al este", "A todas direcciones"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:4"
+    },
+    {
+      "id": "d8-q8",
+      "question": "¿Qué animal vino después?",
+      "options": ["Un león", "Un oso", "Un macho cabrío", "Un dragón"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 8:5"
+    },
+    {
+      "id": "d8-q9",
+      "question": "¿De dónde venía el macho cabrío?",
+      "options": ["Del norte", "Del poniente", "Del sur", "Del este"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:5"
+    },
+    {
+      "id": "d8-q10",
+      "question": "¿Cómo se movía el macho cabrío?",
+      "options": ["Lentamente", "Sin tocar tierra", "Saltando", "Volando"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:5"
+    },
+    {
+      "id": "d8-q11",
+      "question": "¿Qué tenía el macho cabrío entre sus ojos?",
+      "options": ["Una corona", "Un cuerno notable", "Una marca", "Nada"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:5"
+    },
+    {
+      "id": "d8-q12",
+      "question": "¿Qué le hizo el macho cabrío al carnero?",
+      "options": ["Lo ignoró", "Lo derribó y lo pisoteó", "Huyó de él", "Lo adoró"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 8:7"
+    },
+    {
+      "id": "d8-q13",
+      "question": "¿Qué pasó con el cuerno grande del macho cabrío?",
+      "options": ["Creció más", "Fue quebrado", "Se multiplicó", "Desapareció"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:8"
+    },
+    {
+      "id": "d8-q14",
+      "question": "¿Cuántos cuernos notables surgieron en lugar del quebrado?",
+      "options": ["Dos", "Tres", "Cuatro", "Siete"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 8:8"
+    },
+    {
+      "id": "d8-q15",
+      "question": "¿De uno de ellos salió qué?",
+      "options": ["Una flor", "Un cuerno pequeño", "Una estrella", "Un río"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:9"
+    },
+    {
+      "id": "d8-q16",
+      "question": "¿Hasta dónde creció el cuerno pequeño?",
+      "options": ["Hasta el suelo", "Hasta el ejército del cielo", "Hasta las nubes", "Hasta el mar"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:10"
+    },
+    {
+      "id": "d8-q17",
+      "question": "¿Quién le explicó la visión a Daniel?",
+      "options": ["Un ángel", "Gabriel", "Miguel", "Rafael"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:16"
+    },
+    {
+      "id": "d8-q18",
+      "question": "¿Qué representa el carnero con dos cuernos?",
+      "options": ["Babilonia", "Los reyes de Media y de Persia", "Grecia", "Roma"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:20"
+    },
+    {
+      "id": "d8-q19",
+      "question": "¿Qué representa el macho cabrío?",
+      "options": ["Babilonia", "Media", "El rey de Grecia", "Roma"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 8:21"
+    },
+    {
+      "id": "d8-q20",
+      "question": "¿Cómo quedó Daniel después de la visión?",
+      "options": ["Alegre", "Quebrantado y enfermo", "Fortalecido", "Confundido"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 8:27"
+    }
+  ]
+}

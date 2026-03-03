@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 12,
+  "title": "El tiempo del fin",
+  "questions": [
+    {
+      "id": "d12-q1",
+      "question": "¿Quién se levantará en aquel tiempo?",
+      "options": ["Gabriel", "Miguel", "Rafael", "Uriel"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 12:1"
+    },
+    {
+      "id": "d12-q2",
+      "question": "¿Qué es Miguel?",
+      "options": ["Un profeta", "El gran príncipe", "Un rey", "Un sacerdote"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:1"
+    },
+    {
+      "id": "d12-q3",
+      "question": "¿Cómo será ese tiempo?",
+      "options": ["De paz", "De angustia, cual nunca fue", "De prosperidad", "De alegría"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 12:1"
+    },
+    {
+      "id": "d12-q4",
+      "question": "¿Quiénes serán libertados?",
+      "options": ["Todos", "Los que se hallen escritos en el libro", "Los reyes", "Los sacerdotes"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:1"
+    },
+    {
+      "id": "d12-q5",
+      "question": "¿Qué pasará con los que duermen en el polvo?",
+      "options": ["Nada", "Despertarán", "Permanecerán", "Desaparecerán"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 12:2"
+    },
+    {
+      "id": "d12-q6",
+      "question": "¿Para qué despertarán unos?",
+      "options": ["Para vida eterna", "Para muerte", "Para juicio", "Para dormir"],
+      "correctAnswer": 0,
+      "difficulty": "easy",
+      "verse": "Daniel 12:2"
+    },
+    {
+      "id": "d12-q7",
+      "question": "¿Para qué despertarán otros?",
+      "options": ["Para vida", "Para vergüenza y confusión perpetua", "Para gloria", "Para paz"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:2"
+    },
+    {
+      "id": "d12-q8",
+      "question": "¿Cómo resplandecerán los entendidos?",
+      "options": ["Como la luna", "Como el resplandor del firmamento", "Como el sol", "Como las nubes"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:3"
+    },
+    {
+      "id": "d12-q9",
+      "question": "¿Cómo resplandecerán los que enseñan justicia?",
+      "options": ["Como el sol", "Como las estrellas", "Como la luna", "Como el fuego"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:3"
+    },
+    {
+      "id": "d12-q10",
+      "question": "¿Qué debía hacer Daniel con las palabras?",
+      "options": ["Publicarlas", "Cerrar y sellar el libro", "Quemarlas", "Olvidarlas"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:4"
+    },
+    {
+      "id": "d12-q11",
+      "question": "¿Hasta cuándo debía sellar el libro?",
+      "options": ["Para siempre", "Hasta el tiempo del fin", "Un año", "Diez años"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 12:4"
+    },
+    {
+      "id": "d12-q12",
+      "question": "¿Cuántos varones vio Daniel junto al río?",
+      "options": ["Uno", "Dos", "Tres", "Cuatro"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:5"
+    },
+    {
+      "id": "d12-q13",
+      "question": "¿Dónde estaba el varón vestido de lino?",
+      "options": ["En la orilla", "Sobre las aguas del río", "En el cielo", "En la tierra"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:6"
+    },
+    {
+      "id": "d12-q14",
+      "question": "¿Qué preguntó uno de los varones?",
+      "options": ["¿Quién eres?", "¿Cuándo será el fin?", "¿Dónde está Dios?", "¿Por qué esto?"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:6"
+    },
+    {
+      "id": "d12-q15",
+      "question": "¿Qué alzó el varón vestido de lino?",
+      "options": ["Su voz", "Su diestra y su siniestra al cielo", "Su espada", "Su mano"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:7"
+    },
+    {
+      "id": "d12-q16",
+      "question": "¿Por quién juró el varón?",
+      "options": ["Por sí mismo", "Por el que vive por los siglos", "Por Daniel", "Por el rey"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:7"
+    },
+    {
+      "id": "d12-q17",
+      "question": "¿Cuánto tiempo sería?",
+      "options": ["Un tiempo", "Tiempo, tiempos y la mitad de un tiempo", "Dos tiempos", "Tres tiempos"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 12:7"
+    },
+    {
+      "id": "d12-q18",
+      "question": "¿Entendió Daniel lo que oyó?",
+      "options": ["Sí, todo", "No", "Solo un poco", "A medias"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:8"
+    },
+    {
+      "id": "d12-q19",
+      "question": "¿Qué le dijeron a Daniel que hiciera?",
+      "options": ["Predicar", "Seguir su camino", "Escribir más", "Orar"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:9"
+    },
+    {
+      "id": "d12-q20",
+      "question": "¿Qué pasaría con los entendidos?",
+      "options": ["Sufrirían", "Comprenderían", "Huirían", "Morirían"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 12:10"
+    }
+  ]
+}

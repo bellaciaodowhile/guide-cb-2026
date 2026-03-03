@@ -10,7 +10,13 @@ import BibleChapterPage from './components/BibleChapterPage';
 import PRChapterPage from './components/PRChapterPage';
 import QuizLevelsPageCarousel from './components/QuizLevelsPageCarousel';
 import QuizBookSelector from './components/QuizBookSelector';
+import QuizCustomSelector from './components/QuizCustomSelector';
 import QuizGame from './components/QuizGame';
+import CollaboratorDashboard from './components/CollaboratorDashboard';
+import NewQuestionForm from './components/NewQuestionForm';
+import EditQuestionForm from './components/EditQuestionForm';
+import ModeratorPanel from './components/ModeratorPanel';
+import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 
 const App: React.FC = () => {
@@ -54,14 +60,45 @@ const App: React.FC = () => {
 
         {/* Routes */}
         <Routes>
+          {/* Home */}
           <Route path="/" element={<HomePage />} />
+          
+          {/* Category Pages */}
           <Route path="/aventureros" element={<AventurerosDaniel />} />
           <Route path="/conquistadores" element={<ConquistadoresDaniel />} />
           <Route path="/guiasmayores" element={<GuiasmayoresDaniel />} />
+          
+          {/* Bible Reading */}
           <Route path="/bible/daniel/:chapterNumber" element={<BibleChapterPage />} />
           <Route path="/profetas-y-reyes/:chapterNumber" element={<PRChapterPage />} />
+          
+          {/* Collaboration System */}
+          <Route path="/colaborador/dashboard" element={
+            <ProtectedRoute>
+              <CollaboratorDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/colaborador/nueva-pregunta" element={
+            <ProtectedRoute>
+              <NewQuestionForm />
+            </ProtectedRoute>
+          } />
+          <Route path="/colaborador/editar-pregunta/:id" element={
+            <ProtectedRoute requiredRole={['moderator', 'superadmin']}>
+              <EditQuestionForm />
+            </ProtectedRoute>
+          } />
+          <Route path="/colaborador/moderacion" element={
+            <ProtectedRoute requiredRole={['moderator', 'superadmin']}>
+              <ModeratorPanel />
+            </ProtectedRoute>
+          } />
+          
+          {/* Quiz System */}
           <Route path="/quiz" element={<QuizLevelsPageCarousel />} />
           <Route path="/:category/quiz" element={<QuizLevelsPageCarousel />} />
+          <Route path="/:category/quiz/custom" element={<QuizCustomSelector />} />
+          <Route path="/quiz/custom" element={<QuizCustomSelector />} />
           <Route path="/:category/quiz/:level" element={<QuizBookSelector />} />
           <Route path="/:category/quiz/:level/:section" element={<QuizGame />} />
         </Routes>

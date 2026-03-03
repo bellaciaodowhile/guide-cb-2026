@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 4,
+  "title": "La locura de Nabucodonosor",
+  "questions": [
+    {
+      "id": "d4-q1",
+      "question": "¿Qué tuvo Nabucodonosor que lo atemorizó?",
+      "options": ["Una visión", "Un sueño", "Una pesadilla", "Una revelación"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:5"
+    },
+    {
+      "id": "d4-q2",
+      "question": "¿A quiénes llamó primero el rey para interpretar el sueño?",
+      "options": ["A Daniel", "A magos, astrólogos, caldeos y adivinos", "A los sacerdotes", "A sus consejeros"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:7"
+    },
+    {
+      "id": "d4-q3",
+      "question": "¿Pudieron los magos interpretar el sueño del rey?",
+      "options": ["Sí", "No", "Solo parcialmente", "No quisieron"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:7"
+    },
+    {
+      "id": "d4-q4",
+      "question": "¿Qué vio el rey en su sueño en medio de la tierra?",
+      "options": ["Una montaña", "Un árbol grande", "Un río", "Una ciudad"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:10"
+    },
+    {
+      "id": "d4-q5",
+      "question": "¿Hasta dónde llegaba la altura del árbol?",
+      "options": ["Hasta las nubes", "Hasta el cielo", "Hasta las montañas", "Hasta el sol"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:11"
+    },
+    {
+      "id": "d4-q6",
+      "question": "¿Quién descendió del cielo en el sueño?",
+      "options": ["Un ángel", "Un vigilante y santo", "Un profeta", "Dios mismo"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:13"
+    },
+    {
+      "id": "d4-q7",
+      "question": "¿Qué ordenó hacer con el árbol?",
+      "options": ["Regarlo", "Derribarlo", "Podarlo", "Protegerlo"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:14"
+    },
+    {
+      "id": "d4-q8",
+      "question": "¿Qué debían dejar del árbol?",
+      "options": ["Las ramas", "La cepa de sus raíces", "Las hojas", "Los frutos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:15"
+    },
+    {
+      "id": "d4-q9",
+      "question": "¿Cuántos tiempos pasarían sobre él?",
+      "options": ["Tres tiempos", "Cinco tiempos", "Siete tiempos", "Diez tiempos"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 4:16"
+    },
+    {
+      "id": "d4-q10",
+      "question": "¿Cuánto tiempo estuvo Daniel atónito antes de responder?",
+      "options": ["Un momento", "Media hora", "Casi una hora", "Un día"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 4:19"
+    },
+    {
+      "id": "d4-q11",
+      "question": "¿A quién representaba el árbol según Daniel?",
+      "options": ["A Babilonia", "Al rey Nabucodonosor", "Al reino", "A los dioses"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:22"
+    },
+    {
+      "id": "d4-q12",
+      "question": "¿Qué consejo le dio Daniel al rey?",
+      "options": ["Que huyera", "Que redimiera sus pecados con justicia", "Que construyera un templo", "Que abdicara"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:27"
+    },
+    {
+      "id": "d4-q13",
+      "question": "¿Cuánto tiempo después se cumplió el sueño?",
+      "options": ["Inmediatamente", "Al cabo de doce meses", "Un año después", "Dos años después"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:29"
+    },
+    {
+      "id": "d4-q14",
+      "question": "¿Qué estaba haciendo el rey cuando se cumplió la profecía?",
+      "options": ["Orando", "Paseando en el palacio", "Durmiendo", "En una batalla"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:29"
+    },
+    {
+      "id": "d4-q15",
+      "question": "¿Qué dijo el rey que provocó su castigo?",
+      "options": ["Blasfemó contra Dios", "Se jactó de su grandeza", "Maldijo a Daniel", "Adoró ídolos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:30"
+    },
+    {
+      "id": "d4-q16",
+      "question": "¿Qué le pasó al rey inmediatamente?",
+      "options": ["Murió", "Fue echado de entre los hombres", "Perdió su reino", "Enloqueció"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:33"
+    },
+    {
+      "id": "d4-q17",
+      "question": "¿Qué comió el rey durante su locura?",
+      "options": ["Pan y agua", "Hierba como los bueyes", "Nada", "Frutas"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:33"
+    },
+    {
+      "id": "d4-q18",
+      "question": "¿Cómo se pusieron las uñas del rey?",
+      "options": ["Se cayeron", "Como garras de aves", "Se pudrieron", "Normales"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:33"
+    },
+    {
+      "id": "d4-q19",
+      "question": "¿Cuándo recuperó el rey su entendimiento?",
+      "options": ["Nunca", "Al cabo de los días", "Inmediatamente", "Después de un año"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 4:34"
+    },
+    {
+      "id": "d4-q20",
+      "question": "¿Qué hizo el rey cuando recuperó su razón?",
+      "options": ["Vengarse", "Bendijo al Altísimo", "Huyó", "Abdicó"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 4:34"
+    }
+  ]
+}

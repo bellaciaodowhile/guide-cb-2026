@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 5,
+  "title": "La escritura en la pared",
+  "questions": [
+    {
+      "id": "d5-q1",
+      "question": "¿Quién era el rey en este capítulo?",
+      "options": ["Nabucodonosor", "Belsasar", "Darío", "Ciro"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 5:1"
+    },
+    {
+      "id": "d5-q2",
+      "question": "¿Cuántos nobles invitó el rey al banquete?",
+      "options": ["Cien", "Quinientos", "Mil", "Dos mil"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 5:1"
+    },
+    {
+      "id": "d5-q3",
+      "question": "¿Qué mandó traer el rey para beber vino?",
+      "options": ["Copas de oro del templo", "Vasos nuevos", "Copas de plata", "Jarras de barro"],
+      "correctAnswer": 0,
+      "difficulty": "easy",
+      "verse": "Daniel 5:2"
+    },
+    {
+      "id": "d5-q4",
+      "question": "¿De dónde habían sido tomados los vasos de oro?",
+      "options": ["De Egipto", "Del templo de Jerusalén", "De Babilonia", "De Persia"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 5:3"
+    },
+    {
+      "id": "d5-q5",
+      "question": "¿A quiénes alababan mientras bebían en los vasos sagrados?",
+      "options": ["A Dios", "A dioses de oro, plata, bronce, hierro, madera y piedra", "Al rey", "A los antepasados"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:4"
+    },
+    {
+      "id": "d5-q6",
+      "question": "¿Qué apareció de repente?",
+      "options": ["Un ángel", "Dedos de una mano de hombre", "Una luz", "Un trueno"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 5:5"
+    },
+    {
+      "id": "d5-q7",
+      "question": "¿Dónde escribió la mano?",
+      "options": ["En el suelo", "En el encalado de la pared", "En una tabla", "En el aire"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:5"
+    },
+    {
+      "id": "d5-q8",
+      "question": "¿Cómo reaccionó el rey al ver la mano?",
+      "options": ["Se alegró", "Se desmayó", "Se turbó y sus rodillas se batían", "Huyó"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 5:6"
+    },
+    {
+      "id": "d5-q9",
+      "question": "¿Qué prometió el rey a quien leyera la escritura?",
+      "options": ["Oro", "Vestidura de púrpura y collar de oro", "Un palacio", "Libertad"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:7"
+    },
+    {
+      "id": "d5-q10",
+      "question": "¿Qué posición prometió el rey al intérprete?",
+      "options": ["Primer ministro", "El tercer señor del reino", "Segundo del reino", "Consejero real"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 5:7"
+    },
+    {
+      "id": "d5-q11",
+      "question": "¿Quién le recordó al rey sobre Daniel?",
+      "options": ["Un consejero", "La reina", "Un mago", "Un sacerdote"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:10"
+    },
+    {
+      "id": "d5-q12",
+      "question": "¿Qué nombre tenía Daniel en Babilonia?",
+      "options": ["Sadrac", "Mesac", "Beltsasar", "Abed-nego"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 5:12"
+    },
+    {
+      "id": "d5-q13",
+      "question": "¿Aceptó Daniel los regalos del rey?",
+      "options": ["Sí, con gusto", "No, los rechazó", "Solo aceptó el oro", "Solo aceptó el puesto"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:17"
+    },
+    {
+      "id": "d5-q14",
+      "question": "¿Qué palabras estaban escritas en la pared?",
+      "options": ["MENE, MENE, TEKEL, UPARSIN", "MENE, TEKEL, PERES", "TEKEL, UPARSIN", "MENE, MENE, PERES"],
+      "correctAnswer": 0,
+      "difficulty": "hard",
+      "verse": "Daniel 5:25"
+    },
+    {
+      "id": "d5-q15",
+      "question": "¿Qué significa MENE?",
+      "options": ["Pesado", "Contó Dios tu reino y le ha puesto fin", "Dividido", "Hallado falto"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 5:26"
+    },
+    {
+      "id": "d5-q16",
+      "question": "¿Qué significa TEKEL?",
+      "options": ["Contado", "Pesado has sido en balanza y fuiste hallado falto", "Dividido", "Terminado"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 5:27"
+    },
+    {
+      "id": "d5-q17",
+      "question": "¿Qué significa PERES (UPARSIN)?",
+      "options": ["Contado", "Pesado", "Tu reino ha sido roto y dado a medos y persas", "Terminado"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 5:28"
+    },
+    {
+      "id": "d5-q18",
+      "question": "¿Cuándo murió el rey Belsasar?",
+      "options": ["Al día siguiente", "La misma noche", "Una semana después", "Un mes después"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 5:30"
+    },
+    {
+      "id": "d5-q19",
+      "question": "¿Quién tomó el reino después de Belsasar?",
+      "options": ["Ciro", "Darío de Media", "Nabucodonosor", "Artajerjes"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 5:31"
+    },
+    {
+      "id": "d5-q20",
+      "question": "¿Cuántos años tenía Darío cuando tomó el reino?",
+      "options": ["50 años", "60 años", "62 años", "70 años"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 5:31"
+    }
+  ]
+}

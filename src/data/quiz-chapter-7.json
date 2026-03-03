@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 7,
+  "title": "Visión de las cuatro bestias",
+  "questions": [
+    {
+      "id": "d7-q1",
+      "question": "¿En qué año del reinado de Belsasar tuvo Daniel esta visión?",
+      "options": ["Primer año", "Segundo año", "Tercer año", "Cuarto año"],
+      "correctAnswer": 0,
+      "difficulty": "medium",
+      "verse": "Daniel 7:1"
+    },
+    {
+      "id": "d7-q2",
+      "question": "¿Qué vio Daniel que combatían en el gran mar?",
+      "options": ["Ángeles", "Los cuatro vientos del cielo", "Barcos", "Monstruos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:2"
+    },
+    {
+      "id": "d7-q3",
+      "question": "¿Cuántas bestias grandes subieron del mar?",
+      "options": ["Dos", "Tres", "Cuatro", "Cinco"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 7:3"
+    },
+    {
+      "id": "d7-q4",
+      "question": "¿A qué animal se parecía la primera bestia?",
+      "options": ["León", "Oso", "Leopardo", "Dragón"],
+      "correctAnswer": 0,
+      "difficulty": "easy",
+      "verse": "Daniel 7:4"
+    },
+    {
+      "id": "d7-q5",
+      "question": "¿Qué tenía la primera bestia?",
+      "options": ["Cuernos", "Alas de águila", "Garras", "Cola"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:4"
+    },
+    {
+      "id": "d7-q6",
+      "question": "¿A qué animal se parecía la segunda bestia?",
+      "options": ["León", "Oso", "Leopardo", "Cabra"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 7:5"
+    },
+    {
+      "id": "d7-q7",
+      "question": "¿Qué tenía la segunda bestia en su boca?",
+      "options": ["Espada", "Tres costillas", "Fuego", "Sangre"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:5"
+    },
+    {
+      "id": "d7-q8",
+      "question": "¿A qué animal se parecía la tercera bestia?",
+      "options": ["León", "Oso", "Leopardo", "Águila"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 7:6"
+    },
+    {
+      "id": "d7-q9",
+      "question": "¿Cuántas alas tenía la tercera bestia?",
+      "options": ["Dos", "Cuatro", "Seis", "Ocho"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:6"
+    },
+    {
+      "id": "d7-q10",
+      "question": "¿Cuántas cabezas tenía la tercera bestia?",
+      "options": ["Una", "Dos", "Cuatro", "Siete"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 7:6"
+    },
+    {
+      "id": "d7-q11",
+      "question": "¿Cómo era la cuarta bestia?",
+      "options": ["Hermosa", "Espantosa y terrible", "Pequeña", "Débil"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 7:7"
+    },
+    {
+      "id": "d7-q12",
+      "question": "¿Cuántos cuernos tenía la cuarta bestia?",
+      "options": ["Siete", "Diez", "Doce", "Catorce"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:7"
+    },
+    {
+      "id": "d7-q13",
+      "question": "¿Qué surgió entre los cuernos?",
+      "options": ["Una flor", "Otro cuerno pequeño", "Una corona", "Una espada"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:8"
+    },
+    {
+      "id": "d7-q14",
+      "question": "¿Cuántos cuernos fueron arrancados por el cuerno pequeño?",
+      "options": ["Uno", "Dos", "Tres", "Cuatro"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 7:8"
+    },
+    {
+      "id": "d7-q15",
+      "question": "¿Qué tenía el cuerno pequeño?",
+      "options": ["Alas", "Ojos como de hombre y boca que hablaba grandes cosas", "Garras", "Corona"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:8"
+    },
+    {
+      "id": "d7-q16",
+      "question": "¿Quién se sentó en el trono?",
+      "options": ["Un ángel", "Un Anciano de días", "Un rey", "Un profeta"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:9"
+    },
+    {
+      "id": "d7-q17",
+      "question": "¿De qué color era el vestido del Anciano de días?",
+      "options": ["Azul", "Blanco como la nieve", "Dorado", "Púrpura"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:9"
+    },
+    {
+      "id": "d7-q18",
+      "question": "¿Quién vino con las nubes del cielo?",
+      "options": ["Un ángel", "Uno como un hijo de hombre", "Un profeta", "Un rey"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:13"
+    },
+    {
+      "id": "d7-q19",
+      "question": "¿Qué recibirá el hijo de hombre?",
+      "options": ["Riquezas", "Dominio, gloria y reino", "Sabiduría", "Poder temporal"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 7:14"
+    },
+    {
+      "id": "d7-q20",
+      "question": "¿Quiénes recibirán el reino?",
+      "options": ["Los reyes", "Los santos del Altísimo", "Los ángeles", "Los profetas"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 7:18"
+    }
+  ]
+}

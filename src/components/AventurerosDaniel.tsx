@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, Undo2, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
+import { AuthService } from '../services/authService';
 import type { ChapterInfo } from '../types/bible';
 import ChapterCard from './ChapterCard';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
-import QuizCard from './QuizCard';
 import Footer from './Footer';
+import CollaborationModal from './CollaborationModal';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import aventurerosImg from '../assets/aventureros.png';
+import quizImg from '../assets/quiz.png';
+import bankImg from '../assets/bank.png';
+import quizDesktopImg from '../assets/quiz-desktop.png';
+import bankDesktopImg from '../assets/bank-desktop.png';
 import conquistadoresImg from '../assets/conquistadores.png';
 import guiasmayoresImg from '../assets/guiasmayores.png';
 import maskConquistadores from '../assets/mask-conquistadores.png';
@@ -25,6 +30,7 @@ const AventurerosDaniel: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0); // Aventureros es el índice 0
   const [isContentOpen, setIsContentOpen] = useState(false);
+  const [showCollaborationModal, setShowCollaborationModal] = useState(false);
 
   // Capítulos para Aventureros: 1, 2, 3, 6
   const aventurerosChapters = [1, 2, 3, 6];
@@ -170,6 +176,44 @@ const AventurerosDaniel: React.FC = () => {
         ) : (
           <div className="space-y-4 md:space-y-8">
            
+            {/* Iconos de Quiz y Banco */}
+            <div className="icon-cards-container flex justify-center gap-8 mb-6 animate-fade-in">
+              {/* Icono de Quiz */}
+              <button
+                onClick={() => navigate('/aventureros/quiz')}
+                className="icon-card-button group"
+              >
+                <div className="icon-card-image">
+                  <img src={quizImg} alt="Quiz" className="w-full h-full object-contain block min-[771px]:hidden" />
+                  <img src={quizDesktopImg} alt="Quiz" className="w-full h-full object-contain hidden min-[771px]:block" />
+                </div>
+                <span className="icon-card-label">Quiz</span>
+              </button>
+
+              {/* Icono de Banco */}
+              <button
+                onClick={() => {
+                  // Guardar la categoría actual
+                  sessionStorage.setItem('returnCategory', '/aventureros');
+                  // Verificar si ya hay sesión activa
+                  const currentUser = AuthService.getCurrentUser();
+                  if (currentUser) {
+                    // Si ya hay sesión, ir directo al dashboard
+                    navigate('/colaborador/dashboard');
+                  } else {
+                    // Si no hay sesión, abrir modal de login
+                    setShowCollaborationModal(true);
+                  }
+                }}
+                className="icon-card-button group"
+              >
+                <div className="icon-card-image">
+                  <img src={bankImg} alt="Colabora" className="w-full h-full object-contain block min-[771px]:hidden" />
+                  <img src={bankDesktopImg} alt="Colabora" className="w-full h-full object-contain hidden min-[771px]:block" />
+                </div>
+                <span className="icon-card-label">Colabora</span>
+              </button>
+            </div>
 
             {/* Cards en flex-row - Solo pantallas > 770px */}
             <div className="hidden min-[771px]:block bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
@@ -311,9 +355,9 @@ const AventurerosDaniel: React.FC = () => {
             </div>
 
             {/* Quiz Card - Debajo de los detalles de la categoría */}
-            <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+            {/* <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
               <QuizCard category="aventureros" />
-            </div>
+            </div> */}
 
             {/* Chapters Grid */}
             <div className="space-y-4 md:space-y-8">
@@ -346,6 +390,10 @@ const AventurerosDaniel: React.FC = () => {
 
       <Footer />
       <ScrollToTop />
+      <CollaborationModal 
+        isOpen={showCollaborationModal} 
+        onClose={() => setShowCollaborationModal(false)} 
+      />
     </div>
   );
 };

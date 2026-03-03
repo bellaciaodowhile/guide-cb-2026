@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 10,
+  "title": "Visión junto al río Hidekel",
+  "questions": [
+    {
+      "id": "d10-q1",
+      "question": "¿En qué año de Ciro tuvo Daniel esta revelación?",
+      "options": ["Primer año", "Segundo año", "Tercer año", "Cuarto año"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 10:1"
+    },
+    {
+      "id": "d10-q2",
+      "question": "¿Cuánto tiempo estuvo Daniel de duelo?",
+      "options": ["7 días", "14 días", "21 días", "30 días"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 10:2"
+    },
+    {
+      "id": "d10-q3",
+      "question": "¿Qué no comió Daniel durante su duelo?",
+      "options": ["Pan solamente", "Pan delicado", "Frutas", "Verduras"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:3"
+    },
+    {
+      "id": "d10-q4",
+      "question": "¿Qué no entró en la boca de Daniel?",
+      "options": ["Agua", "Carne ni vino", "Pan", "Sal"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:3"
+    },
+    {
+      "id": "d10-q5",
+      "question": "¿Se ungió Daniel durante el duelo?",
+      "options": ["Sí", "No", "Solo una vez", "Solo al final"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:3"
+    },
+    {
+      "id": "d10-q6",
+      "question": "¿Junto a qué río estaba Daniel?",
+      "options": ["Éufrates", "Hidekel", "Ulai", "Jordán"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 10:4"
+    },
+    {
+      "id": "d10-q7",
+      "question": "¿De qué estaba vestido el varón que vio Daniel?",
+      "options": ["De púrpura", "De lino", "De oro", "De plata"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:5"
+    },
+    {
+      "id": "d10-q8",
+      "question": "¿Con qué estaba ceñido el varón?",
+      "options": ["Cuerda", "Oro de Ufaz", "Plata", "Bronce"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 10:5"
+    },
+    {
+      "id": "d10-q9",
+      "question": "¿A qué se parecía el cuerpo del varón?",
+      "options": ["Oro", "Berilo", "Plata", "Bronce"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 10:6"
+    },
+    {
+      "id": "d10-q10",
+      "question": "¿A qué se parecían los ojos del varón?",
+      "options": ["Estrellas", "Antorchas de fuego", "Agua", "Cristal"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:6"
+    },
+    {
+      "id": "d10-q11",
+      "question": "¿Vieron la visión los hombres que estaban con Daniel?",
+      "options": ["Sí, todos", "No", "Solo algunos", "Solo la mitad"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:7"
+    },
+    {
+      "id": "d10-q12",
+      "question": "¿Qué hicieron los hombres que no vieron?",
+      "options": ["Se quedaron", "Huyeron y se escondieron", "Oraron", "Gritaron"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:7"
+    },
+    {
+      "id": "d10-q13",
+      "question": "¿Cómo quedó Daniel después de oír la voz?",
+      "options": ["Fuerte", "Sin fuerzas, sobre su rostro", "De pie", "Sentado"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:9"
+    },
+    {
+      "id": "d10-q14",
+      "question": "¿Qué tocó a Daniel?",
+      "options": ["Un ángel", "Una mano", "Una luz", "Un viento"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:10"
+    },
+    {
+      "id": "d10-q15",
+      "question": "¿Cómo llamó el ángel a Daniel?",
+      "options": ["Profeta", "Varón muy amado", "Siervo", "Santo"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:11"
+    },
+    {
+      "id": "d10-q16",
+      "question": "¿Desde cuándo fueron oídas las palabras de Daniel?",
+      "options": ["Desde el final", "Desde el primer día", "Desde el tercer día", "Desde el último día"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:12"
+    },
+    {
+      "id": "d10-q17",
+      "question": "¿Quién se opuso al ángel durante 21 días?",
+      "options": ["Un demonio", "El príncipe del reino de Persia", "Un rey", "Un mago"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:13"
+    },
+    {
+      "id": "d10-q18",
+      "question": "¿Quién vino a ayudar al ángel?",
+      "options": ["Gabriel", "Miguel", "Rafael", "Uriel"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:13"
+    },
+    {
+      "id": "d10-q19",
+      "question": "¿Qué le pasó a Daniel cuando el varón le habló?",
+      "options": ["Se fortaleció", "Enmudeció", "Gritó", "Huyó"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 10:15"
+    },
+    {
+      "id": "d10-q20",
+      "question": "¿Cuántas veces tocó el ángel a Daniel?",
+      "options": ["Una vez", "Dos veces", "Tres veces", "Cuatro veces"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 10:10, 16, 18"
+    }
+  ]
+}

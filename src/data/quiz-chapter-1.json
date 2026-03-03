@@ -1,0 +1,266 @@
+{
+  "chapter": 1,
+  "title": "Daniel y sus compañeros en Babilonia",
+  "questions": [
+    {
+      "id": "d1-q1",
+      "question": "¿En qué año del reinado de Joacim vino Nabucodonosor a Jerusalén?",
+      "options": [
+        "Primer año",
+        "Segundo año",
+        "Tercer año",
+        "Cuarto año"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 1:1"
+    },
+    {
+      "id": "d1-q2",
+      "question": "¿A qué tierra llevó Nabucodonosor los utensilios de la casa de Dios?",
+      "options": [
+        "Tierra de Egipto",
+        "Tierra de Sinar",
+        "Tierra de Asiria",
+        "Tierra de Persia"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:2"
+    },
+    {
+      "id": "d1-q3",
+      "question": "¿Quién era el jefe de los eunucos del rey?",
+      "options": [
+        "Melsar",
+        "Aspenaz",
+        "Arioc",
+        "Belsasar"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:3"
+    },
+    {
+      "id": "d1-q4",
+      "question": "¿Cuántos años debían ser educados los jóvenes antes de presentarse al rey?",
+      "options": [
+        "Dos años",
+        "Tres años",
+        "Cuatro años",
+        "Cinco años"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 1:5"
+    },
+    {
+      "id": "d1-q5",
+      "question": "¿Qué nombre le puso el jefe de los eunucos a Daniel?",
+      "options": [
+        "Sadrac",
+        "Mesac",
+        "Abed-nego",
+        "Beltsasar"
+      ],
+      "correctAnswer": 3,
+      "difficulty": "easy",
+      "verse": "Daniel 1:7"
+    },
+    {
+      "id": "d1-q6",
+      "question": "¿Qué nombre le pusieron a Ananías?",
+      "options": [
+        "Sadrac",
+        "Mesac",
+        "Abed-nego",
+        "Beltsasar"
+      ],
+      "correctAnswer": 0,
+      "difficulty": "medium",
+      "verse": "Daniel 1:7"
+    },
+    {
+      "id": "d1-q7",
+      "question": "¿Qué nombre le pusieron a Misael?",
+      "options": [
+        "Sadrac",
+        "Mesac",
+        "Abed-nego",
+        "Beltsasar"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:7"
+    },
+    {
+      "id": "d1-q8",
+      "question": "¿Qué nombre le pusieron a Azarías?",
+      "options": [
+        "Sadrac",
+        "Mesac",
+        "Abed-nego",
+        "Beltsasar"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 1:7"
+    },
+    {
+      "id": "d1-q9",
+      "question": "¿Qué propuso Daniel en su corazón?",
+      "options": [
+        "Huir de Babilonia",
+        "No contaminarse con la comida del rey",
+        "Aprender rápido",
+        "Ser el mejor estudiante"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 1:8"
+    },
+    {
+      "id": "d1-q10",
+      "question": "¿Cuántos días pidió Daniel para hacer la prueba con legumbres?",
+      "options": [
+        "Siete días",
+        "Diez días",
+        "Catorce días",
+        "Veinte días"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 1:12"
+    },
+    {
+      "id": "d1-q11",
+      "question": "¿Qué comieron Daniel y sus amigos durante la prueba?",
+      "options": [
+        "Pan y agua",
+        "Legumbres y agua",
+        "Frutas y vino",
+        "Carne y agua"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 1:12"
+    },
+    {
+      "id": "d1-q12",
+      "question": "¿Cómo se veían los rostros de Daniel y sus amigos después de los diez días?",
+      "options": [
+        "Más pálidos",
+        "Igual",
+        "Mejor y más robustos",
+        "Enfermos"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 1:15"
+    },
+    {
+      "id": "d1-q13",
+      "question": "¿Quién les dio conocimiento e inteligencia a los cuatro jóvenes?",
+      "options": [
+        "El rey",
+        "Aspenaz",
+        "Dios",
+        "Los maestros caldeos"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 1:17"
+    },
+    {
+      "id": "d1-q14",
+      "question": "¿En qué tuvo Daniel entendimiento especial?",
+      "options": [
+        "Matemáticas",
+        "Visiones y sueños",
+        "Música",
+        "Guerra"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:17"
+    },
+    {
+      "id": "d1-q15",
+      "question": "¿Cuántas veces mejores encontró el rey a Daniel y sus amigos que a los magos?",
+      "options": [
+        "Cinco veces",
+        "Diez veces",
+        "Veinte veces",
+        "Cien veces"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:20"
+    },
+    {
+      "id": "d1-q16",
+      "question": "¿Hasta qué año continuó Daniel?",
+      "options": [
+        "Año primero del rey Ciro",
+        "Año tercero del rey Ciro",
+        "Año primero de Darío",
+        "Año tercero de Nabucodonosor"
+      ],
+      "correctAnswer": 0,
+      "difficulty": "medium",
+      "verse": "Daniel 1:21"
+    },
+    {
+      "id": "d1-q17",
+      "question": "¿De qué tribu eran Daniel y sus amigos?",
+      "options": [
+        "Benjamín",
+        "Judá",
+        "Leví",
+        "Efraín"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:6"
+    },
+    {
+      "id": "d1-q18",
+      "question": "¿Qué debían aprender los jóvenes seleccionados?",
+      "options": [
+        "Solo la lengua caldea",
+        "Las letras y la lengua de los caldeos",
+        "Solo matemáticas",
+        "Solo astronomía"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:4"
+    },
+    {
+      "id": "d1-q19",
+      "question": "¿Qué características debían tener los jóvenes seleccionados?",
+      "options": [
+        "Solo ser fuertes",
+        "Sin tacha, de buen parecer, instruidos en sabiduría",
+        "Solo ser nobles",
+        "Solo ser jóvenes"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 1:4"
+    },
+    {
+      "id": "d1-q20",
+      "question": "¿A quién pidió Daniel que no se le obligara a contaminarse?",
+      "options": [
+        "Al rey",
+        "A Melsar",
+        "Al jefe de los eunucos",
+        "A sus amigos"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 1:8"
+    }
+  ]
+}

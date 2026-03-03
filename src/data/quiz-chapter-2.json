@@ -1,0 +1,266 @@
+{
+  "chapter": 2,
+  "title": "El sueño de Nabucodonosor",
+  "questions": [
+    {
+      "id": "d2-q1",
+      "question": "¿En qué año del reinado de Nabucodonosor tuvo el rey sueños?",
+      "options": [
+        "Primer año",
+        "Segundo año",
+        "Tercer año",
+        "Cuarto año"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:1"
+    },
+    {
+      "id": "d2-q2",
+      "question": "¿Qué le pasó al espíritu del rey después del sueño?",
+      "options": [
+        "Se alegró",
+        "Se turbó",
+        "Se tranquilizó",
+        "Se fortaleció"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:1"
+    },
+    {
+      "id": "d2-q3",
+      "question": "¿A quiénes mandó llamar el rey para que le explicaran el sueño?",
+      "options": [
+        "Solo a Daniel",
+        "Magos, astrólogos, encantadores y caldeos",
+        "Solo a los profetas",
+        "A sus consejeros"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:2"
+    },
+    {
+      "id": "d2-q4",
+      "question": "¿Qué amenazó el rey hacer si no le decían el sueño?",
+      "options": [
+        "Encarcelarlos",
+        "Hacerlos pedazos y convertir sus casas en estercoleros",
+        "Desterrarlos",
+        "Quitarles sus bienes"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:5"
+    },
+    {
+      "id": "d2-q5",
+      "question": "¿Qué dijeron los caldeos que nadie podía hacer?",
+      "options": [
+        "Interpretar sueños",
+        "Declarar el asunto del rey salvo los dioses",
+        "Hablar con el rey",
+        "Entender al rey"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:11"
+    },
+    {
+      "id": "d2-q6",
+      "question": "¿Qué mandó el rey cuando los sabios no pudieron ayudarle?",
+      "options": [
+        "Que los encarcelaran",
+        "Que mataran a todos los sabios de Babilonia",
+        "Que los desterraran",
+        "Que los multaran"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:12"
+    },
+    {
+      "id": "d2-q7",
+      "question": "¿Quién era el capitán de la guardia del rey?",
+      "options": [
+        "Aspenaz",
+        "Arioc",
+        "Melsar",
+        "Beltsasar"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:14"
+    },
+    {
+      "id": "d2-q8",
+      "question": "¿Qué pidió Daniel al rey?",
+      "options": [
+        "Oro y plata",
+        "Tiempo para dar la interpretación",
+        "Libertad",
+        "Un cargo importante"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:16"
+    },
+    {
+      "id": "d2-q9",
+      "question": "¿Qué pidieron Daniel y sus amigos al Dios del cielo?",
+      "options": [
+        "Riquezas",
+        "Misericordias sobre el misterio",
+        "Poder",
+        "Sabiduría general"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:18"
+    },
+    {
+      "id": "d2-q10",
+      "question": "¿Cuándo le fue revelado el secreto a Daniel?",
+      "options": [
+        "En la mañana",
+        "Al mediodía",
+        "En visión de noche",
+        "En el templo"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 2:19"
+    },
+    {
+      "id": "d2-q11",
+      "question": "¿De qué era la cabeza de la estatua del sueño?",
+      "options": [
+        "Plata",
+        "Oro fino",
+        "Bronce",
+        "Hierro"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:32"
+    },
+    {
+      "id": "d2-q12",
+      "question": "¿De qué eran el pecho y los brazos de la estatua?",
+      "options": [
+        "Oro",
+        "Plata",
+        "Bronce",
+        "Hierro"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:32"
+    },
+    {
+      "id": "d2-q13",
+      "question": "¿De qué eran el vientre y los muslos de la estatua?",
+      "options": [
+        "Oro",
+        "Plata",
+        "Bronce",
+        "Hierro"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 2:32"
+    },
+    {
+      "id": "d2-q14",
+      "question": "¿De qué eran las piernas de la estatua?",
+      "options": [
+        "Oro",
+        "Plata",
+        "Bronce",
+        "Hierro"
+      ],
+      "correctAnswer": 3,
+      "difficulty": "easy",
+      "verse": "Daniel 2:33"
+    },
+    {
+      "id": "d2-q15",
+      "question": "¿De qué eran los pies de la estatua?",
+      "options": [
+        "Solo hierro",
+        "Solo barro",
+        "Parte hierro y parte barro cocido",
+        "Solo bronce"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 2:33"
+    },
+    {
+      "id": "d2-q16",
+      "question": "¿Qué hirió a la estatua en sus pies?",
+      "options": [
+        "Un martillo",
+        "Una espada",
+        "Una piedra",
+        "Un rayo"
+      ],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 2:34"
+    },
+    {
+      "id": "d2-q17",
+      "question": "¿Cómo se desprendió la piedra?",
+      "options": [
+        "Con martillo",
+        "Sin que la cortara mano alguna",
+        "Con cincel",
+        "Con fuego"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:34"
+    },
+    {
+      "id": "d2-q18",
+      "question": "¿En qué se convirtió la piedra después de herir la estatua?",
+      "options": [
+        "En polvo",
+        "En un gran monte que llenó toda la tierra",
+        "En agua",
+        "Desapareció"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:35"
+    },
+    {
+      "id": "d2-q19",
+      "question": "¿Quién era la cabeza de oro según Daniel?",
+      "options": [
+        "Daniel",
+        "Nabucodonosor",
+        "Ciro",
+        "Darío"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 2:38"
+    },
+    {
+      "id": "d2-q20",
+      "question": "¿Qué hizo el rey después de escuchar la interpretación?",
+      "options": [
+        "Se enojó",
+        "Se postró y adoró a Daniel",
+        "Huyó",
+        "Lloró"
+      ],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 2:46"
+    }
+  ]
+}

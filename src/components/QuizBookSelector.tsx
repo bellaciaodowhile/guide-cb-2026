@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, AlertTriangle } from 'lucide-react';
+import { QuestionService } from '../services/questionService';
 
 // Importar imágenes de capítulos
 import daniel1 from '../assets/capitulos/Daniel 1.webp';
@@ -82,15 +83,30 @@ const QuizBookSelector: React.FC = () => {
   const navigate = useNavigate();
   const { category, level } = useParams<{ category: string; level: string }>();
   const currentLevel = parseInt(level || '1');
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   // Obtener la imagen del capítulo actual
   const chapterImage = chapterImages[currentLevel - 1] || daniel1;
 
-  // Generar 10 tarjetas para el nivel actual
-  const cards = Array.from({ length: 10 }, (_, i) => i + 1);
+  // Cargar preguntas aprobadas del capítulo
+  useEffect(() => {
+    loadQuestions();
+  }, [currentLevel]);
+
+  const loadQuestions = async () => {
+    setLoading(true);
+    const questions = await QuestionService.getApprovedQuestionsByChapter(currentLevel);
+    setTotalQuestions(questions.length);
+    setLoading(false);
+  };
+
+  // Calcular número de secciones (cada sección tiene máximo 20 preguntas)
+  const numberOfSections = Math.ceil(totalQuestions / 20);
+  const cards = Array.from({ length: numberOfSections }, (_, i) => i + 1);
 
   const handleCardOpen = (cardNumber: number) => {
-    // Navegar a la ruta del quiz con la categoría, nivel y la pregunta
+    // Navegar a la ruta del quiz con la categoría, nivel y la sección
     const route = category ? `/${category}/quiz/${currentLevel}/${cardNumber}` : `/quiz/${currentLevel}/${cardNumber}`;
     navigate(route);
   };
@@ -99,6 +115,25 @@ const QuizBookSelector: React.FC = () => {
     const route = category ? `/${category}/quiz` : '/quiz';
     navigate(route);
   };
+
+  if (loading) {
+    return (
+      <div className="quiz-card-selector">
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${chapterImage})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+        
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-500 mx-auto mb-4"></div>
+            <p className="text-xl font-bold text-white drop-shadow-lg">Cargando preguntas...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="quiz-card-selector">
@@ -112,7 +147,7 @@ const QuizBookSelector: React.FC = () => {
       {/* Botón de volver */}
       <button
         onClick={handleBack}
-        className="carousel-nav-button group/arrow relative fixed -top-10 left-1 z-50"
+        className="carousel-nav-button group/arrow fixed top-6 left-6 z-50"
       >
         <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full blur-lg opacity-75 group-hover/arrow:opacity-100 animate-pulse-glow"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-amber-800 to-amber-950 rounded-full transform translate-y-1.5 group-hover/arrow:translate-y-1 transition-transform duration-150"></div>
@@ -125,24 +160,63 @@ const QuizBookSelector: React.FC = () => {
       {/* Título */}
       <div className="card-selector-title">
         <h1 className="text-4xl md:text-6xl font-black text-amber-100 text-center mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]" style={{ fontFamily: "'Bungee', cursive" }}>
-          Nivel {currentLevel}
+          Capítulo {currentLevel}
         </h1>
         <p className="text-xl md:text-2xl text-amber-200 text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          Selecciona una sección para comenzar
+          {totalQuestions > 0 
+            ? `${totalQuestions} ${totalQuestions === 1 ? 'pregunta disponible' : 'preguntas disponibles'}`
+            : 'Selecciona una sección para comenzar'
+          }
         </p>
       </div>
 
-      {/* Grid de tarjetas */}
-      <div className="cards-grid">
-        {cards.map((cardNumber, index) => (
-          <GoldenCard
-            key={cardNumber}
-            number={cardNumber}
-            onOpen={() => handleCardOpen(cardNumber)}
-            delay={index * 100}
-          />
-        ))}
-      </div>
+      {/* Grid de tarjetas o mensaje de sin preguntas */}
+      {totalQuestions === 0 ? (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center bg-black/50 backdrop-blur-sm p-12 rounded-2xl border-2 border-amber-500/30 max-w-md">
+            <AlertTriangle className="h-20 w-20 text-amber-500 mx-auto mb-6" />
+            <h2 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Bungee', cursive" }}>
+              Sin Preguntas
+            </h2>
+            <p className="text-lg text-amber-100 mb-6">
+              Este capítulo aún no tiene preguntas aprobadas en el banco.
+            </p>
+            <p className="text-sm text-amber-200/80">
+              ¡Sé el primero en contribuir creando preguntas para este capítulo!
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="cards-grid">
+          {cards.map((cardNumber, index) => (
+            <GoldenCard
+              key={cardNumber}
+              number={cardNumber}
+              onOpen={() => handleCardOpen(cardNumber)}
+              delay={index * 100}
+            />
+          ))}
+          
+          {/* Card de Próximamente solo si hay preguntas */}
+          <div className="golden-card-container coming-soon-card">
+            <div className="golden-card golden-card-coming-soon">
+              <div className="golden-card-border-outer"></div>
+              
+              <div className="golden-card-content">
+                <div className="golden-card-inner-frame"></div>
+                
+                <div className="coming-soon-content">
+                  <span className="coming-soon-text" style={{ fontFamily: "'Bungee', cursive" }}>
+                    PRÓXIMAMENTE
+                  </span>
+                </div>
+                
+                <div className="golden-card-pattern"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

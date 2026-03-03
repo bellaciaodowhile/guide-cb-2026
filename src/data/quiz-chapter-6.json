@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 6,
+  "title": "Daniel en el foso de los leones",
+  "questions": [
+    {
+      "id": "d6-q1",
+      "question": "¿Cuántos gobernadores puso el rey Darío sobre el reino?",
+      "options": ["60", "80", "100", "120"],
+      "correctAnswer": 3,
+      "difficulty": "medium",
+      "verse": "Daniel 6:1"
+    },
+    {
+      "id": "d6-q2",
+      "question": "¿Cuántos príncipes había sobre los gobernadores?",
+      "options": ["Dos", "Tres", "Cuatro", "Cinco"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:2"
+    },
+    {
+      "id": "d6-q3",
+      "question": "¿Por qué Daniel era superior a los otros príncipes?",
+      "options": ["Por su edad", "Porque había en él un espíritu superior", "Por su riqueza", "Por su familia"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:3"
+    },
+    {
+      "id": "d6-q4",
+      "question": "¿Qué pensaba hacer el rey con Daniel?",
+      "options": ["Desterrarlo", "Ponerlo sobre todo el reino", "Encarcelarlo", "Jubilarlo"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 6:3"
+    },
+    {
+      "id": "d6-q5",
+      "question": "¿Pudieron los príncipes hallar falta en Daniel?",
+      "options": ["Sí, muchas", "Sí, algunas", "No, ninguna", "Solo una"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 6:4"
+    },
+    {
+      "id": "d6-q6",
+      "question": "¿En qué decidieron buscar ocasión contra Daniel?",
+      "options": ["En su trabajo", "En la ley de su Dios", "En su familia", "En sus amigos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:5"
+    },
+    {
+      "id": "d6-q7",
+      "question": "¿Cuántos días duraría el edicto del rey?",
+      "options": ["Siete días", "Diez días", "Treinta días", "Cuarenta días"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 6:7"
+    },
+    {
+      "id": "d6-q8",
+      "question": "¿A quién se podía pedir durante esos días?",
+      "options": ["A cualquiera", "Solo al rey", "A los dioses", "A nadie"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 6:7"
+    },
+    {
+      "id": "d6-q9",
+      "question": "¿Qué pasaría con quien desobedeciera el edicto?",
+      "options": ["Sería encarcelado", "Sería echado al foso de los leones", "Sería desterrado", "Perdería sus bienes"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 6:7"
+    },
+    {
+      "id": "d6-q10",
+      "question": "¿Qué hizo Daniel cuando supo del edicto?",
+      "options": ["Dejó de orar", "Oró en secreto", "Siguió orando como siempre", "Huyó"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 6:10"
+    },
+    {
+      "id": "d6-q11",
+      "question": "¿Cuántas veces al día oraba Daniel?",
+      "options": ["Una vez", "Dos veces", "Tres veces", "Cinco veces"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 6:10"
+    },
+    {
+      "id": "d6-q12",
+      "question": "¿Hacia dónde estaban abiertas las ventanas de Daniel?",
+      "options": ["Hacia Babilonia", "Hacia Jerusalén", "Hacia el este", "Hacia el norte"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:10"
+    },
+    {
+      "id": "d6-q13",
+      "question": "¿Cómo reaccionó el rey al saber que Daniel había desobedecido?",
+      "options": ["Se alegró", "Se pesó en gran manera", "Se enojó", "No le importó"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:14"
+    },
+    {
+      "id": "d6-q14",
+      "question": "¿Hasta cuándo trabajó el rey para librar a Daniel?",
+      "options": ["Hasta el mediodía", "Hasta la puesta del sol", "Hasta la medianoche", "Hasta el amanecer"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:14"
+    },
+    {
+      "id": "d6-q15",
+      "question": "¿Qué le dijo el rey a Daniel antes de echarlo al foso?",
+      "options": ["Adiós", "El Dios tuyo te libre", "Lo siento", "Perdóname"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:16"
+    },
+    {
+      "id": "d6-q16",
+      "question": "¿Con qué sellaron la piedra del foso?",
+      "options": ["Con cera", "Con el anillo del rey y de sus príncipes", "Con cemento", "Con cadenas"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 6:17"
+    },
+    {
+      "id": "d6-q17",
+      "question": "¿Qué hizo el rey esa noche?",
+      "options": ["Durmió bien", "Ayunó y no durmió", "Celebró", "Oró"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:18"
+    },
+    {
+      "id": "d6-q18",
+      "question": "¿Cuándo fue el rey al foso?",
+      "options": ["Al mediodía", "Al anochecer", "Muy de mañana", "A la medianoche"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 6:19"
+    },
+    {
+      "id": "d6-q19",
+      "question": "¿Quién cerró la boca de los leones?",
+      "options": ["Daniel", "El rey", "Dios envió su ángel", "Nadie"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 6:22"
+    },
+    {
+      "id": "d6-q20",
+      "question": "¿Qué les pasó a los acusadores de Daniel?",
+      "options": ["Fueron perdonados", "Fueron echados al foso y los leones los devoraron", "Fueron desterrados", "Fueron encarcelados"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 6:24"
+    }
+  ]
+}

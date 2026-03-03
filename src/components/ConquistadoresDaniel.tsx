@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, Undo2, AlertTriangle, MousePointer2, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LocalBibleService } from '../services/localBibleService';
+import { AuthService } from '../services/authService';
 import type { ChapterInfo } from '../types/bible';
 import ChapterCard from './ChapterCard';
 import LoadingSpinner from './LoadingSpinner';
 import StatsCard from './StatsCard';
 import ScrollToTop from './ScrollToTop';
-import QuizCard from './QuizCard';
 import Footer from './Footer';
+import CollaborationModal from './CollaborationModal';
 import bgConquistadores from '../assets/bg-conquistadores.webp';
 import bgAventureros from '../assets/bg-aventureros.webp';
 import bgGuiasmayores from '../assets/bg-guiasmayores.webp';
 import aventurerosImg from '../assets/aventureros.png';
+import quizImg from '../assets/quiz.png';
+import bankImg from '../assets/bank.png';
+import quizDesktopImg from '../assets/quiz-desktop.png';
+import bankDesktopImg from '../assets/bank-desktop.png';
 import conquistadoresImg from '../assets/conquistadores.png';
 import guiasmayoresImg from '../assets/guiasmayores.png';
 import maskAventureros from '../assets/mask-aventureros.png';
@@ -25,6 +30,7 @@ const ConquistadoresDaniel: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(1); // Conquistadores es el índice 1
   const [isContentOpen, setIsContentOpen] = useState(false);
+  const [showCollaborationModal, setShowCollaborationModal] = useState(false);
 
   // Capítulos para Conquistadores: 1-6 (toda la primera parte narrativa)
   const conquistadoresChapters = [1, 2, 3, 4, 5, 6];
@@ -174,6 +180,45 @@ const ConquistadoresDaniel: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-4 md:space-y-8 mt-0 min-[771px]:mt-32">
+            {/* Iconos de Quiz y Banco */}
+            <div className="icon-cards-container flex justify-center gap-8 mb-6 animate-fade-in">
+              {/* Icono de Quiz */}
+              <button
+                onClick={() => navigate('/conquistadores/quiz')}
+                className="icon-card-button group"
+              >
+                <div className="icon-card-image">
+                  <img src={quizImg} alt="Quiz" className="w-full h-full object-contain block min-[771px]:hidden" />
+                  <img src={quizDesktopImg} alt="Quiz" className="w-full h-full object-contain hidden min-[771px]:block" />
+                </div>
+                <span className="icon-card-label">Quiz</span>
+              </button>
+
+              {/* Icono de Banco */}
+              <button
+                onClick={() => {
+                  // Guardar la categoría actual
+                  sessionStorage.setItem('returnCategory', '/conquistadores');
+                  // Verificar si ya hay sesión activa
+                  const currentUser = AuthService.getCurrentUser();
+                  if (currentUser) {
+                    // Si ya hay sesión, ir directo al dashboard
+                    navigate('/colaborador/dashboard');
+                  } else {
+                    // Si no hay sesión, abrir modal de login
+                    setShowCollaborationModal(true);
+                  }
+                }}
+                className="icon-card-button group"
+              >
+                <div className="icon-card-image">
+                  <img src={bankImg} alt="Colabora" className="w-full h-full object-contain block min-[771px]:hidden" />
+                  <img src={bankDesktopImg} alt="Colabora" className="w-full h-full object-contain hidden min-[771px]:block" />
+                </div>
+                <span className="icon-card-label">Colabora</span>
+              </button>
+            </div>
+
             {/* Cards en flex-row - Solo pantallas > 770px */}
             <div className="hidden min-[771px]:block bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6">
               <div className="text-left mb-6">
@@ -318,9 +363,9 @@ const ConquistadoresDaniel: React.FC = () => {
             </div>
 
             {/* Quiz Card - Debajo de los detalles de la categoría */}
-            <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
+            {/* <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
               <QuizCard category="conquistadores" />
-            </div>
+            </div> */}
 
             {/* Chapters Grid */}
             <div className="space-y-4 md:space-y-8">
@@ -358,6 +403,10 @@ const ConquistadoresDaniel: React.FC = () => {
 
       <Footer />
       <ScrollToTop />
+      <CollaborationModal 
+        isOpen={showCollaborationModal} 
+        onClose={() => setShowCollaborationModal(false)} 
+      />
     </div>
   );
 };

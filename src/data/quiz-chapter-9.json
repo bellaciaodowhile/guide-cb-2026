@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 9,
+  "title": "La oración de Daniel y las setenta semanas",
+  "questions": [
+    {
+      "id": "d9-q1",
+      "question": "¿En qué año de Darío oró Daniel?",
+      "options": ["Primer año", "Segundo año", "Tercer año", "Cuarto año"],
+      "correctAnswer": 0,
+      "difficulty": "medium",
+      "verse": "Daniel 9:1"
+    },
+    {
+      "id": "d9-q2",
+      "question": "¿De qué nación era Darío?",
+      "options": ["Babilonia", "Persia", "De los medos", "Grecia"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 9:1"
+    },
+    {
+      "id": "d9-q3",
+      "question": "¿En qué libro leyó Daniel sobre los 70 años?",
+      "options": ["Isaías", "Los libros del profeta Jeremías", "Ezequiel", "Moisés"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:2"
+    },
+    {
+      "id": "d9-q4",
+      "question": "¿Cuántos años durarían las desolaciones de Jerusalén?",
+      "options": ["40 años", "50 años", "70 años", "100 años"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 9:2"
+    },
+    {
+      "id": "d9-q5",
+      "question": "¿Cómo oró Daniel?",
+      "options": ["De pie", "Con ayuno, cilicio y ceniza", "Cantando", "En silencio"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:3"
+    },
+    {
+      "id": "d9-q6",
+      "question": "¿Qué confesó Daniel en su oración?",
+      "options": ["Su grandeza", "Los pecados de su pueblo", "Su sabiduría", "Su poder"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 9:5"
+    },
+    {
+      "id": "d9-q7",
+      "question": "¿A quiénes no escuchó el pueblo según Daniel?",
+      "options": ["A los reyes", "A los profetas", "A los sacerdotes", "A los ancianos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:6"
+    },
+    {
+      "id": "d9-q8",
+      "question": "¿Qué pidió Daniel para Jerusalén?",
+      "options": ["Riquezas", "Que Dios hiciera volver su ira", "Guerra", "Venganza"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:16"
+    },
+    {
+      "id": "d9-q9",
+      "question": "¿Cuándo vino Gabriel a Daniel?",
+      "options": ["Al amanecer", "Al mediodía", "A la hora del sacrificio de la tarde", "A medianoche"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 9:21"
+    },
+    {
+      "id": "d9-q10",
+      "question": "¿Cómo vino Gabriel?",
+      "options": ["Caminando", "Volando con presteza", "En un carro", "Montado"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:21"
+    },
+    {
+      "id": "d9-q11",
+      "question": "¿Cuándo fue oída la oración de Daniel?",
+      "options": ["Al final", "Al principio de su ruego", "A la mitad", "Al día siguiente"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:23"
+    },
+    {
+      "id": "d9-q12",
+      "question": "¿Cuántas semanas están determinadas sobre el pueblo?",
+      "options": ["40 semanas", "50 semanas", "70 semanas", "100 semanas"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 9:24"
+    },
+    {
+      "id": "d9-q13",
+      "question": "¿Qué se terminaría según la profecía?",
+      "options": ["El reino", "La prevaricación", "La guerra", "El hambre"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:24"
+    },
+    {
+      "id": "d9-q14",
+      "question": "¿Qué se traería según la profecía?",
+      "options": ["Guerra", "La justicia perdurable", "Hambre", "Peste"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:24"
+    },
+    {
+      "id": "d9-q15",
+      "question": "¿Desde cuándo se contarían las semanas?",
+      "options": ["Desde la cautividad", "Desde la salida de la orden para restaurar Jerusalén", "Desde la destrucción", "Desde el exilio"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:25"
+    },
+    {
+      "id": "d9-q16",
+      "question": "¿Cuántas semanas hasta el Mesías Príncipe?",
+      "options": ["49 semanas", "62 semanas", "69 semanas", "70 semanas"],
+      "correctAnswer": 2,
+      "difficulty": "hard",
+      "verse": "Daniel 9:25"
+    },
+    {
+      "id": "d9-q17",
+      "question": "¿Qué se reedificaría en tiempos angustiosos?",
+      "options": ["El templo", "La plaza y el muro", "El palacio", "Las casas"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:25"
+    },
+    {
+      "id": "d9-q18",
+      "question": "¿Qué le pasaría al Mesías después de las 62 semanas?",
+      "options": ["Reinaría", "Sería quitado", "Huiría", "Sería coronado"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:26"
+    },
+    {
+      "id": "d9-q19",
+      "question": "¿Qué haría cesar en la mitad de la semana?",
+      "options": ["La guerra", "El sacrificio y la ofrenda", "El ayuno", "La oración"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 9:27"
+    },
+    {
+      "id": "d9-q20",
+      "question": "¿Qué vendría sobre el ala de las abominaciones?",
+      "options": ["Bendición", "El desolador", "Paz", "Prosperidad"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 9:27"
+    }
+  ]
+}

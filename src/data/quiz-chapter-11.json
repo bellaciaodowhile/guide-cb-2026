@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 11,
+  "title": "Los reyes del norte y del sur",
+  "questions": [
+    {
+      "id": "d11-q1",
+      "question": "¿Cuántos reyes se levantarían aún en Persia?",
+      "options": ["Dos", "Tres", "Cuatro", "Cinco"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:2"
+    },
+    {
+      "id": "d11-q2",
+      "question": "¿Qué haría el cuarto rey de Persia?",
+      "options": ["Morir", "Ser más rico que todos", "Huir", "Abdicar"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:2"
+    },
+    {
+      "id": "d11-q3",
+      "question": "¿Contra quién se levantaría el cuarto rey?",
+      "options": ["Egipto", "El reino de Grecia", "Babilonia", "Media"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:2"
+    },
+    {
+      "id": "d11-q4",
+      "question": "¿Qué se levantaría después?",
+      "options": ["Un profeta", "Un rey valiente", "Un sacerdote", "Un juez"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 11:3"
+    },
+    {
+      "id": "d11-q5",
+      "question": "¿Qué pasaría con el reino del rey valiente?",
+      "options": ["Crecería", "Sería quebrantado y repartido", "Duraría para siempre", "Se fortalecería"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:4"
+    },
+    {
+      "id": "d11-q6",
+      "question": "¿Hacia dónde sería repartido el reino?",
+      "options": ["Dos partes", "Tres partes", "Los cuatro vientos del cielo", "Seis partes"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 11:4"
+    },
+    {
+      "id": "d11-q7",
+      "question": "¿Quién se haría fuerte?",
+      "options": ["El rey del norte", "El rey del sur", "El rey del este", "El rey del oeste"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:5"
+    },
+    {
+      "id": "d11-q8",
+      "question": "¿Qué harían los reyes del norte y del sur?",
+      "options": ["Pelear siempre", "Hacer alianza", "Ignorarse", "Comerciar"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:6"
+    },
+    {
+      "id": "d11-q9",
+      "question": "¿Quién vendría de un renuevo de sus raíces?",
+      "options": ["Un profeta", "Uno que se levantaría en su lugar", "Un ángel", "Un sacerdote"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:7"
+    },
+    {
+      "id": "d11-q10",
+      "question": "¿Qué llevaría cautivos a Egipto?",
+      "options": ["Personas", "Sus dioses, imágenes y vasos preciosos", "Animales", "Oro"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:8"
+    },
+    {
+      "id": "d11-q11",
+      "question": "¿Cuántos años se mantendría el rey del sur?",
+      "options": ["Más años que el rey del norte", "Menos años", "Los mismos años", "No se dice"],
+      "correctAnswer": 0,
+      "difficulty": "hard",
+      "verse": "Daniel 11:8"
+    },
+    {
+      "id": "d11-q12",
+      "question": "¿Qué harían los hijos del rey del norte?",
+      "options": ["Paz", "Se moverían y reunirían multitud de grandes ejércitos", "Huir", "Rendirse"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:10"
+    },
+    {
+      "id": "d11-q13",
+      "question": "¿Qué haría el rey del sur?",
+      "options": ["Huir", "Se enfurecería y pelearía", "Rendirse", "Negociar"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:11"
+    },
+    {
+      "id": "d11-q14",
+      "question": "¿Qué pasaría después de derribar la multitud?",
+      "options": ["Paz eterna", "Se enaltecería su corazón", "Moriría", "Abdicaría"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:12"
+    },
+    {
+      "id": "d11-q15",
+      "question": "¿Qué haría el rey del norte después de algunos años?",
+      "options": ["Rendirse", "Vendrá con gran ejército", "Morir", "Huir"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:13"
+    },
+    {
+      "id": "d11-q16",
+      "question": "¿Quiénes se levantarían contra el rey del sur?",
+      "options": ["Solo el norte", "Muchos", "Nadie", "Solo los sacerdotes"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:14"
+    },
+    {
+      "id": "d11-q17",
+      "question": "¿Qué tomaría el rey del norte?",
+      "options": ["Una ciudad", "Una ciudad fortificada", "Un templo", "Un palacio"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:15"
+    },
+    {
+      "id": "d11-q18",
+      "question": "¿Qué haría en la tierra gloriosa?",
+      "options": ["Destruirla", "Consumirla", "Embellecerla", "Abandonarla"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:16"
+    },
+    {
+      "id": "d11-q19",
+      "question": "¿Qué daría para corromper el reino?",
+      "options": ["Oro", "Una hija de mujeres", "Tierras", "Ejércitos"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 11:17"
+    },
+    {
+      "id": "d11-q20",
+      "question": "¿Qué haría un príncipe?",
+      "options": ["Huir", "Hacer cesar su afrenta", "Morir", "Rendirse"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 11:18"
+    }
+  ]
+}

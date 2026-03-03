@@ -1,0 +1,166 @@
+﻿{
+  "chapter": 3,
+  "title": "El horno de fuego ardiente",
+  "questions": [
+    {
+      "id": "d3-q1",
+      "question": "¿Qué mandó hacer el rey Nabucodonosor?",
+      "options": ["Una torre", "Una estatua de oro", "Un templo", "Un palacio"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:1"
+    },
+    {
+      "id": "d3-q2",
+      "question": "¿Cuántos codos de altura tenía la estatua de oro?",
+      "options": ["30 codos", "40 codos", "50 codos", "60 codos"],
+      "correctAnswer": 3,
+      "difficulty": "medium",
+      "verse": "Daniel 3:1"
+    },
+    {
+      "id": "d3-q3",
+      "question": "¿Cuántos codos de anchura tenía la estatua?",
+      "options": ["3 codos", "6 codos", "9 codos", "12 codos"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:1"
+    },
+    {
+      "id": "d3-q4",
+      "question": "¿Dónde levantó Nabucodonosor la estatua de oro?",
+      "options": ["En Babilonia", "En el campo de Dura", "En Jerusalén", "En Susa"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:1"
+    },
+    {
+      "id": "d3-q5",
+      "question": "¿Qué debían hacer todos cuando sonaran los instrumentos musicales?",
+      "options": ["Cantar", "Postrarse y adorar la estatua", "Bailar", "Orar"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:5"
+    },
+    {
+      "id": "d3-q6",
+      "question": "¿Qué pasaría con quien no se postrara ante la estatua?",
+      "options": ["Sería encarcelado", "Sería echado en un horno de fuego", "Sería desterrado", "Perdería sus bienes"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:6"
+    },
+    {
+      "id": "d3-q7",
+      "question": "¿Quiénes no se postraron ante la estatua?",
+      "options": ["Daniel y sus amigos", "Sadrac, Mesac y Abed-nego", "Los magos caldeos", "Los sacerdotes"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:12"
+    },
+    {
+      "id": "d3-q8",
+      "question": "¿Quiénes acusaron a los judíos ante el rey?",
+      "options": ["Los sacerdotes", "Algunos caldeos", "Los guardias", "El pueblo"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:8"
+    },
+    {
+      "id": "d3-q9",
+      "question": "¿Cuántas veces más caliente mandó calentar el horno?",
+      "options": ["Tres veces", "Cinco veces", "Siete veces", "Diez veces"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 3:19"
+    },
+    {
+      "id": "d3-q10",
+      "question": "¿Qué les pasó a los hombres que echaron a los tres jóvenes al horno?",
+      "options": ["Nada", "Se quemaron y murieron", "Huyeron", "Se arrepintieron"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:22"
+    },
+    {
+      "id": "d3-q11",
+      "question": "¿Cuántos hombres vio el rey caminando en el fuego?",
+      "options": ["Tres", "Cuatro", "Cinco", "Seis"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:25"
+    },
+    {
+      "id": "d3-q12",
+      "question": "¿A quién se parecía el cuarto hombre en el fuego?",
+      "options": ["A un ángel", "A hijo de los dioses", "A un profeta", "Al rey"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:25"
+    },
+    {
+      "id": "d3-q13",
+      "question": "¿Qué no se quemó de los tres jóvenes?",
+      "options": ["Solo su ropa", "Ni un cabello de sus cabezas", "Solo sus sandalias", "Todo se quemó"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:27"
+    },
+    {
+      "id": "d3-q14",
+      "question": "¿Olían a humo los tres jóvenes al salir del horno?",
+      "options": ["Sí, mucho", "Un poco", "No", "Solo su ropa"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 3:27"
+    },
+    {
+      "id": "d3-q15",
+      "question": "¿Qué dijo Nabucodonosor después del milagro?",
+      "options": ["Nada", "Bendito sea el Dios de ellos", "Es brujería", "Es un truco"],
+      "correctAnswer": 1,
+      "difficulty": "easy",
+      "verse": "Daniel 3:28"
+    },
+    {
+      "id": "d3-q16",
+      "question": "¿Qué decreto hizo el rey después del milagro?",
+      "options": ["Liberar a todos los judíos", "Que nadie hablara mal del Dios de ellos", "Destruir la estatua", "Adorar solo a ese Dios"],
+      "correctAnswer": 1,
+      "difficulty": "medium",
+      "verse": "Daniel 3:29"
+    },
+    {
+      "id": "d3-q17",
+      "question": "¿Qué les pasaría a quienes hablaran mal del Dios de los hebreos?",
+      "options": ["Serían encarcelados", "Serían descuartizados", "Serían desterrados", "Pagarían multa"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 3:29"
+    },
+    {
+      "id": "d3-q18",
+      "question": "¿Qué hizo el rey con Sadrac, Mesac y Abed-nego después?",
+      "options": ["Los desterró", "Los encarceló", "Los engrandeció en la provincia", "Los despidió"],
+      "correctAnswer": 2,
+      "difficulty": "medium",
+      "verse": "Daniel 3:30"
+    },
+    {
+      "id": "d3-q19",
+      "question": "¿Con qué estaban atados los tres jóvenes cuando los echaron al horno?",
+      "options": ["Cadenas", "Sus mantos, calzas, turbantes y vestidos", "Sogas", "Nada"],
+      "correctAnswer": 1,
+      "difficulty": "hard",
+      "verse": "Daniel 3:21"
+    },
+    {
+      "id": "d3-q20",
+      "question": "¿Por qué razón los tres jóvenes no adoraron la estatua?",
+      "options": ["Por miedo", "Por orgullo", "Porque servían a su Dios", "Por rebeldía"],
+      "correctAnswer": 2,
+      "difficulty": "easy",
+      "verse": "Daniel 3:17-18"
+    }
+  ]
+}
