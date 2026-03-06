@@ -2,6 +2,38 @@ import { supabase } from '../lib/supabase';
 import type { Notification } from '../types/collaboration';
 
 export class NotificationService {
+  // Crear una nueva notificación
+  static async createNotification(
+    userId: string,
+    type: 'approved' | 'rejected' | 'message',
+    title: string,
+    message: string,
+    questionId?: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      const { error } = await supabase
+        .from('notifications')
+        .insert([{
+          user_id: userId,
+          type,
+          title,
+          message,
+          question_id: questionId || null,
+          is_read: false
+        }]);
+
+      if (error) {
+        console.error('Error al crear notificación:', error);
+        return { success: false, message: 'Error al crear notificación' };
+      }
+
+      return { success: true, message: 'Notificación creada' };
+    } catch (error) {
+      console.error('Error:', error);
+      return { success: false, message: 'Error al procesar la solicitud' };
+    }
+  }
+
   // Obtener notificaciones del usuario
   static async getUserNotifications(userId: string): Promise<Notification[]> {
     try {

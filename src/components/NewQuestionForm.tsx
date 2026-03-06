@@ -17,7 +17,10 @@ const NewQuestionForm: React.FC = () => {
     option_d: '',
     correct_answer: 0,
     verse_reference: '',
-    difficulty: 'medium' as 'easy' | 'medium' | 'hard'
+    difficulty: 'medium' as 'easy' | 'medium' | 'hard',
+    show_author: true,
+    time_limit: 20,
+    points: 20
   });
 
   const [loading, setLoading] = useState(false);
@@ -57,18 +60,41 @@ const NewQuestionForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'chapter' || name === 'correct_answer' ? parseInt(value) : value
+      [name]: name === 'chapter' || name === 'correct_answer' || name === 'time_limit' || name === 'points' ? parseInt(value) : value
     }));
   };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-sm mx-4">
+            <div className="flex flex-col items-center">
+              <div className="relative">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-amber-500"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Save className="h-6 w-6 text-amber-500 animate-pulse" />
+                </div>
+              </div>
+              <h3 className="mt-6 text-xl font-bold text-gray-900 dark:text-white" style={{ fontFamily: "'Bungee', cursive" }}>
+                Enviando pregunta...
+              </h3>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 text-center">
+                Estamos guardando tu pregunta en el banco de preguntas
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate('/colaborador/dashboard')}
             className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-4"
+            disabled={loading}
           >
             <ArrowLeft className="h-5 w-5" />
             Volver
@@ -244,23 +270,78 @@ const NewQuestionForm: React.FC = () => {
             />
           </div>
 
-          {/* Difficulty */}
-          <div>
-            <label htmlFor="difficulty" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Dificultad
-            </label>
-            <select
-              id="difficulty"
-              name="difficulty"
-              value={formData.difficulty}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-              required
+          {/* Time Limit and Points */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="time_limit" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Tiempo Límite (segundos)
+              </label>
+              <select
+                id="time_limit"
+                name="time_limit"
+                value={formData.time_limit}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              >
+                <option value={20}>20 segundos</option>
+                <option value={25}>25 segundos</option>
+                <option value={30}>30 segundos</option>
+                <option value={35}>35 segundos</option>
+                <option value={40}>40 segundos</option>
+                <option value={45}>45 segundos</option>
+                <option value={50}>50 segundos</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="points" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Puntos
+              </label>
+              <select
+                id="points"
+                name="points"
+                value={formData.points}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                required
+              >
+                <option value={20}>20 puntos</option>
+                <option value={25}>25 puntos</option>
+                <option value={30}>30 puntos</option>
+                <option value={35}>35 puntos</option>
+                <option value={40}>40 puntos</option>
+                <option value={45}>45 puntos</option>
+                <option value={50}>50 puntos</option>
+                <option value={55}>55 puntos</option>
+                <option value={60}>60 puntos</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Show Author Toggle */}
+          <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+            <div className="flex-1">
+              <label htmlFor="show_author" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Mostrar mi nombre como autor
+              </label>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Si está activado, tu nombre de usuario será visible en los resultados del quiz
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFormData(prev => ({ ...prev, show_author: !prev.show_author }))}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
+                formData.show_author ? 'bg-amber-500' : 'bg-gray-300 dark:bg-gray-600'
+              }`}
             >
-              <option value="easy">Fácil</option>
-              <option value="medium">Media</option>
-              <option value="hard">Difícil</option>
-            </select>
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  formData.show_author ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
           </div>
 
           {/* Submit Button */}
@@ -268,7 +349,8 @@ const NewQuestionForm: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/colaborador/dashboard')}
-              className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading}
             >
               Cancelar
             </button>

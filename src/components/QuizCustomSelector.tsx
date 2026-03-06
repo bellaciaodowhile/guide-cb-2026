@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Sparkles } from 'lucide-react';
+import { QuestionService } from '../services/questionService';
 
 // Importar imágenes de capítulos
 import daniel1 from '../assets/capitulos/Daniel 1.webp';
@@ -76,13 +77,44 @@ const QuizCustomSelector: React.FC = () => {
   const chaptersParam = searchParams.get('chapters');
   const selectedChapters = chaptersParam ? chaptersParam.split(',').map(Number) : [];
 
+  // Estados para cargar las secciones disponibles
+  const [sectionsCount, setSectionsCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   // Usar la primera imagen de los capítulos seleccionados como fondo
   const backgroundImage = selectedChapters.length > 0 
     ? chapterImages[selectedChapters[0] - 1] 
     : daniel1;
 
-  // Generar 10 tarjetas de secciones
-  const cards = Array.from({ length: 10 }, (_, i) => i + 1);
+  // Cargar preguntas y calcular secciones disponibles
+  useEffect(() => {
+    loadSections();
+  }, [chaptersParam]);
+
+  const loadSections = async () => {
+    setLoading(true);
+    try {
+      let totalQuestions = 0;
+      
+      // Cargar preguntas de todos los capítulos seleccionados
+      for (const chapterId of selectedChapters) {
+        const questions = await QuestionService.getApprovedQuestionsByChapter(chapterId);
+        totalQuestions += questions.length;
+      }
+      
+      // Calcular número de secciones (20 preguntas por sección)
+      const sections = Math.ceil(totalQuestions / 20);
+      setSectionsCount(sections);
+    } catch (error) {
+      console.error('Error loading sections:', error);
+      setSectionsCount(0);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Generar tarjetas basadas en las secciones disponibles
+  const availableCards = Array.from({ length: sectionsCount }, (_, i) => i + 1);
 
   const handleCardOpen = (cardNumber: number) => {
     // Navegar al quiz con los capítulos personalizados
@@ -96,6 +128,27 @@ const QuizCustomSelector: React.FC = () => {
     const route = category ? `/${category}/quiz` : '/quiz';
     navigate(route);
   };
+
+  if (loading) {
+    return (
+      <div className="quiz-card-selector">
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+        
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-amber-500 mx-auto mb-4"></div>
+            <p className="text-xl font-bold text-amber-100" style={{ fontFamily: "'Bungee', cursive" }}>
+              Cargando secciones...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="quiz-card-selector">
@@ -125,38 +178,50 @@ const QuizCustomSelector: React.FC = () => {
           Capítulos: {selectedChapters.join(', ')}
         </p>
         <p className="text-lg md:text-xl text-amber-300 text-center mt-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          Selecciona una sección para comenzar
+          {sectionsCount > 0 ? 'Selecciona una sección para comenzar' : 'No hay preguntas disponibles'}
         </p>
       </div>
 
-      <div className="cards-grid">
-        {cards.map((cardNumber) => (
-          <GoldenCard
-            key={cardNumber}
-            number={cardNumber}
-            onOpen={() => handleCardOpen(cardNumber)}
-          />
-        ))}
-        
-        {/* Card de Próximamente */}
-        <div className="golden-card-container coming-soon-card">
-          <div className="golden-card golden-card-coming-soon">
-            <div className="golden-card-border-outer"></div>
-            
-            <div className="golden-card-content">
-              <div className="golden-card-inner-frame"></div>
-              
-              <div className="coming-soon-content">
-                <span className="coming-soon-text" style={{ fontFamily: "'Bungee', cursive" }}>
-                  PRÓXIMAMENTE
-                </span>
+      {sectionsCount > 0 ? (
+        <div className="cards-grid">
+          {availableCards.map((cardNumber) => (
+            <GoldenCard
+              key={cardNumber}
+              number={cardNumber}
+              onOpen={() => handleCardOpen(cardNumber)}
+            />
+          ))}
+          
+          {/* Card de Próximamente solo si hay menos de 10 secciones */}
+          {sectionsCount < 10 && (
+            <div className="golden-card-container coming-soon-card">
+              <div className="golden-card golden-card-coming-soon">
+                <div className="golden-card-border-outer"></div>
+                
+                <div className="golden-card-content">
+                  <div className="golden-card-inner-frame"></div>
+                  
+                  <div className="coming-soon-content">
+                    <span className="coming-soon-text" style={{ fontFamily: "'Bungee', cursive" }}>
+                      PRÓXIMAMENTE
+                    </span>
+                  </div>
+                  
+                  <div className="golden-card-pattern"></div>
+                </div>
               </div>
-              
-              <div className="golden-card-pattern"></div>
             </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center mt-12">
+          <div className="bg-red-500/20 border-2 border-red-500 rounded-xl p-8 max-w-md">
+            <p className="text-red-200 text-center text-lg">
+              Los capítulos seleccionados no tienen preguntas disponibles.
+            </p>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

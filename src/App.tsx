@@ -16,6 +16,7 @@ import CollaboratorDashboard from './components/CollaboratorDashboard';
 import NewQuestionForm from './components/NewQuestionForm';
 import EditQuestionForm from './components/EditQuestionForm';
 import ModeratorPanel from './components/ModeratorPanel';
+import AdminCollaboratorManager from './components/AdminCollaboratorManager';
 import ProtectedRoute from './components/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -78,6 +79,11 @@ const App: React.FC = () => {
               <CollaboratorDashboard />
             </ProtectedRoute>
           } />
+          <Route path="/colaborador/admin/colaboradores" element={
+            <ProtectedRoute requiredRole={['moderator', 'superadmin']}>
+              <AdminCollaboratorManager />
+            </ProtectedRoute>
+          } />
           <Route path="/colaborador/nueva-pregunta" element={
             <ProtectedRoute>
               <NewQuestionForm />
@@ -99,8 +105,8 @@ const App: React.FC = () => {
           <Route path="/:category/quiz" element={<QuizLevelsPageCarousel />} />
           <Route path="/:category/quiz/custom" element={<QuizCustomSelector />} />
           <Route path="/quiz/custom" element={<QuizCustomSelector />} />
-          <Route path="/:category/quiz/:level" element={<QuizBookSelector />} />
           <Route path="/:category/quiz/:level/:section" element={<QuizGame />} />
+          <Route path="/quiz/:level/:section" element={<QuizGame />} />
         </Routes>
 
         {/* Scroll to Top Button */}

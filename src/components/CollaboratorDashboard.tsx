@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/authService';
 import { QuestionService } from '../services/questionService';
-import { LogOut, Plus, Clock, CheckCircle, XCircle, Award, TrendingUp, Sparkles, Home, ChevronDown, Edit } from 'lucide-react';
+import { LogOut, Plus, Clock, CheckCircle, XCircle, Award, TrendingUp, Sparkles, Home, ChevronDown, Edit, Trash2 } from 'lucide-react';
 import NotificationBell from './NotificationBell';
+import AdminSidebar from './AdminSidebar';
+import { supabase } from '../lib/supabase';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
 const CollaboratorDashboard: React.FC = () => {
@@ -27,14 +29,14 @@ const CollaboratorDashboard: React.FC = () => {
       return;
     }
     setUser(currentUser);
-    loadData(currentUser.id);
+    loadData(currentUser.id, currentUser.role);
   }, [navigate]);
 
-  const loadData = async (userId: string) => {
+  const loadData = async (userId: string, userRole: string) => {
     setLoading(true);
     
     // Si es admin, cargar estadísticas globales y todas las preguntas
-    const isAdmin = user?.role === 'moderator' || user?.role === 'superadmin';
+    const isAdmin = userRole === 'moderator' || userRole === 'superadmin';
     
     if (isAdmin) {
       const [userQuestions, allQuestionsData, globalStats, userChapterStats, globalChapterStats] = await Promise.all([
@@ -81,13 +83,36 @@ const CollaboratorDashboard: React.FC = () => {
   }, [selectedChapterFilter, questions, allQuestions, questionsTab, user]);
 
   const handleLogout = () => {
-    AuthService.logout();
-    // Obtener la categoría de retorno guardada
+    // Obtener la categoría de retorno guardada ANTES de hacer logout
     const returnCategory = sessionStorage.getItem('returnCategory');
-    // Limpiar el sessionStorage
+    AuthService.logout();
+    // Limpiar el sessionStorage después de obtener el valor
     sessionStorage.removeItem('returnCategory');
     // Navegar a la categoría o al home si no hay categoría guardada
     navigate(returnCategory || '/');
+  };
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (!confirm('¿Estás seguro de eliminar esta pregunta? Esta acción no se puede deshacer.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('collaborative_questions')
+        .delete()
+        .eq('id', questionId);
+
+      if (error) throw error;
+
+      // Recargar datos
+      if (user) {
+        loadData(user.id, user.role);
+      }
+    } catch (err) {
+      console.error('Error deleting question:', err);
+      alert('Error al eliminar la pregunta');
+    }
   };
 
   const getRoleLabel = (role: string) => {
@@ -133,9 +158,15 @@ const CollaboratorDashboard: React.FC = () => {
   if (!user) return null;
 
   const progressPercentage = Math.min((stats.approved / 10) * 100, 100);
+  const isAdmin = user.role === 'moderator' || user.role === 'superadmin';
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+      {/* Sidebar Navigation - Solo para admins */}
+      <AdminSidebar userRole={user.role} />
+
+      {/* Main Content */}
+      <div className={`flex-1 ${isAdmin ? 'md:ml-64' : ''} pb-12`}>
       {/* Header con gradiente */}
       <div className={`bg-gradient-to-r ${getRoleGradient(user.role)} text-white`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -145,9 +176,16 @@ const CollaboratorDashboard: React.FC = () => {
                 <Award className="h-8 w-8" />
               </div>
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Bungee', cursive" }}>
-                  {user.username}
-                </h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Bungee', cursive" }}>
+                    {user.username}
+                  </h1>
+                  {user.beta_mode && (
+                    <span className="px-3 py-1 bg-purple-500/90 text-white text-xs font-bold rounded-full animate-pulse">
+                      BETA
+                    </span>
+                  )}
+                </div>
                 <p className="text-white/90 mt-1 flex items-center gap-2">
                   <Sparkles className="h-4 w-4" />
                   {getRoleLabel(user.role)}
@@ -277,7 +315,7 @@ const CollaboratorDashboard: React.FC = () => {
 
           {/* Card: Progreso - Solo para colaboradores */}
           {user.role === 'collaborator' && (
-            <div className="md:col-span-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-lg p-6 text-white">
+            <div className="md:col-span-2 lg:col-span-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-lg p-6 text-white">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-white/20 p-2 rounded-lg">
                   <Award className="h-5 w-5" />
@@ -520,9 +558,11 @@ const CollaboratorDashboard: React.FC = () => {
                             {statusBadge.icon}
                             {statusBadge.label}
                           </span>
-                          <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-lg">
-                            {question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Media' : 'Difícil'}
-                          </span>
+                          {question.author && (
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium">
+                              👤 {question.author}
+                            </span>
+                          )}
                         </div>
                         <p className="text-gray-900 dark:text-white font-semibold text-lg mb-2">
                           {question.question}
@@ -532,12 +572,13 @@ const CollaboratorDashboard: React.FC = () => {
                         </p>
                       </div>
                       
-                      {/* Botón de editar (solo para moderadores y superadmin) */}
-                      {(user.role === 'superadmin' || user.role === 'moderator') && (
+                      {/* Botón de editar */}
+                      {((user.role === 'superadmin' || user.role === 'moderator') || 
+                        (question.status === 'pending' && question.submitted_by === user.id)) && (
                         <button
                           onClick={() => navigate(`/colaborador/editar-pregunta/${question.id}`, { state: { from: 'dashboard' } })}
                           className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900/30 rounded-lg transition-colors group"
-                          title="Editar pregunta"
+                          title={question.status === 'pending' ? 'Editar pregunta (en espera)' : 'Editar pregunta'}
                         >
                           <Edit className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
                         </button>
@@ -546,9 +587,21 @@ const CollaboratorDashboard: React.FC = () => {
 
                     {question.status === 'rejected' && question.rejection_reason && (
                       <div className="mt-3 p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 rounded-lg">
-                        <p className="text-sm text-red-800 dark:text-red-200">
-                          <strong>Motivo:</strong> {question.rejection_reason}
-                        </p>
+                        <div className="flex items-start justify-between gap-4">
+                          <p className="text-sm text-red-800 dark:text-red-200 flex-1">
+                            <strong>Motivo:</strong> {question.rejection_reason}
+                          </p>
+                          {(user.role === 'superadmin' || user.role === 'moderator') && (
+                            <button
+                              onClick={() => handleDeleteQuestion(question.id)}
+                              className="flex items-center gap-1 px-3 py-1 text-xs bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                              title="Eliminar pregunta rechazada"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                              Eliminar
+                            </button>
+                          )}
+                        </div>
                       </div>
                     )}
 
@@ -565,6 +618,7 @@ const CollaboratorDashboard: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

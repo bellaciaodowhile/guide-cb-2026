@@ -91,12 +91,16 @@ const NotificationBell: React.FC<NotificationBellProps> = ({ userId, userRole })
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
+      case 'approved':
       case 'question_approved':
         return <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />;
+      case 'rejected':
       case 'question_rejected':
         return <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />;
       case 'new_question_pending':
         return <FileText className="h-5 w-5 text-amber-600 dark:text-amber-400" />;
+      case 'message':
+        return <Bell className="h-5 w-5 text-blue-600 dark:text-blue-400" />;
       default:
         return <Bell className="h-5 w-5 text-gray-600 dark:text-gray-400" />;
     }

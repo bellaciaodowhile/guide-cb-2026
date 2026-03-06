@@ -23,6 +23,9 @@ export class QuestionService {
           correct_answer: question.correct_answer,
           verse_reference: question.verse_reference,
           difficulty: question.difficulty,
+          show_author: question.show_author ?? true,
+          time_limit: question.time_limit ?? 20,
+          points: question.points ?? 20,
           status: status,
           reviewed_by: (status === 'approved') ? userId : null,
           reviewed_at: (status === 'approved') ? new Date().toISOString() : null
@@ -51,7 +54,12 @@ export class QuestionService {
     try {
       const { data, error } = await supabase
         .from('collaborative_questions')
-        .select('*')
+        .select(`
+          *,
+          users!collaborative_questions_user_id_fkey (
+            username
+          )
+        `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 
@@ -60,7 +68,11 @@ export class QuestionService {
         return [];
       }
 
-      return data as CollaborativeQuestion[];
+      // Mapear los datos para incluir el username directamente
+      return (data || []).map((question: any) => ({
+        ...question,
+        author: question.users?.username || 'Anónimo'
+      })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
       return [];
@@ -72,7 +84,12 @@ export class QuestionService {
     try {
       const { data, error } = await supabase
         .from('collaborative_questions')
-        .select('*')
+        .select(`
+          *,
+          users!collaborative_questions_user_id_fkey (
+            username
+          )
+        `)
         .eq('status', 'pending')
         .order('created_at', { ascending: true });
 
@@ -81,7 +98,11 @@ export class QuestionService {
         return [];
       }
 
-      return data as CollaborativeQuestion[];
+      // Mapear los datos para incluir el username directamente
+      return (data || []).map((question: any) => ({
+        ...question,
+        author: question.users?.username || 'Anónimo'
+      })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
       return [];
@@ -183,7 +204,12 @@ export class QuestionService {
     try {
       const { data, error } = await supabase
         .from('collaborative_questions')
-        .select('*')
+        .select(`
+          *,
+          users!collaborative_questions_user_id_fkey (
+            username
+          )
+        `)
         .eq('chapter', chapter)
         .eq('status', 'approved')
         .order('created_at', { ascending: false });
@@ -193,7 +219,11 @@ export class QuestionService {
         return [];
       }
 
-      return data as CollaborativeQuestion[];
+      // Mapear los datos para incluir el username directamente
+      return (data || []).map((question: any) => ({
+        ...question,
+        author: question.users?.username || 'Anónimo'
+      })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
       return [];
@@ -319,7 +349,12 @@ export class QuestionService {
     try {
       const { data, error } = await supabase
         .from('collaborative_questions')
-        .select('*')
+        .select(`
+          *,
+          users!collaborative_questions_user_id_fkey (
+            username
+          )
+        `)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -327,7 +362,11 @@ export class QuestionService {
         return [];
       }
 
-      return data as CollaborativeQuestion[];
+      // Mapear los datos para incluir el username directamente
+      return (data || []).map((question: any) => ({
+        ...question,
+        author: question.users?.username || 'Anónimo'
+      })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
       return [];

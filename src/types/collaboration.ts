@@ -4,7 +4,7 @@ export type QuestionStatus = 'pending' | 'approved' | 'rejected';
 
 export type QuestionDifficulty = 'easy' | 'medium' | 'hard';
 
-export type NotificationType = 'question_approved' | 'question_rejected' | 'new_question_pending';
+export type NotificationType = 'approved' | 'rejected' | 'question_approved' | 'question_rejected' | 'new_question_pending' | 'message';
 
 export interface User {
   id: string;
@@ -12,6 +12,8 @@ export interface User {
   email?: string;
   role: UserRole;
   approved_questions_count: number;
+  is_beta: boolean;
+  beta_mode: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -19,6 +21,7 @@ export interface User {
 export interface CollaborativeQuestion {
   id: string;
   user_id: string;
+  submitted_by: string;
   chapter: number;
   question: string;
   option_a: string;
@@ -32,6 +35,10 @@ export interface CollaborativeQuestion {
   rejection_reason?: string;
   reviewed_by?: string;
   reviewed_at?: string;
+  show_author: boolean;
+  time_limit: number;
+  points: number;
+  author?: string;
   created_at: string;
   updated_at: string;
 }
@@ -46,6 +53,9 @@ export interface QuestionSubmission {
   correct_answer: number;
   verse_reference: string;
   difficulty: QuestionDifficulty;
+  show_author?: boolean;
+  time_limit?: number;
+  points?: number;
 }
 
 export interface Notification {

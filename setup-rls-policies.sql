@@ -15,6 +15,7 @@ ALTER TABLE notifications DISABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Users are viewable by everyone" ON users;
 DROP POLICY IF EXISTS "Anyone can create a user" ON users;
 DROP POLICY IF EXISTS "Users can update own data" ON users;
+DROP POLICY IF EXISTS "Anyone can delete users" ON users;
 DROP POLICY IF EXISTS "Questions are viewable by everyone" ON collaborative_questions;
 DROP POLICY IF EXISTS "Anyone can create questions" ON collaborative_questions;
 DROP POLICY IF EXISTS "Moderators can update questions" ON collaborative_questions;
@@ -49,6 +50,10 @@ CREATE POLICY "Anyone can create a user" ON users
 -- Permitir actualización de usuarios
 CREATE POLICY "Users can update own data" ON users
   FOR UPDATE USING (true);
+
+-- Permitir eliminación de usuarios
+CREATE POLICY "Anyone can delete users" ON users
+  FOR DELETE USING (true);
 
 -- ============================================
 -- POLÍTICAS PARA TABLA COLLABORATIVE_QUESTIONS

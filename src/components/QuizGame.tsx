@@ -4,6 +4,25 @@ import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
 import { QuestionService } from '../services/questionService';
 import type { CollaborativeQuestion } from '../types/collaboration';
 
+// Importar imágenes de capítulos
+import daniel1 from '../assets/capitulos/Daniel 1.webp';
+import daniel2 from '../assets/capitulos/Daniel 2.webp';
+import daniel3 from '../assets/capitulos/Daniel 3.webp';
+import daniel4 from '../assets/capitulos/Daniel 4.webp';
+import daniel5 from '../assets/capitulos/Daniel 5.webp';
+import daniel6 from '../assets/capitulos/Daniel 6.webp';
+import daniel7 from '../assets/capitulos/Daniel 7.webp';
+import daniel8 from '../assets/capitulos/Daniel 8.webp';
+import daniel9 from '../assets/capitulos/Daniel 9.webp';
+import daniel10 from '../assets/capitulos/Daniel 10.webp';
+import daniel11 from '../assets/capitulos/Daniel 11.webp';
+import daniel12 from '../assets/capitulos/Daniel 12.webp';
+
+const chapterImages = [
+  daniel1, daniel2, daniel3, daniel4, daniel5, daniel6,
+  daniel7, daniel8, daniel9, daniel10, daniel11, daniel12
+];
+
 interface Question {
   id: string;
   question: string;
@@ -11,6 +30,10 @@ interface Question {
   correctAnswer: number;
   difficulty: string;
   verse: string;
+  timeLimit?: number;
+  points?: number;
+  author?: string;
+  showAuthor?: boolean;
 }
 
 interface UserAnswer {
@@ -43,7 +66,11 @@ const convertToQuizQuestion = (dbQuestion: CollaborativeQuestion): Question => {
     ],
     correctAnswer: dbQuestion.correct_answer,
     difficulty: dbQuestion.difficulty,
-    verse: dbQuestion.verse_reference
+    verse: dbQuestion.verse_reference,
+    timeLimit: dbQuestion.time_limit || 20,
+    points: dbQuestion.points || 20,
+    showAuthor: dbQuestion.show_author,
+    author: dbQuestion.author
   };
 };
 
@@ -55,6 +82,10 @@ const QuizGame: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [gameStarted, setGameStarted] = useState(false);
+  
+  // Obtener la imagen del capítulo (usar capítulo 11 por defecto para quiz personalizado)
+  const currentLevel = level === 'custom' ? 11 : parseInt(level || '1');
+  const chapterImage = chapterImages[currentLevel - 1] || daniel11;
   
   // Cargar preguntas desde la base de datos
   useEffect(() => {
@@ -115,22 +146,35 @@ const QuizGame: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
 
+  // Calcular el score basado en respuestas correctas
+  const score = userAnswers.filter(answer => answer.isCorrect).length;
+
+  // Obtener la pregunta actual
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Actualizar timeLeft cuando cambia la pregunta
+  useEffect(() => {
+    if (currentQuestion && gameStarted) {
+      setTimeLeft(currentQuestion.timeLimit || 20);
+    }
+  }, [currentQuestionIndex, currentQuestion, gameStarted]);
+
   // Temporizador - solo inicia cuando el juego ha comenzado
   useEffect(() => {
-    if (!gameStarted || showResults || isAnswered || questions.length === 0) return;
+    if (!gameStarted || showResults || isAnswered || questions.length === 0 || !currentQuestion) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           handleTimeOut();
-          return 20;
+          return currentQuestion.timeLimit || 20;
         }
         return prev - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [currentQuestionIndex, showResults, isAnswered, questions, gameStarted]);
+  }, [currentQuestionIndex, showResults, isAnswered, questions, gameStarted, currentQuestion]);
 
   const handleTimeOut = () => {
     // Si no respondió, marcar como incorrecta
@@ -170,8 +214,9 @@ const QuizGame: React.FC = () => {
 
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
+      const nextQuestion = questions[currentQuestionIndex + 1];
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setTimeLeft(20);
+      setTimeLeft(nextQuestion?.timeLimit || 20);
       setSelectedAnswer(null);
       setIsAnswered(false);
     } else {
@@ -193,7 +238,7 @@ const QuizGame: React.FC = () => {
     const shuffled = shuffleArray([...questions]);
     setQuestions(shuffled);
     setCurrentQuestionIndex(0);
-    setTimeLeft(20);
+    setTimeLeft(shuffled[0]?.timeLimit || 20);
     setSelectedAnswer(null);
     setUserAnswers([]);
     setShowResults(false);
@@ -208,6 +253,13 @@ const QuizGame: React.FC = () => {
   if (isLoading || questions.length === 0) {
     return (
       <div className="quiz-game-container">
+        {/* Fondo con imagen del capítulo */}
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${chapterImage})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+        
         <div className="quiz-loading">
           <span>Cargando preguntas</span>
           <span className="loading-dots">
@@ -224,6 +276,13 @@ const QuizGame: React.FC = () => {
   if (!gameStarted) {
     return (
       <div className="quiz-game-container">
+        {/* Fondo con imagen del capítulo */}
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${chapterImage})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+        
         <div className="quiz-start-screen">
           <button 
             onClick={handleBack} 
@@ -267,6 +326,13 @@ const QuizGame: React.FC = () => {
 
     return (
       <div className="quiz-game-container-new">
+        {/* Fondo con imagen del capítulo */}
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${chapterImage})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+        
         <button 
           onClick={handleBack} 
           className="carousel-nav-button group/arrow fixed top-6 left-6 z-50"
@@ -293,6 +359,21 @@ const QuizGame: React.FC = () => {
               </div>
               <p className="score-percentage-trivia" style={{ fontFamily: "'Bungee', cursive" }}>
                 {percentage.toFixed(0)}% Correcto
+              </p>
+            </div>
+
+            {/* Total de puntos obtenidos */}
+            <div className="my-6 p-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <p className="text-white text-center text-sm font-medium mb-1">
+                Puntos Totales
+              </p>
+              <p className="text-white text-center text-4xl font-bold" style={{ fontFamily: "'Bungee', cursive" }}>
+                {userAnswers.reduce((total, answer, index) => {
+                  if (answer?.isCorrect) {
+                    return total + (questions[index]?.points || 20);
+                  }
+                  return total;
+                }, 0)} pts
               </p>
             </div>
 
@@ -362,10 +443,15 @@ const QuizGame: React.FC = () => {
     );
   }
 
-  const currentQuestion = questions[currentQuestionIndex];
-
   return (
     <div className="quiz-game-container-new">
+      {/* Fondo con imagen del capítulo */}
+      <div 
+        className="card-selector-background"
+        style={{ backgroundImage: `url(${chapterImage})` }}
+      ></div>
+      <div className="card-selector-overlay"></div>
+      
       <button 
         onClick={handleBack} 
         className="carousel-nav-button group/arrow fixed top-6 left-6 z-50"
@@ -390,15 +476,33 @@ const QuizGame: React.FC = () => {
         <div className="timer-progress-bar">
           <div 
             className="timer-progress-fill" 
-            style={{ width: `${(timeLeft / 20) * 100}%` }}
+            style={{ width: `${(timeLeft / (currentQuestion.timeLimit || 20)) * 100}%` }}
           ></div>
         </div>
 
+        {/* Información de puntos y tiempo */}
+        <div className="question-info-bar">
+          <div className="question-info-item">
+            <span className="question-info-label">Puntos:</span>
+            <span className="question-info-value">{currentQuestion.points || 20}</span>
+          </div>
+          <div className="question-info-item">
+            <span className="question-info-label">Tiempo:</span>
+            <span className="question-info-value">
+              {timeLeft}<span style={{ fontSize: '0.7em' }}>s</span>
+            </span>
+          </div>
+        </div>
         {/* Panel de la Pregunta */}
         <div className="question-panel-trivia">
           <p className="question-text-trivia">
             {currentQuestion.question}
           </p>
+          {currentQuestion.showAuthor && currentQuestion.author && (
+            <p className="question-author">
+              Por: {currentQuestion.author}
+            </p>
+          )}
         </div>
 
         {/* Panel de Respuestas */}
@@ -420,6 +524,18 @@ const QuizGame: React.FC = () => {
               </button>
             );
           })}
+        </div>
+
+        {/* Apartado de estadísticas */}
+        <div className="quiz-stats-panel">
+          <div className="quiz-stat-item">
+            <span className="quiz-stat-label">Puntos:</span>
+            <span className="quiz-stat-value">{score}</span>
+          </div>
+          <div className="quiz-stat-item">
+            <span className="quiz-stat-label">Correctas:</span>
+            <span className="quiz-stat-value">{score}/{questions.length}</span>
+          </div>
         </div>
       </div>
     </div>

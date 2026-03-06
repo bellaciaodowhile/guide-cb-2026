@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
+import { QuestionService } from '../services/questionService';
 
 // Importar imágenes de capítulos
 import daniel1 from '../assets/capitulos/Daniel 1.webp';
@@ -40,26 +41,12 @@ const allQuizLevels: QuizLevel[] = [
   { id: 13, title: 'Nivel Personalizado', subtitle: 'Crea tu propio desafío', image: '' } // Nivel personalizado
 ];
 
-// Configuración de capítulos por categoría
-const categoryChapters: Record<string, number[]> = {
-  aventureros: [1, 2, 3, 6], // 4 capítulos
-  conquistadores: [1, 2, 3, 4, 5, 6], // 6 capítulos
-  guiasmayores: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] // 12 capítulos
-};
-
 const QuizLevelsPageCarousel: React.FC = () => {
   const navigate = useNavigate();
   const { category } = useParams<{ category: string }>();
   
   // Mostrar todos los niveles siempre
   const quizLevels = allQuizLevels;
-  
-  // Función para verificar si un capítulo pertenece a la categoría
-  const isChapterInCategory = (chapterId: number): boolean => {
-    if (!category) return true; // Si no hay categoría, permitir todos
-    const allowedChapters = categoryChapters[category] || [];
-    return allowedChapters.includes(chapterId);
-  };
   
   const [active, setActive] = useState(0);
   const [isDown, setIsDown] = useState(false);
@@ -81,6 +68,57 @@ const QuizLevelsPageCarousel: React.FC = () => {
     const saved = localStorage.getItem('customQuizChapters');
     return saved ? JSON.parse(saved) : [];
   });
+  const [availableChapters, setAvailableChapters] = useState<number[]>([]);
+  const [loadingAvailableChapters, setLoadingAvailableChapters] = useState(false);
+
+  // Estado para el modal de secciones
+  const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+  const [sectionsCount, setSectionsCount] = useState(0);
+  const [loadingSections, setLoadingSections] = useState(false);
+  const [isExpanding, setIsExpanding] = useState(false);
+
+  // Cargar capítulos disponibles cuando se abre el modal de personalización
+  useEffect(() => {
+    if (showCustomModal && availableChapters.length === 0) {
+      loadAvailableChapters();
+    }
+  }, [showCustomModal]);
+
+  const loadAvailableChapters = async () => {
+    setLoadingAvailableChapters(true);
+    try {
+      const chaptersWithQuestions: number[] = [];
+      
+      // Verificar cada capítulo del 1 al 12
+      for (let i = 1; i <= 12; i++) {
+        const questions = await QuestionService.getApprovedQuestionsByChapter(i);
+        if (questions.length > 0) {
+          chaptersWithQuestions.push(i);
+        }
+      }
+      
+      setAvailableChapters(chaptersWithQuestions);
+    } catch (error) {
+      console.error('Error loading available chapters:', error);
+    } finally {
+      setLoadingAvailableChapters(false);
+    }
+  };
+
+  // Cargar secciones cuando se selecciona un nivel
+  useEffect(() => {
+    if (selectedLevel !== null && selectedLevel !== 13) {
+      loadSections(selectedLevel);
+    }
+  }, [selectedLevel]);
+
+  const loadSections = async (levelId: number) => {
+    setLoadingSections(true);
+    const questions = await QuestionService.getApprovedQuestionsByChapter(levelId);
+    const sections = Math.ceil(questions.length / 20);
+    setSectionsCount(sections);
+    setLoadingSections(false);
+  };
 
   const scrollThreshold = 250; // Umbral más alto para evitar cambios accidentales
 
@@ -218,15 +256,33 @@ const QuizLevelsPageCarousel: React.FC = () => {
     animate(newProgress);
   };
   
-  const handleExploreClick = (levelId: number) => {
-    if (!isChapterInCategory(levelId)) {
-      // Mostrar modal de confirmación
-      setPendingLevelId(levelId);
-      setShowModal(true);
+  const handleExploreClick = (levelId: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Evitar que se active el click del carousel-item
+    
+    if (levelId === 13) {
+      // Nivel personalizado - abrir modal de personalización
+      setShowCustomModal(true);
     } else {
-      // Navegar directamente
-      navigateToLevel(levelId);
+      // Iniciar animación de expansión y cargar secciones inmediatamente
+      setIsExpanding(true);
+      setSelectedLevel(levelId);
+      loadSections(levelId);
     }
+  };
+
+  const handleSectionClick = (sectionNumber: number) => {
+    if (selectedLevel) {
+      const route = category ? `/${category}/quiz/${selectedLevel}/${sectionNumber}` : `/quiz/${selectedLevel}/${sectionNumber}`;
+      navigate(route);
+    }
+  };
+
+  const handleCloseSectionsModal = () => {
+    setIsExpanding(false);
+    setTimeout(() => {
+      setSelectedLevel(null);
+      setSectionsCount(0);
+    }, 400);
   };
   
   const navigateToLevel = (levelId: number) => {
@@ -247,18 +303,8 @@ const QuizLevelsPageCarousel: React.FC = () => {
     setPendingLevelId(null);
   };
   
-  const handleOpenCustomModal = () => {
-    setShowCustomModal(true);
-    // Cargar la selección guardada al abrir el modal
-    const saved = localStorage.getItem('customQuizChapters');
-    if (saved) {
-      setSelectedChapters(JSON.parse(saved));
-    }
-  };
-  
   const handleCloseCustomModal = () => {
     setShowCustomModal(false);
-    // No limpiar selectedChapters para mantener la selección
   };
   
   const handleToggleChapter = (chapterId: number) => {
@@ -368,13 +414,7 @@ const QuizLevelsPageCarousel: React.FC = () => {
                   <div className="carousel-explore-button">
                     <button
                       onClick={(e) => {
-                        e.stopPropagation();
-                        if (level.id === 13) {
-                          // Abrir modal de personalización
-                          handleOpenCustomModal();
-                        } else {
-                          handleExploreClick(level.id);
-                        }
+                        handleExploreClick(level.id, e);
                       }}
                       className="quiz-button group/btn relative w-full"
                     >
@@ -434,33 +474,46 @@ const QuizLevelsPageCarousel: React.FC = () => {
               Selecciona los capítulos que deseas incluir en tu quiz personalizado
             </p>
             
-            <div className="chapters-grid">
-              {allQuizLevels.slice(0, 12).map((level) => {
-                const isSelected = selectedChapters.includes(level.id);
-                const selectedIndex = selectedChapters.indexOf(level.id);
-                
-                return (
-                  <div
-                    key={level.id}
-                    className={`chapter-mini-card ${isSelected ? 'selected' : ''}`}
-                    onClick={() => handleToggleChapter(level.id)}
-                    style={isSelected ? {
-                      '--stack-index': selectedIndex,
-                      '--stack-total': selectedChapters.length
-                    } as React.CSSProperties : {}}
-                  >
-                    <div className="chapter-number">{level.id}</div>
-                    <div 
-                      className="chapter-image"
-                      style={{ backgroundImage: `url(${level.image})` }}
-                    ></div>
-                    {isSelected && (
-                      <div className="chapter-check"></div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            {loadingAvailableChapters ? (
+              <div className="flex justify-center items-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+              </div>
+            ) : (
+              <div className="chapters-grid">
+                {allQuizLevels.slice(0, 12).map((level) => {
+                  const isAvailable = availableChapters.includes(level.id);
+                  const isSelected = selectedChapters.includes(level.id);
+                  const selectedIndex = selectedChapters.indexOf(level.id);
+                  
+                  return (
+                    <div
+                      key={level.id}
+                      className={`chapter-mini-card ${isSelected ? 'selected' : ''} ${!isAvailable ? 'disabled' : ''}`}
+                      onClick={() => isAvailable && handleToggleChapter(level.id)}
+                      style={isSelected ? {
+                        '--stack-index': selectedIndex,
+                        '--stack-total': selectedChapters.length
+                      } as React.CSSProperties : {}}
+                      title={!isAvailable ? 'Este capítulo no tiene preguntas disponibles' : ''}
+                    >
+                      <div className="chapter-number">{level.id}</div>
+                      <div 
+                        className="chapter-image"
+                        style={{ backgroundImage: `url(${level.image})` }}
+                      ></div>
+                      {isSelected && (
+                        <div className="chapter-check"></div>
+                      )}
+                      {!isAvailable && (
+                        <div className="chapter-unavailable">
+                          <span>Sin preguntas</span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             
             <div className="custom-modal-footer">
               <p className="selected-count">
@@ -477,6 +530,81 @@ const QuizLevelsPageCarousel: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Modal de secciones desde abajo */}
+      {selectedLevel !== null && (
+        <>
+          {/* Overlay oscuro */}
+          <div 
+            className={`sections-modal-overlay-new ${isExpanding ? 'active' : ''}`}
+            onClick={handleCloseSectionsModal}
+          />
+          
+          {/* Card expandida */}
+          <div 
+            className={`carousel-item-expanded ${isExpanding ? 'active' : ''}`}
+            style={{
+              backgroundImage: `url(${allQuizLevels[selectedLevel - 1]?.image})`
+            }}
+          >
+            {/* Imagen del capítulo en el top */}
+            <div className="expanded-card-image">
+              <img 
+                src={allQuizLevels[selectedLevel - 1]?.image} 
+                alt={allQuizLevels[selectedLevel - 1]?.subtitle}
+              />
+              <div className="expanded-card-overlay" />
+              <button onClick={handleCloseSectionsModal} className="expanded-card-close">
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Contenido de secciones con fondo blanco */}
+            <div className="expanded-card-content">
+              {loadingSections ? (
+                <div className="sections-loading">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+                  <p className="mt-4 text-gray-600">Cargando secciones...</p>
+                </div>
+              ) : sectionsCount === 0 ? (
+                <div className="sections-empty">
+                  <p className="text-lg font-semibold text-gray-800 mb-2">
+                    Sin preguntas disponibles
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Este capítulo aún no tiene preguntas aprobadas.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div className="expanded-card-header">
+                    <h2 className="expanded-card-chapter-number">Capítulo {selectedLevel}</h2>
+                    <h3 className="expanded-card-chapter-title">{allQuizLevels[selectedLevel - 1]?.subtitle}</h3>
+                  </div>
+                  <h3 className="sections-content-title">Selecciona una sección</h3>
+                  <div className="sections-grid-new">
+                    {Array.from({ length: sectionsCount }, (_, i) => i + 1).map((sectionNum) => (
+                      <button
+                        key={sectionNum}
+                        onClick={() => handleSectionClick(sectionNum)}
+                        className="section-card-new"
+                        style={{ animationDelay: `${sectionNum * 50}ms` }}
+                      >
+                        <div className="section-card-inner-new">
+                          <div className="section-number-new" style={{ fontFamily: "'Bungee', cursive" }}>
+                            {sectionNum}
+                          </div>
+                          <div className="section-label-new">Sección</div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

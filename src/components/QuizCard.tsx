@@ -1,20 +1,234 @@
-import React from 'react';
-import { Play, Sparkles, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Play, Sparkles, Zap, ArrowLeft, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import daniel6Image from '../assets/capitulos/Daniel 6.webp';
+import daniel1 from '../assets/capitulos/Daniel 1.webp';
+import daniel2 from '../assets/capitulos/Daniel 2.webp';
+import daniel3 from '../assets/capitulos/Daniel 3.webp';
+import daniel4 from '../assets/capitulos/Daniel 4.webp';
+import daniel5 from '../assets/capitulos/Daniel 5.webp';
+import daniel6 from '../assets/capitulos/Daniel 6.webp';
+import daniel7 from '../assets/capitulos/Daniel 7.webp';
+import daniel8 from '../assets/capitulos/Daniel 8.webp';
+import daniel9 from '../assets/capitulos/Daniel 9.webp';
+import daniel10 from '../assets/capitulos/Daniel 10.webp';
+import daniel11 from '../assets/capitulos/Daniel 11.webp';
+import daniel12 from '../assets/capitulos/Daniel 12.webp';
+import { QuestionService } from '../services/questionService';
 
 interface QuizCardProps {
   animationDelay?: string;
   category?: string;
 }
 
+const chapterImages = [
+  daniel1, daniel2, daniel3, daniel4, daniel5, daniel6,
+  daniel7, daniel8, daniel9, daniel10, daniel11, daniel12
+];
+
+const chapterTitles = [
+  'Daniel y sus compañeros',
+  'El sueño de Nabucodonosor',
+  'El horno de fuego',
+  'La locura del rey',
+  'La escritura en la pared',
+  'Daniel en el foso',
+  'Las cuatro bestias',
+  'El carnero y el macho cabrío',
+  'Las setenta semanas',
+  'Visión junto al río',
+  'Reyes del norte y sur',
+  'El tiempo del fin'
+];
+
 const QuizCard: React.FC<QuizCardProps> = ({ animationDelay = '0ms', category }) => {
   const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+  const [sectionsCount, setSectionsCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const handleQuizClick = () => {
-    const route = category ? `/${category}/quiz` : '/quiz';
-    navigate(route);
+  useEffect(() => {
+    if (selectedLevel !== null) {
+      loadSections(selectedLevel);
+    }
+  }, [selectedLevel]);
+
+  const loadSections = async (levelId: number) => {
+    setLoading(true);
+    const questions = await QuestionService.getApprovedQuestionsByChapter(levelId);
+    const sections = Math.ceil(questions.length / 20);
+    setSectionsCount(sections);
+    setLoading(false);
   };
+
+  const handleExploreClick = () => {
+    setIsExpanded(true);
+  };
+
+  const handleBack = () => {
+    setIsExpanded(false);
+    setSelectedLevel(null);
+  };
+
+  const handleLevelClick = (levelId: number) => {
+    setSelectedLevel(levelId);
+  };
+
+  const handleSectionClick = (sectionNumber: number) => {
+    if (selectedLevel) {
+      const route = category ? `/${category}/quiz/${selectedLevel}/${sectionNumber}` : `/quiz/${selectedLevel}/${sectionNumber}`;
+      navigate(route);
+    }
+  };
+
+  const handleCustomClick = () => {
+    navigate(category ? `/${category}/quiz/custom` : '/quiz/custom');
+  };
+
+  if (isExpanded) {
+    return (
+      <div className="quiz-levels-expanded">
+        {/* Fondo con imagen blureada */}
+        <div 
+          className="card-selector-background"
+          style={{ backgroundImage: `url(${daniel6Image})` }}
+        ></div>
+        <div className="card-selector-overlay"></div>
+
+        {/* Botón de volver */}
+        <button
+          onClick={handleBack}
+          className="carousel-nav-button group/arrow fixed top-6 left-6 z-50"
+        >
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full blur-lg opacity-75 group-hover/arrow:opacity-100 animate-pulse-glow"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-800 to-amber-950 rounded-full transform translate-y-1.5 group-hover/arrow:translate-y-1 transition-transform duration-150"></div>
+          
+          <div className="relative bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 rounded-full p-4 transform group-hover/arrow:translate-y-1 transition-all duration-150 border-3 border-amber-900/70 shadow-2xl">
+            <ArrowLeft className="h-8 w-8 text-amber-900 stroke-[3] group-hover/arrow:-translate-x-0.5 transition-transform duration-300" />
+          </div>
+        </button>
+
+        {/* Contenedor de niveles */}
+        <div className="levels-container">
+          <h1 className="levels-title" style={{ fontFamily: "'Bungee', cursive" }}>
+            Selecciona un Nivel
+          </h1>
+
+          {/* Grid de niveles */}
+          <div className="levels-grid">
+            {chapterImages.map((image, index) => (
+              <div
+                key={index}
+                className="level-card"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <div className="level-card-inner">
+                  <img src={image} alt={`Nivel ${index + 1}`} className="level-card-image" />
+                  <div className="level-card-overlay">
+                    <div className="level-card-number" style={{ fontFamily: "'Bungee', cursive" }}>
+                      {index + 1}
+                    </div>
+                    <div className="level-card-title">
+                      {chapterTitles[index]}
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLevelClick(index + 1);
+                      }}
+                      className="level-explore-btn"
+                      style={{ fontFamily: "'Bungee', cursive" }}
+                    >
+                      Explorar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Nivel personalizado */}
+            <div
+              className="level-card level-card-custom"
+              onClick={handleCustomClick}
+              style={{ animationDelay: `${12 * 50}ms` }}
+            >
+              <div className="level-card-inner">
+                <div className="level-card-custom-bg">
+                  <Sparkles className="h-16 w-16 text-amber-400 animate-pulse" />
+                </div>
+                <div className="level-card-overlay">
+                  <div className="level-card-number" style={{ fontFamily: "'Bungee', cursive" }}>
+                    ?
+                  </div>
+                  <div className="level-card-title">
+                    Nivel Personalizado
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Modal de secciones desde abajo */}
+        {selectedLevel !== null && (
+          <div className="sections-modal-overlay" onClick={handleBack}>
+            <div className="sections-modal" onClick={(e) => e.stopPropagation()}>
+              {/* Header del modal */}
+              <div className="sections-modal-header">
+                <div>
+                  <h2 className="sections-modal-title" style={{ fontFamily: "'Bungee', cursive" }}>
+                    Capítulo {selectedLevel}
+                  </h2>
+                  <p className="sections-modal-subtitle">
+                    {chapterTitles[selectedLevel - 1]}
+                  </p>
+                </div>
+                <button onClick={handleBack} className="sections-modal-close">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Contenido del modal */}
+              {loading ? (
+                <div className="sections-loading">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+                  <p className="mt-4 text-gray-600 dark:text-gray-400">Cargando secciones...</p>
+                </div>
+              ) : sectionsCount === 0 ? (
+                <div className="sections-empty">
+                  <p className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                    Sin preguntas disponibles
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Este capítulo aún no tiene preguntas aprobadas.
+                  </p>
+                </div>
+              ) : (
+                <div className="sections-grid">
+                  {Array.from({ length: sectionsCount }, (_, i) => i + 1).map((sectionNum) => (
+                    <button
+                      key={sectionNum}
+                      onClick={() => handleSectionClick(sectionNum)}
+                      className="section-card"
+                      style={{ animationDelay: `${sectionNum * 50}ms` }}
+                    >
+                      <div className="section-card-inner">
+                        <div className="section-number" style={{ fontFamily: "'Bungee', cursive" }}>
+                          {sectionNum}
+                        </div>
+                        <div className="section-label">Sección</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -39,7 +253,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ animationDelay = '0ms', category })
             {/* Botón 3D estilo dorado */}
             <div className="flex flex-col items-center space-y-3 sm:space-y-4">
               <button 
-                onClick={handleQuizClick}
+                onClick={handleExploreClick}
                 className="quiz-button group/btn relative animate-bounce-subtle"
               >
                 {/* Resplandor animado de fondo - tonos dorados */}

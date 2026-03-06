@@ -43,6 +43,7 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
         const result = await AuthService.login(username, password);
         if (result.success && result.user) {
           AuthService.saveCurrentUser(result.user);
+          // Mantener returnCategory en sessionStorage al navegar
           navigate('/colaborador/dashboard');
           onClose();
         } else {
@@ -59,6 +60,7 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
         const result = await AuthService.register(username, password, email);
         if (result.success && result.user) {
           AuthService.saveCurrentUser(result.user);
+          // Mantener returnCategory en sessionStorage al navegar
           navigate('/colaborador/dashboard');
           onClose();
         } else {
@@ -173,6 +175,11 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
                 required
                 minLength={3}
               />
+              {!isLogin && (
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  💡 Recomendación: Usa tu mismo usuario de Instagram para que otros puedan encontrarte fácilmente
+                </p>
+              )}
             </div>
 
             {!isLogin && (

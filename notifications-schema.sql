@@ -6,7 +6,7 @@
 CREATE TABLE IF NOT EXISTS notifications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  type VARCHAR(50) NOT NULL CHECK (type IN ('question_approved', 'question_rejected', 'new_question_pending')),
+  type VARCHAR(50) NOT NULL CHECK (type IN ('question_approved', 'question_rejected', 'new_question_pending', 'message')),
   title TEXT NOT NULL,
   message TEXT NOT NULL,
   question_id UUID REFERENCES collaborative_questions(id) ON DELETE CASCADE,
@@ -131,5 +131,5 @@ CREATE TRIGGER trigger_notify_moderators_new_question
 
 -- Comentarios para documentación
 COMMENT ON TABLE notifications IS 'Sistema de notificaciones para colaboradores y moderadores';
-COMMENT ON COLUMN notifications.type IS 'Tipos: question_approved, question_rejected, new_question_pending';
+COMMENT ON COLUMN notifications.type IS 'Tipos: question_approved, question_rejected, new_question_pending, message';
 COMMENT ON COLUMN notifications.is_read IS 'Indica si la notificación ha sido leída por el usuario';

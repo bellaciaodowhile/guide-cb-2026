@@ -118,17 +118,11 @@ const QuizBookSelector: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="quiz-card-selector">
-        <div 
-          className="card-selector-background"
-          style={{ backgroundImage: `url(${chapterImage})` }}
-        ></div>
-        <div className="card-selector-overlay"></div>
-        
+      <div className="quiz-book-selector-new">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-500 mx-auto mb-4"></div>
-            <p className="text-xl font-bold text-white drop-shadow-lg">Cargando preguntas...</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-white">Cargando preguntas...</p>
           </div>
         </div>
       </div>
@@ -136,8 +130,8 @@ const QuizBookSelector: React.FC = () => {
   }
 
   return (
-    <div className="quiz-card-selector">
-      {/* Fondo con imagen del capítulo */}
+    <div className="quiz-book-selector-new">
+      {/* Fondo con imagen del capítulo blureada */}
       <div 
         className="card-selector-background"
         style={{ backgroundImage: `url(${chapterImage})` }}
@@ -157,66 +151,67 @@ const QuizBookSelector: React.FC = () => {
         </div>
       </button>
 
-      {/* Título */}
-      <div className="card-selector-title">
-        <h1 className="text-4xl md:text-6xl font-black text-amber-100 text-center mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]" style={{ fontFamily: "'Bungee', cursive" }}>
-          Capítulo {currentLevel}
-        </h1>
-        <p className="text-xl md:text-2xl text-amber-200 text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          {totalQuestions > 0 
-            ? `${totalQuestions} ${totalQuestions === 1 ? 'pregunta disponible' : 'preguntas disponibles'}`
-            : 'Selecciona una sección para comenzar'
-          }
-        </p>
-      </div>
-
-      {/* Grid de tarjetas o mensaje de sin preguntas */}
-      {totalQuestions === 0 ? (
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center bg-black/50 backdrop-blur-sm p-12 rounded-2xl border-2 border-amber-500/30 max-w-md">
-            <AlertTriangle className="h-20 w-20 text-amber-500 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: "'Bungee', cursive" }}>
-              Sin Preguntas
-            </h2>
-            <p className="text-lg text-amber-100 mb-6">
-              Este capítulo aún no tiene preguntas aprobadas en el banco.
-            </p>
-            <p className="text-sm text-amber-200/80">
-              ¡Sé el primero en contribuir creando preguntas para este capítulo!
+      {/* Contenedor principal estilo quiz */}
+      <div className="book-selector-quiz-container">
+        {/* Card principal estilo trivia */}
+        <div className="book-selector-card-trivia">
+          {/* Título del capítulo dentro de la card */}
+          <div className="book-selector-header">
+            <h1 className="book-selector-title" style={{ fontFamily: "'Bungee', cursive" }}>
+              Capítulo {currentLevel}
+            </h1>
+            <p className="book-selector-subtitle">
+              {totalQuestions > 0 
+                ? `${totalQuestions} ${totalQuestions === 1 ? 'pregunta disponible' : 'preguntas disponibles'}`
+                : 'Sin preguntas disponibles'
+              }
             </p>
           </div>
-        </div>
-      ) : (
-        <div className="cards-grid">
-          {cards.map((cardNumber, index) => (
-            <GoldenCard
-              key={cardNumber}
-              number={cardNumber}
-              onOpen={() => handleCardOpen(cardNumber)}
-              delay={index * 100}
-            />
-          ))}
-          
-          {/* Card de Próximamente solo si hay preguntas */}
-          <div className="golden-card-container coming-soon-card">
-            <div className="golden-card golden-card-coming-soon">
-              <div className="golden-card-border-outer"></div>
+
+          {/* Grid de tarjetas o mensaje de sin preguntas */}
+          {totalQuestions === 0 ? (
+            <div className="book-selector-no-questions">
+              <AlertTriangle className="h-12 w-12 text-amber-600 mx-auto mb-3" />
+              <p className="text-base font-bold text-gray-800 mb-2" style={{ fontFamily: "'Bungee', cursive" }}>
+                Sin Preguntas
+              </p>
+              <p className="text-sm text-gray-600">
+                Este capítulo aún no tiene preguntas aprobadas.
+              </p>
+            </div>
+          ) : (
+            <div className="book-selector-sections-grid">
+              {cards.map((cardNumber, index) => (
+                <GoldenCard
+                  key={cardNumber}
+                  number={cardNumber}
+                  onOpen={() => handleCardOpen(cardNumber)}
+                  delay={index * 100}
+                />
+              ))}
               
-              <div className="golden-card-content">
-                <div className="golden-card-inner-frame"></div>
-                
-                <div className="coming-soon-content">
-                  <span className="coming-soon-text" style={{ fontFamily: "'Bungee', cursive" }}>
-                    PRÓXIMAMENTE
-                  </span>
+              {/* Card de Próximamente */}
+              <div className="golden-card-container coming-soon-card">
+                <div className="golden-card golden-card-coming-soon">
+                  <div className="golden-card-border-outer"></div>
+                  
+                  <div className="golden-card-content">
+                    <div className="golden-card-inner-frame"></div>
+                    
+                    <div className="coming-soon-content">
+                      <span className="coming-soon-text" style={{ fontFamily: "'Bungee', cursive" }}>
+                        PRÓXIMAMENTE
+                      </span>
+                    </div>
+                    
+                    <div className="golden-card-pattern"></div>
+                  </div>
                 </div>
-                
-                <div className="golden-card-pattern"></div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

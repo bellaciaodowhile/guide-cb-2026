@@ -4,6 +4,7 @@ import { AuthService } from '../services/authService';
 import { QuestionService } from '../services/questionService';
 import { LogOut, Home, CheckCircle, XCircle, Clock, AlertTriangle, Eye, EyeOff, Edit } from 'lucide-react';
 import NotificationBell from './NotificationBell';
+import AdminSidebar from './AdminSidebar';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
 const ModeratorPanel: React.FC = () => {
@@ -117,7 +118,12 @@ const ModeratorPanel: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+      {/* Sidebar Navigation */}
+      <AdminSidebar userRole={user.role} />
+
+      {/* Main Content */}
+      <div className="flex-1 md:ml-64 pb-12">
       {/* Header */}
       <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -267,9 +273,11 @@ const ModeratorPanel: React.FC = () => {
                           <span className="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-sm font-bold rounded-lg">
                             Capítulo {question.chapter}
                           </span>
-                          <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-lg">
-                            {question.difficulty === 'easy' ? 'Fácil' : question.difficulty === 'medium' ? 'Media' : 'Difícil'}
-                          </span>
+                          {question.author && (
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium">
+                              👤 {question.author}
+                            </span>
+                          )}
                           <span className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs rounded-lg flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             Pendiente
@@ -406,6 +414,7 @@ const ModeratorPanel: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
