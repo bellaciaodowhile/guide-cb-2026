@@ -9,7 +9,6 @@ import GuiasmayoresDaniel from './components/GuiasmayoresDaniel';
 import BibleChapterPage from './components/BibleChapterPage';
 import PRChapterPage from './components/PRChapterPage';
 import QuizLevelsPageCarousel from './components/QuizLevelsPageCarousel';
-import QuizBookSelector from './components/QuizBookSelector';
 import QuizCustomSelector from './components/QuizCustomSelector';
 import QuizGame from './components/QuizGame';
 import CollaboratorDashboard from './components/CollaboratorDashboard';
