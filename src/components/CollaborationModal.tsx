@@ -11,10 +11,8 @@ interface CollaborationModalProps {
 
 const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -38,34 +36,15 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
     setLoading(true);
 
     try {
-      if (isLogin) {
-        // Login
-        const result = await AuthService.login(username, password);
-        if (result.success && result.user) {
-          AuthService.saveCurrentUser(result.user);
-          // Mantener returnCategory en sessionStorage al navegar
-          navigate('/colaborador/dashboard');
-          onClose();
-        } else {
-          setError(result.message);
-        }
+      // Login
+      const result = await AuthService.login(username, password);
+      if (result.success && result.user) {
+        AuthService.saveCurrentUser(result.user);
+        // Mantener returnCategory en sessionStorage al navegar
+        navigate('/colaborador/dashboard');
+        onClose();
       } else {
-        // Registro
-        if (password.length < 6) {
-          setError('La contraseña debe tener al menos 6 caracteres');
-          setLoading(false);
-          return;
-        }
-
-        const result = await AuthService.register(username, password, email);
-        if (result.success && result.user) {
-          AuthService.saveCurrentUser(result.user);
-          // Mantener returnCategory en sessionStorage al navegar
-          navigate('/colaborador/dashboard');
-          onClose();
-        } else {
-          setError(result.message);
-        }
+        setError(result.message);
       }
     } catch (err) {
       setError('Error al procesar la solicitud');
@@ -131,26 +110,11 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
           </div>
         </div>
 
-        {/* Formulario de Login/Registro */}
+        {/* Formulario de Login */}
         <div className="collaboration-form-container">
           <div className="collaboration-form-tabs">
-            <button
-              onClick={() => {
-                setIsLogin(true);
-                setError('');
-              }}
-              className={`collaboration-tab ${isLogin ? 'active' : ''}`}
-            >
+            <button className="collaboration-tab active">
               Iniciar Sesión
-            </button>
-            <button
-              onClick={() => {
-                setIsLogin(false);
-                setError('');
-              }}
-              className={`collaboration-tab ${!isLogin ? 'active' : ''}`}
-            >
-              Registrarse
             </button>
           </div>
 
@@ -175,28 +139,7 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
                 required
                 minLength={3}
               />
-              {!isLogin && (
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                  💡 Recomendación: Usa tu mismo usuario de Instagram para que otros puedan encontrarte fácilmente
-                </p>
-              )}
             </div>
-
-            {!isLogin && (
-              <div className="collaboration-input-group">
-                <label htmlFor="email" className="collaboration-label">
-                  Email (opcional)
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="collaboration-input"
-                  placeholder="tu@email.com"
-                />
-              </div>
-            )}
 
             <div className="collaboration-input-group">
               <label htmlFor="password" className="collaboration-label">
@@ -220,7 +163,7 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
               className="collaboration-submit-button"
               style={{ fontFamily: "'Bungee', cursive" }}
             >
-              {loading ? 'Procesando...' : isLogin ? 'Iniciar Sesión' : 'Registrarse'}
+              {loading ? 'Procesando...' : 'Iniciar Sesión'}
             </button>
           </form>
         </div>
@@ -228,7 +171,7 @@ const CollaborationModal: React.FC<CollaborationModalProps> = ({ isOpen, onClose
           {/* Footer con información adicional */}
           <div className="collaboration-modal-footer">
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-              Al registrarte, aceptas colaborar con preguntas basadas en la Biblia Reina Valera 1995
+              Inicia sesión para colaborar con preguntas basadas en la Biblia Reina Valera 1995
             </p>
           </div>
         </div>

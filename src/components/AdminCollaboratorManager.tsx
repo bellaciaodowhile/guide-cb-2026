@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { UserPlus, Users, Mail, Key, Shield, AlertCircle, CheckCircle, Trash2, Send } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import bcrypt from 'bcryptjs';
 import { AuthService } from '../services/authService';
@@ -9,7 +8,6 @@ import AdminSidebar from './AdminSidebar';
 import type { User } from '../types/collaboration';
 
 const AdminCollaboratorManager: React.FC = () => {
-  const navigate = useNavigate();
   const currentUser = AuthService.getCurrentUser();
   const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -132,20 +130,24 @@ const AdminCollaboratorManager: React.FC = () => {
     }
 
     try {
-      await NotificationService.createNotification(
+      const result = await NotificationService.createNotification(
         selectedUser.id,
         'message',
         'Mensaje del administrador',
         messageText
       );
 
-      setSuccess(`Mensaje enviado a ${selectedUser.username}`);
-      setShowMessageModal(false);
-      setSelectedUser(null);
-      setMessageText('');
+      if (result.success) {
+        setSuccess(`Mensaje enviado a ${selectedUser.username}`);
+        setShowMessageModal(false);
+        setSelectedUser(null);
+        setMessageText('');
+      } else {
+        setError(`Error al enviar el mensaje: ${result.message}`);
+      }
     } catch (err) {
       console.error('Error sending message:', err);
-      setError('Error al enviar el mensaje');
+      setError('Error al enviar el mensaje. Verifica que hayas ejecutado el script SQL para agregar el tipo "message" a las notificaciones.');
     }
   };
 
