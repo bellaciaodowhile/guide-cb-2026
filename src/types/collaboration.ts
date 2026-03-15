@@ -14,6 +14,7 @@ export interface User {
   approved_questions_count: number;
   is_beta: boolean;
   beta_mode: boolean;
+  nationality?: string;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +40,7 @@ export interface CollaborativeQuestion {
   time_limit: number;
   points: number;
   author?: string;
+  author_nationality?: string;
   created_at: string;
   updated_at: string;
 }

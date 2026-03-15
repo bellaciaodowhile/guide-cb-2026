@@ -129,7 +129,22 @@ const NotificationBell: React.FC<NotificationBellProps> = ({ userId, userRole })
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-96 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 max-h-[80vh] flex flex-col overflow-hidden">
+        <>
+          {/* Overlay en móvil */}
+          <div
+            className="fixed inset-0 z-40 sm:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="
+            fixed top-16 left-2 right-2 z-50
+            sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2
+            sm:w-96
+            bg-white dark:bg-gray-800
+            rounded-2xl sm:rounded-xl
+            shadow-2xl border border-gray-200 dark:border-gray-700
+            max-h-[80vh]
+            flex flex-col overflow-hidden
+          ">
           {/* Header */}
           <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between bg-[#fdfdfd] dark:bg-gray-800">
             <div>
@@ -237,6 +252,7 @@ const NotificationBell: React.FC<NotificationBellProps> = ({ userId, userRole })
             )}
           </div>
         </div>
+        </>
       )}
     </div>
   );

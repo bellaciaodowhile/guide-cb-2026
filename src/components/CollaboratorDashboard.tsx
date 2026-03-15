@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthService } from '../services/authService';
 import { QuestionService } from '../services/questionService';
-import { LogOut, Plus, Clock, CheckCircle, XCircle, Award, TrendingUp, Sparkles, Home, ChevronDown, Edit, Trash2 } from 'lucide-react';
+import { LogOut, Plus, Clock, CheckCircle, XCircle, Award, TrendingUp, Sparkles, Home, ChevronDown, Edit, Trash2, Search } from 'lucide-react';
 import NotificationBell from './NotificationBell';
 import AdminSidebar from './AdminSidebar';
+import CountryFlag from './CountryFlag';
 import { supabase } from '../lib/supabase';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
@@ -20,7 +21,8 @@ const CollaboratorDashboard: React.FC = () => {
   const [globalStatsByChapter, setGlobalStatsByChapter] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
   const [isChapterStatsOpen, setIsChapterStatsOpen] = useState(false);
-  const [questionsTab, setQuestionsTab] = useState<'all' | 'mine'>('all'); // Tab para admin
+  const [questionsTab, setQuestionsTab] = useState<'all' | 'mine'>('mine');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser();
@@ -35,7 +37,6 @@ const CollaboratorDashboard: React.FC = () => {
   const loadData = async (userId: string, userRole: string) => {
     setLoading(true);
     
-    // Si es admin, cargar estadísticas globales y todas las preguntas
     const isAdmin = userRole === 'moderator' || userRole === 'superadmin';
     
     if (isAdmin) {
@@ -48,19 +49,20 @@ const CollaboratorDashboard: React.FC = () => {
       ]);
       setQuestions(userQuestions);
       setAllQuestions(allQuestionsData);
-      setFilteredQuestions(allQuestionsData); // Por defecto mostrar todas
-      setStats(globalStats); // Estadísticas globales
+      setFilteredQuestions(allQuestionsData);
+      setStats(globalStats);
       setUserStatsByChapter(userChapterStats);
       setGlobalStatsByChapter(globalChapterStats);
     } else {
-      const [userQuestions, userStats, userChapterStats, globalChapterStats] = await Promise.all([
+      const [userQuestions, allQuestionsData, userStats, userChapterStats, globalChapterStats] = await Promise.all([
         QuestionService.getUserQuestions(userId),
+        QuestionService.getAllQuestions(),
         QuestionService.getUserStats(userId),
         QuestionService.getUserStatsByChapter(userId),
         QuestionService.getGlobalStatsByChapter()
       ]);
       setQuestions(userQuestions);
-      setAllQuestions(userQuestions);
+      setAllQuestions(allQuestionsData);
       setFilteredQuestions(userQuestions);
       setStats(userStats);
       setUserStatsByChapter(userChapterStats);
@@ -70,17 +72,25 @@ const CollaboratorDashboard: React.FC = () => {
     setLoading(false);
   };
 
-  // Filtrar preguntas cuando cambia el capítulo seleccionado o el tab
+  // Filtrar preguntas cuando cambia el capítulo seleccionado, el tab o el buscador
   useEffect(() => {
-    const isAdmin = user?.role === 'moderator' || user?.role === 'superadmin';
-    const sourceQuestions = (isAdmin && questionsTab === 'all') ? allQuestions : questions;
+    const sourceQuestions = questionsTab === 'all' ? allQuestions : questions;
     
-    if (selectedChapterFilter === 'all') {
-      setFilteredQuestions(sourceQuestions);
-    } else {
-      setFilteredQuestions(sourceQuestions.filter(q => q.chapter === selectedChapterFilter));
+    let filtered = selectedChapterFilter === 'all'
+      ? sourceQuestions
+      : sourceQuestions.filter(q => q.chapter === selectedChapterFilter);
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(question =>
+        question.question.toLowerCase().includes(q) ||
+        question.verse_reference?.toLowerCase().includes(q) ||
+        question.author?.toLowerCase().includes(q)
+      );
     }
-  }, [selectedChapterFilter, questions, allQuestions, questionsTab, user]);
+
+    setFilteredQuestions(filtered);
+  }, [selectedChapterFilter, questions, allQuestions, questionsTab, user, searchQuery]);
 
   const handleLogout = () => {
     // Obtener la categoría de retorno guardada ANTES de hacer logout
@@ -436,38 +446,34 @@ const CollaboratorDashboard: React.FC = () => {
 
         {/* Lista de Preguntas */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-          {/* Tabs para administradores */}
-          {(user.role === 'moderator' || user.role === 'superadmin') && (
-            <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
-              <button
-                onClick={() => setQuestionsTab('all')}
-                className={`px-4 py-2 font-medium transition-colors ${
-                  questionsTab === 'all'
-                    ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                Todas las Preguntas
-              </button>
-              <button
-                onClick={() => setQuestionsTab('mine')}
-                className={`px-4 py-2 font-medium transition-colors ${
-                  questionsTab === 'mine'
-                    ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                Mis Preguntas
-              </button>
-            </div>
-          )}
+          {/* Tabs para todos los usuarios */}
+          <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+            <button
+              onClick={() => setQuestionsTab('all')}
+              className={`px-4 py-2 font-medium transition-colors ${
+                questionsTab === 'all'
+                  ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              Todas las Preguntas
+            </button>
+            <button
+              onClick={() => setQuestionsTab('mine')}
+              className={`px-4 py-2 font-medium transition-colors ${
+                questionsTab === 'mine'
+                  ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              Mis Preguntas
+            </button>
+          </div>
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {(user.role === 'moderator' || user.role === 'superadmin') && questionsTab === 'all' 
-                  ? 'Todas las Preguntas' 
-                  : 'Mis Preguntas'}
+                {questionsTab === 'all' ? 'Todas las Preguntas' : 'Mis Preguntas'}
               </h3>
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {filteredQuestions.length} {filteredQuestions.length === 1 ? 'pregunta' : 'preguntas'}
@@ -475,32 +481,46 @@ const CollaboratorDashboard: React.FC = () => {
               </span>
             </div>
 
-            {/* Filtro por Capítulo */}
-            <div className="flex items-center gap-3">
-              {selectedChapterFilter !== 'all' && (
-                <button
-                  onClick={() => setSelectedChapterFilter('all')}
-                  className="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium whitespace-nowrap"
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              {/* Buscador */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar pregunta, versículo, autor..."
+                  className="pl-9 pr-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm w-full sm:w-64"
+                />
+              </div>
+
+              {/* Filtro por Capítulo */}
+              <div className="flex items-center gap-3">
+                {selectedChapterFilter !== 'all' && (
+                  <button
+                    onClick={() => setSelectedChapterFilter('all')}
+                    className="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium whitespace-nowrap"
+                  >
+                    Limpiar filtro
+                  </button>
+                )}
+                <select
+                  value={selectedChapterFilter}
+                  onChange={(e) => setSelectedChapterFilter(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+                  className="px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent font-medium"
                 >
-                  Limpiar filtro
-                </button>
-              )}
-              <select
-                value={selectedChapterFilter}
-                onChange={(e) => setSelectedChapterFilter(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
-                className="px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent font-medium"
-              >
-                <option value="all">Todos los capítulos</option>
-                {Array.from({ length: 12 }, (_, i) => i + 1).map(num => {
-                  const sourceQuestions = (user.role === 'moderator' || user.role === 'superadmin') && questionsTab === 'all' ? allQuestions : questions;
-                  const count = sourceQuestions.filter(q => q.chapter === num).length;
-                  return count > 0 ? (
-                    <option key={num} value={num}>
-                      Capítulo {num} ({count})
-                    </option>
-                  ) : null;
-                })}
-              </select>
+                  <option value="all">Todos los capítulos</option>
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map(num => {
+                    const sourceQuestions = questionsTab === 'all' ? allQuestions : questions;
+                    const count = sourceQuestions.filter(q => q.chapter === num).length;
+                    return count > 0 ? (
+                      <option key={num} value={num}>
+                        Capítulo {num} ({count})
+                      </option>
+                    ) : null;
+                  })}
+                </select>
+              </div>
             </div>
           </div>
 
@@ -559,8 +579,11 @@ const CollaboratorDashboard: React.FC = () => {
                             {statusBadge.label}
                           </span>
                           {question.author && (
-                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium">
-                              👤 {question.author}
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium flex items-center gap-1.5">
+                              {question.author_nationality
+                                ? <CountryFlag code={question.author_nationality} size={16} />
+                                : <span>👤</span>}
+                              {question.author}
                             </span>
                           )}
                         </div>
@@ -572,17 +595,30 @@ const CollaboratorDashboard: React.FC = () => {
                         </p>
                       </div>
                       
-                      {/* Botón de editar */}
-                      {((user.role === 'superadmin' || user.role === 'moderator') || 
-                        (question.status === 'pending' && question.submitted_by === user.id)) && (
-                        <button
-                          onClick={() => navigate(`/colaborador/editar-pregunta/${question.id}`, { state: { from: 'dashboard' } })}
-                          className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900/30 rounded-lg transition-colors group"
-                          title={question.status === 'pending' ? 'Editar pregunta (en espera)' : 'Editar pregunta'}
-                        >
-                          <Edit className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
-                        </button>
-                      )}
+                      {/* Botones de acción */}
+                      <div className="flex items-center gap-1">
+                        {/* Botón de editar */}
+                        {((user.role === 'superadmin' || user.role === 'moderator') || 
+                          (question.status === 'pending' && question.submitted_by === user.id)) && (
+                          <button
+                            onClick={() => navigate(`/colaborador/editar-pregunta/${question.id}`, { state: { from: 'dashboard' } })}
+                            className="p-2 hover:bg-amber-100 dark:hover:bg-amber-900/30 rounded-lg transition-colors group"
+                            title="Editar pregunta"
+                          >
+                            <Edit className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-amber-400" />
+                          </button>
+                        )}
+                        {/* Botón de eliminar (solo admins) */}
+                        {(user.role === 'superadmin' || user.role === 'moderator') && (
+                          <button
+                            onClick={() => handleDeleteQuestion(question.id)}
+                            className="p-2 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors group"
+                            title="Eliminar pregunta"
+                          >
+                            <Trash2 className="h-5 w-5 text-gray-600 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400" />
+                          </button>
+                        )}
+                      </div>
                     </div>
 
                     {question.status === 'rejected' && question.rejection_reason && (

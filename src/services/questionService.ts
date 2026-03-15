@@ -57,7 +57,8 @@ export class QuestionService {
         .select(`
           *,
           users!collaborative_questions_user_id_fkey (
-            username
+            username,
+            nationality
           )
         `)
         .eq('user_id', userId)
@@ -71,7 +72,8 @@ export class QuestionService {
       // Mapear los datos para incluir el username directamente
       return (data || []).map((question: any) => ({
         ...question,
-        author: question.users?.username || 'Anónimo'
+        author: question.users?.username || 'Anónimo',
+        author_nationality: question.users?.nationality || null
       })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
@@ -87,7 +89,8 @@ export class QuestionService {
         .select(`
           *,
           users!collaborative_questions_user_id_fkey (
-            username
+            username,
+            nationality
           )
         `)
         .eq('status', 'pending')
@@ -101,7 +104,8 @@ export class QuestionService {
       // Mapear los datos para incluir el username directamente
       return (data || []).map((question: any) => ({
         ...question,
-        author: question.users?.username || 'Anónimo'
+        author: question.users?.username || 'Anónimo',
+        author_nationality: question.users?.nationality || null
       })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
@@ -207,7 +211,8 @@ export class QuestionService {
         .select(`
           *,
           users!collaborative_questions_user_id_fkey (
-            username
+            username,
+            nationality
           )
         `)
         .eq('chapter', chapter)
@@ -222,7 +227,8 @@ export class QuestionService {
       // Mapear los datos para incluir el username directamente
       return (data || []).map((question: any) => ({
         ...question,
-        author: question.users?.username || 'Anónimo'
+        author: question.users?.username || 'Anónimo',
+        author_nationality: question.users?.nationality || null
       })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);
@@ -352,7 +358,8 @@ export class QuestionService {
         .select(`
           *,
           users!collaborative_questions_user_id_fkey (
-            username
+            username,
+            nationality
           )
         `)
         .order('created_at', { ascending: false });
@@ -365,7 +372,8 @@ export class QuestionService {
       // Mapear los datos para incluir el username directamente
       return (data || []).map((question: any) => ({
         ...question,
-        author: question.users?.username || 'Anónimo'
+        author: question.users?.username || 'Anónimo',
+        author_nationality: question.users?.nationality || null
       })) as CollaborativeQuestion[];
     } catch (error) {
       console.error('Error:', error);

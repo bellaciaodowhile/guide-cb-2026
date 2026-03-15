@@ -5,6 +5,7 @@ import { QuestionService } from '../services/questionService';
 import { LogOut, Home, CheckCircle, XCircle, Clock, AlertTriangle, Eye, EyeOff, Edit } from 'lucide-react';
 import NotificationBell from './NotificationBell';
 import AdminSidebar from './AdminSidebar';
+import CountryFlag from './CountryFlag';
 import type { User, CollaborativeQuestion } from '../types/collaboration';
 
 const ModeratorPanel: React.FC = () => {
@@ -274,8 +275,11 @@ const ModeratorPanel: React.FC = () => {
                             Capítulo {question.chapter}
                           </span>
                           {question.author && (
-                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium">
-                              👤 {question.author}
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-lg font-medium flex items-center gap-1.5">
+                              {question.author_nationality
+                                ? <CountryFlag code={question.author_nationality} size={16} />
+                                : <span>👤</span>}
+                              {question.author}
                             </span>
                           )}
                           <span className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs rounded-lg flex items-center gap-1">

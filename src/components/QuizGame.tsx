@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
 import { QuestionService } from '../services/questionService';
 import type { CollaborativeQuestion } from '../types/collaboration';
+import CountryFlag from './CountryFlag';
 
 // Importar imágenes de capítulos
 import daniel1 from '../assets/capitulos/Daniel 1.webp';
@@ -33,6 +34,7 @@ interface Question {
   timeLimit?: number;
   points?: number;
   author?: string;
+  authorNationality?: string;
   showAuthor?: boolean;
 }
 
@@ -70,7 +72,8 @@ const convertToQuizQuestion = (dbQuestion: CollaborativeQuestion): Question => {
     timeLimit: dbQuestion.time_limit || 20,
     points: dbQuestion.points || 20,
     showAuthor: dbQuestion.show_author,
-    author: dbQuestion.author
+    author: dbQuestion.author,
+    authorNationality: dbQuestion.author_nationality
   };
 };
 
@@ -499,8 +502,11 @@ const QuizGame: React.FC = () => {
             {currentQuestion.question}
           </p>
           {currentQuestion.showAuthor && currentQuestion.author && (
-            <p className="question-author">
-              Por: {currentQuestion.author}
+            <p className="question-author flex items-center justify-end gap-1.5">
+              {currentQuestion.authorNationality && (
+                <CountryFlag code={currentQuestion.authorNationality} size={18} />
+              )}
+              {currentQuestion.author}
             </p>
           )}
         </div>

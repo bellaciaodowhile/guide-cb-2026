@@ -104,6 +104,23 @@ const AdminCollaboratorManager: React.FC = () => {
     }
   };
 
+  const handleUpdateNationality = async (userId: string, nationality: string) => {
+    try {
+      const { error } = await supabase
+        .from('users')
+        .update({ nationality: nationality || null })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      setSuccess('Nacionalidad actualizada');
+      loadCollaborators();
+    } catch (err) {
+      console.error('Error updating nationality:', err);
+      setError('Error al actualizar nacionalidad');
+    }
+  };
+
   const handleDeleteCollaborator = async (userId: string) => {
     if (!confirm('¿Estás seguro de eliminar este colaborador?')) return;
 
@@ -429,6 +446,42 @@ const AdminCollaboratorManager: React.FC = () => {
                     </button>
                   </div>
                 </div>
+
+                {/* Nacionalidad (solo para usuarios beta) */}
+                {collaborator.beta_mode && (
+                  <div className="mb-4">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Nacionalidad</p>
+                    <select
+                      value={collaborator.nationality || ''}
+                      onChange={(e) => handleUpdateNationality(collaborator.id, e.target.value)}
+                      className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    >
+                      <option value="">Sin nacionalidad</option>
+                      <option value="AR">🇦🇷 Argentina</option>
+                      <option value="BO">🇧🇴 Bolivia</option>
+                      <option value="BR">🇧🇷 Brasil</option>
+                      <option value="CL">🇨🇱 Chile</option>
+                      <option value="CO">🇨🇴 Colombia</option>
+                      <option value="CR">🇨🇷 Costa Rica</option>
+                      <option value="CU">🇨🇺 Cuba</option>
+                      <option value="DO">🇩🇴 República Dominicana</option>
+                      <option value="EC">🇪🇨 Ecuador</option>
+                      <option value="SV">🇸🇻 El Salvador</option>
+                      <option value="GT">🇬🇹 Guatemala</option>
+                      <option value="HN">🇭🇳 Honduras</option>
+                      <option value="MX">🇲🇽 México</option>
+                      <option value="NI">🇳🇮 Nicaragua</option>
+                      <option value="PA">🇵🇦 Panamá</option>
+                      <option value="PY">🇵🇾 Paraguay</option>
+                      <option value="PE">🇵🇪 Perú</option>
+                      <option value="PR">🇵🇷 Puerto Rico</option>
+                      <option value="ES">🇪🇸 España</option>
+                      <option value="UY">🇺🇾 Uruguay</option>
+                      <option value="VE">🇻🇪 Venezuela</option>
+                      <option value="US">🇺🇸 Estados Unidos</option>
+                    </select>
+                  </div>
+                )}
 
                 {/* Fecha de registro */}
                 <div className="text-xs text-gray-500 dark:text-gray-400 text-center pt-3 border-t border-gray-200 dark:border-gray-700">
